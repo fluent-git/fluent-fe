@@ -78,7 +78,7 @@ async function tryToQueue(){
       // Success callback
       function success(localAudioStream) {
           localStream = localAudioStream
-          console.log(localStream)
+          console.log({localStream})
       },
       // Failure callback
       function error(err) {
@@ -103,10 +103,16 @@ async function tryToQueue(){
 
     if(res.data.message === 'Queuing'){
       alert("Please be patient, we are finding you a partner")
-      localPeer.on('call',async(conn)=>{
-        callConnection = conn
+
+      localPeer.on('call', async function(incoming) {
+        alert("We've found you a partner!")
+
+        callConnection = incoming
 
         callConnection.answer(localStream)
+
+
+        playStream(callConnection.remoteStream)
 
         var res = await axios.post(startTalkUrl,
           {
@@ -125,11 +131,9 @@ async function tryToQueue(){
         var otherID = res.data.user_id
         var talkID = res.data.talk_id
 
-        callConnection.on('stream', playStream)
         callConnection.on('close',()=>reviewCallback(otherID,talkID))
       })
     } else {
-      
       alert("Found a partner: "+res.data)
 
       var otherID = res.data.user_id
@@ -137,7 +141,10 @@ async function tryToQueue(){
 
       callConnection = localPeer.call(res.data.peerjs_id,localStream)
       console.log(callConnection)
-      callConnection.on('stream', playStream);
+      callConnection.on('stream', (strm)=>{
+        console.log(strm)
+        playStream(strm)
+      })
       callConnection.on('close',()=>reviewCallback(otherID,talkID))
     }
   })
