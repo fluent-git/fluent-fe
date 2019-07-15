@@ -4,7 +4,7 @@ import Head from '../components/head'
 import Nav from '../components/nav'
 import axios from 'axios'
 
-const baseUrl = 'http://localhost:8000'//'http://165.22.105.219:8000'
+const baseUrl = 'http://165.22.105.219:8000'
 const checkUrl = baseUrl+'/queue/check/'
 const queueUrl = baseUrl+'/queue/start/'
 const startTalkUrl = baseUrl+'/talk/start/'
