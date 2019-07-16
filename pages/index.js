@@ -36,12 +36,15 @@ async function checkIfQueueIsAllowed(params){
     })
 }
 
+//// TEST FUNCTION
 function getUserID(){
+  //// REPLACE BODY
   var content = $('#userid')[0].value
   if(content === ''){
     throw('user id kosong')
   }
   return Number(content)
+  //// REPLACE BODY
 }
 
 async function tryToQueue(){
@@ -57,6 +60,23 @@ async function tryToQueue(){
   var user_id = getUserID()
   console.log({user_id})
 
+  navigator.getUserMedia = (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
+  // Get access to microphone
+  navigator.getUserMedia (
+    {video: false, audio: true},
+    
+    // Success callback
+    function success(localAudioStream) {
+        localStream = localAudioStream
+        console.log({localStream})
+    },
+    // Failure callback
+    function error(err) {
+        console.log(err)
+        alert("Audio input device error. Please refresh the website.")
+    }
+  )
+
   //instantiate peer
   localPeer = new Peer({
     config: {'iceServers': [
@@ -69,23 +89,6 @@ async function tryToQueue(){
     console.log({localPeer})
     
     $('.title')[0].innerHTML = localPeer.id
-    
-    navigator.getUserMedia = (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
-    // Get access to microphone
-    navigator.getUserMedia (
-      {video: false, audio: true},
-      
-      // Success callback
-      function success(localAudioStream) {
-          localStream = localAudioStream
-          console.log({localStream})
-      },
-      // Failure callback
-      function error(err) {
-          console.log(err)
-          alert("Audio input device error. Please refresh the website.")
-      }
-    )
 
     var res = await axios.post(queueUrl,
       {
@@ -110,7 +113,6 @@ async function tryToQueue(){
         callConnection = incoming
 
         callConnection.answer(localStream)
-
 
         playStream(callConnection.remoteStream)
 
