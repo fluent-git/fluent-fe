@@ -1,4 +1,6 @@
 import React from 'react'
+import Layout from '../components/layout'
+import sessionManager from '../utils/session'
 import Link from 'next/link'
 import Head from '../components/head'
 import Nav from '../components/nav'
@@ -163,79 +165,95 @@ function reviewCallback(otherID,talkID){
 }
 
 class Talk extends React.Component{
+
+  constructor(props) {
+    super(props)
+    if (sessionManager.isLoggedIn()) {
+      var username = sessionManager.getUsername()
+      var token = sessionManager.getToken()
+      this.state = { loggedIn: true, username: username, token: token }
+    } else {
+      var username = sessionManager.getUsername()
+      var token = sessionManager.getToken()
+      this.state = { loggedIn: false, username: "", token: "" }
+    }
+  }
+
   render(){
     return (
-    <div>
-      <Head title="Fluent" />
-      <script src="https://cdn.jsdelivr.net/npm/peerjs@0.3.20/dist/peer.min.js"></script>
-      <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-      <Nav />
+      <Layout loggedIn={this.state.loggedIn} username={this.state.username}>
+        <div>
+          <Head title="Fluent" />
+          <script src="https://cdn.jsdelivr.net/npm/peerjs@0.3.20/dist/peer.min.js"></script>
+          <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+          <Nav />
 
-      <div className="hero">
-        <h1 className="title">hehehe</h1>
-        <table>
-          <tbody>
-            <tr>
-              <td>username:</td>
-              <td><input id="username"></input></td>
-              <td>user ID:</td>
-              <td><input id="userid"></input></td>
-            </tr>
-          </tbody>
-        </table>
+          <div className="hero">
+            <h1 className="title">hehehe</h1>
+            <table>
+              <tbody>
+                <tr>
+                  <td>username:</td>
+                  <td><input id="username"></input></td>
+                  <td>user ID:</td>
+                  <td><input id="userid"></input></td>
+                </tr>
+              </tbody>
+            </table>
 
-        <div className="row">
-          <button onClick={tryToQueue}>queue me now!</button>
-          <button onClick={disconnectCall}>disconnect call!</button>
+            <div className="row">
+              <button onClick={tryToQueue}>queue me now!</button>
+              <button onClick={disconnectCall}>disconnect call!</button>
+            </div>
+          </div>
+          <style jsx>{`
+            .hero {
+              width: 100%;
+              color: #333;
+            }
+            .title {
+              margin: 0;
+              width: 100%;
+              padding-top: 80px;
+              line-height: 1.15;
+              font-size: 48px;
+            }
+            .title,
+            .description {
+              text-align: center;
+            }
+            .row {
+              max-width: 880px;
+              margin: 80px auto 40px;
+              display: flex;
+              flex-direction: row;
+              justify-content: space-around;
+            }
+            .card {
+              padding: 18px 18px 24px;
+              width: 220px;
+              text-align: left;
+              text-decoration: none;
+              color: #434343;
+              border: 1px solid #9b9b9b;
+            }
+            .card:hover {
+              border-color: #067df7;
+            }
+            .card h3 {
+              margin: 0;
+              color: #067df7;
+              font-size: 18px;
+            }
+            .card p {
+              margin: 0;
+              padding: 12px 0 0;
+              font-size: 13px;
+              color: #333;
+            }
+          `}</style>
         </div>
-      </div>
-      <style jsx>{`
-        .hero {
-          width: 100%;
-          color: #333;
-        }
-        .title {
-          margin: 0;
-          width: 100%;
-          padding-top: 80px;
-          line-height: 1.15;
-          font-size: 48px;
-        }
-        .title,
-        .description {
-          text-align: center;
-        }
-        .row {
-          max-width: 880px;
-          margin: 80px auto 40px;
-          display: flex;
-          flex-direction: row;
-          justify-content: space-around;
-        }
-        .card {
-          padding: 18px 18px 24px;
-          width: 220px;
-          text-align: left;
-          text-decoration: none;
-          color: #434343;
-          border: 1px solid #9b9b9b;
-        }
-        .card:hover {
-          border-color: #067df7;
-        }
-        .card h3 {
-          margin: 0;
-          color: #067df7;
-          font-size: 18px;
-        }
-        .card p {
-          margin: 0;
-          padding: 12px 0 0;
-          font-size: 13px;
-          color: #333;
-        }
-      `}</style>
-    </div>
+      </Layout>
     )
   }
   componentDidMount(){
