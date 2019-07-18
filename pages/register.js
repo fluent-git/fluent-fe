@@ -37,6 +37,7 @@ class Register extends Component {
       const username = this.state.username
       const email = this.state.email
       const password = this.state.password
+      console.log({email,username,password})
       const url = `https://api.fluent.id/users/`
       this.setState({ loading: "is-loading" })
   
@@ -48,7 +49,9 @@ class Register extends Component {
         })
         // TODO: Implement real token from backend once implemented in backend
         const token = "abc"   // Dummy token
-        sessionManager.signIn(response.data.username, token)
+        const username = response.data.username
+        const userId = response.data.user.id
+        sessionManager.signIn(username, userId, token)
       } catch (error) {
         console.error(
           'You have an error in your code or there are Network issues.',

@@ -7,6 +7,10 @@ var SessionManager = (function() {
         return cookie.get('username');
     };
 
+    var getUserId = function() {
+        return cookie.get('userId');
+    };
+
     var getToken = function() {
         return cookie.get('token');
     };
@@ -20,14 +24,16 @@ var SessionManager = (function() {
         }
     }
 
-    var signIn = function(username, token) {
+    var signIn = function(username, userId, token) {
         cookie.set('username', username)
+        cookie.set('userId',userId)
         cookie.set('token', token)
         Router.push('/')
     }
 
     var signOut = function() {
         cookie.remove('username')
+        cookie.remove('userId')
         cookie.remove('token')
         Router.push('/login')
     }
@@ -35,6 +41,7 @@ var SessionManager = (function() {
     return {
         isLoggedIn: isLoggedIn,
         getUsername: getUsername,
+        getUserId: getUserId,
         getToken: getToken,
         signIn: signIn,
         signOut: signOut

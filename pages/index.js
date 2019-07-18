@@ -9,12 +9,14 @@ class Home extends Component {
     super(props)
     if (sessionManager.isLoggedIn()) {
       var username = sessionManager.getUsername()
+      var userId = sessionManager.getUserId()
       var token = sessionManager.getToken()
-      this.state = { loggedIn: true, username: username, token: token }
+      this.state = { loggedIn: true, username: username, userId: userId, token: token }
     } else {
       var username = sessionManager.getUsername()
+      var userId = sessionManager.getUserId()
       var token = sessionManager.getToken()
-      this.state = { loggedIn: false, username: "", token: "" }
+      this.state = { loggedIn: false, username: "", userId: 0, token: "" }
     }
   }
 

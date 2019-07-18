@@ -42,7 +42,8 @@ class Login extends Component {
       })
       if (response.data.message == 'OK') {
         const token = response.data.token
-        sessionManager.signIn(username, token)
+        const userId = response.data.user.id
+        sessionManager.signIn(username, userId, token)
       } else {
         console.log('Login failed.')
         let error = new Error(response.data.message)
