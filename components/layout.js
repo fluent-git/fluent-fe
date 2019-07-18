@@ -50,12 +50,6 @@ const ProfileButton = props => (
     <div className="navbar-start">
     </div>
     <div className="navbar-end">
-      <Link prefetch href="/">
-        <a className="navbar-item">Home</a>
-      </Link>
-      <Link prefetch href="/">
-        <a className="navbar-item">Lesson</a>
-      </Link>
       <Link prefetch href="/talk">
         <a className="navbar-item">Talk</a>
       </Link>
@@ -67,13 +61,7 @@ const ProfileButton = props => (
           <a className="navbar-item">
             Profile
           </a>
-          <a className="navbar-item">
-            Dashboard
-          </a>
           <hr className="navbar-divider"/>
-          <a className="navbar-item">
-            Settings
-          </a>
           <a className="navbar-item" onClick={sessionManager.signOut}>
             Sign Out
           </a>
