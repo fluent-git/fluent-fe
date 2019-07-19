@@ -20,7 +20,7 @@ const Layout = props => (
           <div className="navbar-brand">
             <a className="navbar-item">
               <Link prefetch href="/">
-                <img src="/static/img/fluent-logo.png"/>
+                <img src="/static/asset/logo/logo.svg"/>
               </Link>
             </a>
             <a id="burger" onClick={toggleStyles} 
