@@ -1,0 +1,10 @@
+#F8F8F8 white
+#C4C4C4 gray
+#E9D0CE dark pink
+#EA9D9F logo pink
+#F4E3E1 light pink
+#3C3C72 logo purple
+#1F3149 black
+#5353AC dark purple
+#6A68FA purple
+#B9B8FF light purple
