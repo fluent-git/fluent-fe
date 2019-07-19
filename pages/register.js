@@ -41,12 +41,14 @@ class Register extends Component {
       const url = `https://api.fluent.id/users/`
       this.setState({ loading: "is-loading" })
   
+      const obj = {
+        "email": email, 
+        "username": username,
+        "password": password
+      }
+      console.log(obj)
       try {
-        const response = await Axios.post(url, {
-            "email": email, 
-            "username": username,
-            "password": password
-        })
+        const response = await Axios.post(url, obj)
         // TODO: Implement real token from backend once implemented in backend
         const token = "abc"   // Dummy token
         const username = response.data.username

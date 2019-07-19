@@ -7,7 +7,7 @@ import Nav from '../components/nav'
 import axios from 'axios'
 import { homedir } from 'os';
 
-const baseUrl = 'http://localhost:8000'
+const baseUrl = 'https://api.fluent.id'
 const checkUrl = baseUrl+'/queue/check/'
 const queueUrl = baseUrl+'/queue/start/'
 const cancelUrl = baseUrl+'/queue/cancel/'
