@@ -7,9 +7,10 @@ import Nav from '../components/nav'
 import axios from 'axios'
 import { homedir } from 'os';
 
-const baseUrl = 'https://api.fluent.id'
+const baseUrl = 'http://localhost:8000'
 const checkUrl = baseUrl+'/queue/check/'
 const queueUrl = baseUrl+'/queue/start/'
+const cancelUrl = baseUrl+'/queue/cancel/'
 const startTalkUrl = baseUrl+'/talk/start/'
 const endTalkUrl = baseUrl+'/talk/end/'
 
@@ -25,17 +26,18 @@ class Talk extends React.Component{
       var username = sessionManager.getUsername()
       var userId = sessionManager.getUserId()
       var token = sessionManager.getToken()
-      this.state = { loggedIn: true, username: username, userId: userId, token: token }
+      this.state = { loggedIn: true, username: username, userId: userId, token: token, statusMsg: "Not Queued" }
     } else {
       var username = sessionManager.getUsername()
       var userId = sessionManager.getUserId()
       var token = sessionManager.getToken()
-      this.state = { loggedIn: false, username: "", userId: 0, token: "" }
+      this.state = { loggedIn: false, username: "", userId: 0, token: "", statusMsg: "Not Queued" }
     }
 
     this.init = this.init.bind(this)
     this.playStream = this.playStream.bind(this)
     this.tryToQueue = this.tryToQueue.bind(this)
+    this.cancelQueue = this.cancelQueue.bind(this)
     this.disconnectCall = this.disconnectCall.bind(this)
     this.reviewCallback = this.reviewCallback.bind(this)
     this.checkIfQueueIsAllowed = this.checkIfQueueIsAllowed.bind(this)
@@ -132,7 +134,8 @@ class Talk extends React.Component{
   
     if(res.data.message === 'Queuing'){
       alert("Please be patient, we are finding you a partner")
-  
+      this.setState({statusMsg: "Queued"})
+
       localPeer.on('call', async (incoming) => {
         alert("We've found you a partner!")
   
@@ -151,14 +154,13 @@ class Talk extends React.Component{
             }
           }
         )
-        console.log('ini start talk ditembak')
         console.log(res.data)
-  
   
         var otherID = res.data.user_id
         var talkID = res.data.talk_id
   
         callConnection.on('close',()=>this.reviewCallback(otherID,talkID))
+        this.setState({statusMsg: "Connected"})
       })
     } else {
       alert("Found a partner: "+res.data.user_id)
@@ -173,16 +175,34 @@ class Talk extends React.Component{
         this.playStream(stream)
       })
       callConnection.on('close',()=>this.reviewCallback(otherID,talkID))
+      this.setState({statusMsg: "Connected"})
     }
   }
   
   disconnectCall(){
     if(callConnection) callConnection.close()
   }
+
+  async cancelQueue(){
+    if(this.state.statusMsg === "Queued") {
+      await axios.post(cancelUrl,
+        {
+          "user_id":Number(this.state.userId)
+        },
+        {
+          "headers": {
+            "Content-Type": "application/json"
+          }
+        }
+      )
+    } else alert("You are not queued yet!")
+    this.setState({statusMsg: "Not Queued"})
+  }
   
   reviewCallback(otherID,talkID){
     console.log('###### INI REVIEW CALLBACK #######')
     console.log('create review for user',otherID,', talkID',talkID)
+    this.setState({statusMsg: "Review"})
   }
 
   render(){
@@ -193,7 +213,7 @@ class Talk extends React.Component{
           <Nav />
 
           <div className="hero">
-            <h1 className="title">hehehe</h1>
+            <h1 className="title">{this.state.statusMsg}</h1>
             <table>
               <tbody>
                 <tr>
@@ -205,6 +225,7 @@ class Talk extends React.Component{
 
             <div className="row">
               <button onClick={this.tryToQueue}>queue me now!</button>
+              <button onClick={this.cancelQueue}>cancel queue!</button>
               <button onClick={this.disconnectCall}>disconnect call!</button>
             </div>
           </div>
