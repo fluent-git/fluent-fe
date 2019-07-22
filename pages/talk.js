@@ -202,6 +202,16 @@ class Talk extends React.Component{
   reviewCallback(otherID,talkID){
     console.log('###### INI REVIEW CALLBACK #######')
     console.log('create review for user',otherID,', talkID',talkID)
+    axios.post(endTalkUrl,
+      {
+        'talk_id': talkID
+      },
+      {
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    )
     this.setState({statusMsg: "Review"})
   }
 
