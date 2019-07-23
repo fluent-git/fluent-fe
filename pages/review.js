@@ -62,7 +62,8 @@ class Review extends Component {
             "talk_id": 1
           })
           if (response.data.id != 0) {
-            console.log('Success Bitch')
+            console.log('Success')
+            Router.push('/')
           } else {
             console.log('Login failed.')
             let error = new Error(response.data.message)
@@ -83,6 +84,9 @@ class Review extends Component {
     render() {
         return (
             <Layout loggedIn={this.state.loggedIn} username={this.state.username}>
+
+                <link type="text/css" rel="stylesheet" href="static/style.css" />
+
                 <br></br>
 
                 <form onSubmit={this.handleSubmit}>
@@ -93,28 +97,20 @@ class Review extends Component {
                   </div>
                   <div class="field-body">
                     <div class="field is-narrow">
-                      <div class="control">
-                        <label class="radio">
-                          <input type="radio" name="clarity" value="1" onChange={this.handleClarity}/>
-                          1
-                        </label>
-                        <label class="radio">
-                          <input type="radio" name="clarity" value="2" onChange={this.handleClarity}/>
-                          2
-                        </label>
-                        <label class="radio">
-                          <input type="radio" name="clarity" value="3" onChange={this.handleClarity}/>
-                          3
-                        </label>
-                        <label class="radio">
-                          <input type="radio" name="clarity" value="4" onChange={this.handleClarity}/>
-                          4
-                        </label>
-                        <label class="radio">
-                          <input type="radio" name="clarity" value="5" onChange={this.handleClarity}/>
-                          5
-                        </label>
-                      </div>
+                      
+                    <div class="rate">
+                      <input type="radio" id="star5" name="clarity" value="5" onChange={this.handleClarity}/>
+                      <label for="star5" title="text">5 stars</label>
+                      <input type="radio" id="star4" name="clarity" value="4" onChange={this.handleClarity}/>
+                      <label for="star4" title="text">4 stars</label>
+                      <input type="radio" id="star3" name="clarity" value="3" onChange={this.handleClarity}/>
+                      <label for="star3" title="text">3 stars</label>
+                      <input type="radio" id="star2" name="clarity" value="2" onChange={this.handleClarity}/>
+                      <label for="star2" title="text">2 stars</label>
+                      <input type="radio" id="star1" name="clarity" value="1" onChange={this.handleClarity}/>
+                      <label for="star1" title="text">1 star</label>
+                    </div>
+
                     </div>
                   </div>
                 </div>
@@ -125,28 +121,20 @@ class Review extends Component {
                   </div>
                   <div class="field-body">
                     <div class="field is-narrow">
-                      <div class="control">
-                        <label class="radio">
-                          <input type="radio" name="pacing" value="1" onChange={this.handlePacing}/>
-                          1
-                        </label>
-                        <label class="radio">
-                          <input type="radio" name="pacing" value="2" onChange={this.handlePacing}/>
-                          2
-                        </label>
-                        <label class="radio">
-                          <input type="radio" name="pacing" value="3" onChange={this.handlePacing}/>
-                          3
-                        </label>
-                        <label class="radio">
-                          <input type="radio" name="pacing" value="4" onChange={this.handlePacing}/>
-                          4
-                        </label>
-                        <label class="radio">
-                          <input type="radio" name="pacing" value="5" onChange={this.handlePacing}/>
-                          5
-                        </label>
-                      </div>
+
+                    <div class="rate">
+                      <input type="radio" id="star10" name="pacing" value="5" onChange={this.handlePacing}/>
+                      <label for="star10" title="text">5 stars</label>
+                      <input type="radio" id="star9" name="pacing" value="4" onChange={this.handlePacing}/>
+                      <label for="star9" title="text">4 stars</label>
+                      <input type="radio" id="star8" name="pacing" value="3" onChange={this.handlePacing}/>
+                      <label for="star8" title="text">3 stars</label>
+                      <input type="radio" id="star7" name="pacing" value="2" onChange={this.handlePacing}/>
+                      <label for="star7" title="text">2 stars</label>
+                      <input type="radio" id="star6" name="pacing" value="1" onChange={this.handlePacing}/>
+                      <label for="star6" title="text">1 star</label>
+                    </div>
+
                     </div>
                   </div>
                 </div>
@@ -157,28 +145,20 @@ class Review extends Component {
                   </div>
                   <div class="field-body">
                     <div class="field is-narrow">
-                      <div class="control">
-                        <label class="radio">
-                          <input type="radio" name="pronounciation" value="1" onChange={this.handlePronounciation}/>
-                          1
-                        </label>
-                        <label class="radio">
-                          <input type="radio" name="pronounciation" value="2" onChange={this.handlePronounciation}/>
-                          2
-                        </label>
-                        <label class="radio">
-                          <input type="radio" name="pronounciation" value="3" onChange={this.handlePronounciation}/>
-                          3
-                        </label>
-                        <label class="radio">
-                          <input type="radio" name="pronounciation" value="4" onChange={this.handlePronounciation}/>
-                          4
-                        </label>
-                        <label class="radio">
-                          <input type="radio" name="pronounciation" value="5" onChange={this.handlePronounciation}/>
-                          5
-                        </label>
-                      </div>
+                      
+                    <div class="rate">
+                      <input type="radio" id="star15" name="pronounciation" value="5" onChange={this.handlePronounciation}/>
+                      <label for="star15" title="text">5 stars</label>
+                      <input type="radio" id="star14" name="pronounciation" value="4" onChange={this.handlePronounciation}/>
+                      <label for="star14" title="text">4 stars</label>
+                      <input type="radio" id="star13" name="pronounciation" value="3" onChange={this.handlePronounciation}/>
+                      <label for="star13" title="text">3 stars</label>
+                      <input type="radio" id="star12" name="pronounciation" value="2" onChange={this.handlePronounciation}/>
+                      <label for="star12" title="text">2 stars</label>
+                      <input type="radio" id="star11" name="pronounciation" value="1" onChange={this.handlePronounciation}/>
+                      <label for="star11" title="text">1 star</label>
+                    </div>
+
                     </div>
                   </div>
                 </div>
