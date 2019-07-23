@@ -13,7 +13,7 @@ class Home extends Component {
       var userId = sessionManager.getUserId()
       var token = sessionManager.getToken()
       this.state = { loggedIn: true, username: username, userId: userId, token: token }
-      Router.push('/speak')
+      Router.push('/talk')
     } else {
       var username = sessionManager.getUsername()
       var userId = sessionManager.getUserId()

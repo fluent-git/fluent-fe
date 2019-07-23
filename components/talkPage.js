@@ -1,6 +1,6 @@
 import { Component } from 'react'
 
-class SpeakPage extends Component {
+class TalkPage extends Component {
 	constructor(props){
 		super(props)
 	}
@@ -134,4 +134,4 @@ class BoxTalk extends Component {
 }
 
 
-export default SpeakPage
+export default TalkPage

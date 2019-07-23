@@ -50,8 +50,8 @@ const ProfileButton = props => (
     <div className="navbar-start">
     </div>
     <div className="navbar-end">
-      <Link prefetch href="/talk">
-        <a className="navbar-item">Talk</a>
+      <Link prefetch href="/tobi">
+        <a className="navbar-item">Tobi</a>
       </Link>
       <div className="navbar-item has-dropdown is-hoverable">
         <a className="navbar-link is-primary is-link">
