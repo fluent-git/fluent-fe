@@ -1,12 +1,10 @@
 import { Component, Fragment } from 'react'
 import Layout from '../components/layout'
-import Router from 'next/router'
+import CallPage from '../components/callPage'
+import QueuePage from '../components/queuePage'
+import SpeakPage from '../components/speakPage'
 import sessionManager from '../utils/session'
-import Link from 'next/link'
-import Head from '../components/head'
-import Nav from '../components/nav'
 import axios from 'axios'
-import { homedir } from 'os';
 
 const baseUrl = 'https://api.fluent.id'
 const checkUrl = baseUrl+'/queue/check/'
@@ -119,12 +117,12 @@ class Speak extends Component {
       return
     }
     
-    var user_id = this.state.userId
-    var topic = thisTopic.toLowerCase()
     this.setState({
       topic: topic,
       topicImg: topicImageSource,
     })
+    var user_id = this.state.userId
+    var topic = thisTopic.toLowerCase()
     console.log({user_id})
     console.log({topic})
   
@@ -146,10 +144,7 @@ class Speak extends Component {
       this.setState({status: queued})
 
       localPeer.on('call', async (incoming) => {
-        alert("We've found you a partner!")
-  
         callConnection = incoming
-  
         callConnection.answer(localStream)
         this.playStream(callConnection.remoteStream)
   
@@ -172,8 +167,6 @@ class Speak extends Component {
         this.setState({status: connected})
       })
     } else {
-      alert("Found a partner: "+res.data.user_id)
-  
       var otherID = res.data.user_id
       var talkID = res.data.talk_id
   
@@ -234,148 +227,6 @@ class Speak extends Component {
       </Layout>
     );
   }
-}
-
-class SpeakPage extends Component {
-  constructor(props){
-    super(props)
-  }
-  render(){
-    return(
-      <div className="columns">
-        <div className="column has-background-link is-narrow">
-          <div className="columns" style={{width: 300, padding: 30, flexDirection: 'column'}}>         
-            <TileHeader tryToQueue={this.props.tryToQueue} imgsrc='/static/asset/topic/free-purple.svg' title="Free"/>
-            <p className="title" style={{color: '#3C3C72'}}>Talk</p>
-            <p className="subtitle">
-              Talking with stranger and polish your speaking skill. 
-              What do you waiting for? Choose your topic!   
-            </p>
-          </div> 
-        </div>
-        <div className="column has-background-primary" style={{padding: 50}}>
-          <div className="columns is-mobile is-multiline"> 
-              <Tile tryToQueue={this.props.tryToQueue} imgsrc='/static/asset/topic/culture.svg' title="Culture"/>
-              <Tile tryToQueue={this.props.tryToQueue} imgsrc='/static/asset/topic/food.svg' title="Food"/>
-              <Tile tryToQueue={this.props.tryToQueue} imgsrc='/static/asset/topic/game.svg' title="Game"/>
-              <Tile tryToQueue={this.props.tryToQueue} imgsrc='/static/asset/topic/health.svg' title="Health"/>
-              <Tile tryToQueue={this.props.tryToQueue} imgsrc='/static/asset/topic/job.svg' title="Job"/>
-              <Tile tryToQueue={this.props.tryToQueue} imgsrc='/static/asset/topic/movie.svg' title="Movie"/>
-              <Tile tryToQueue={this.props.tryToQueue} imgsrc='/static/asset/topic/place.svg' title="Place"/>
-              <Tile tryToQueue={this.props.tryToQueue} imgsrc='/static/asset/topic/politic.svg' title="Politic"/>
-              <Tile tryToQueue={this.props.tryToQueue} imgsrc='/static/asset/topic/tech.svg' title="Tech"/>
-              <Tile tryToQueue={this.props.tryToQueue} imgsrc='/static/asset/topic/trend.svg' title="Trend"/>
-          </div>
-        </div>
-      </div>
-    );
-  }
-}
-
-class Tile extends Component {
-  constructor(props){
-    super(props)
-  }
-  render(){
-    return (
-      <div className="column container">
-        <Box tryToQueue={this.props.tryToQueue}  title={this.props.title} imgsrc={this.props.imgsrc}/>
-      </div>
-    );
-  }
-}
-
-class TileHeader extends Component {
-  constructor(props){
-    super(props)
-  }
-  render(){
-    return (
-      <div className="column container">
-        <Box tryToQueue={this.props.tryToQueue} title={this.props.title} imgsrc={this.props.imgsrc}/>
-      </div>
-    );
-  }
-}
-
-class Box extends Component {
-  constructor(props){
-    super(props)
-  }
-  render() {
-    return (
-      <a onClick={() => this.props.tryToQueue(this.props.title, this.props.imgsrc)}>
-        <div 
-          className="box" 
-          style={{
-            display: 'flex', 
-            flexDirection:'column', 
-            alignItems: 'center',
-            justifyContent:'space-around',
-            height: 300}}>
-          <figure className="image is-128x128">
-            <img src={this.props.imgsrc} />
-          </figure>
-          <p className="title">
-            {this.props.title}
-          </p>
-        </div>
-      </a>
-    );
-  }
-}
-
-class QueuePage extends Component {
-  render() {
-    return (
-      <div className="container" style={{display: 'flex', alignItems: 'center', flexDirection: 'column', padding: 50}}>
-        <img src='/static/asset/image/queue.svg' style={{width: 600}} />
-        <img src='/static/asset/icon/load.svg' style={{width: 64, margin: 20}} />
-        <p className="title">Please wait till match...</p>
-        <p className="subtitle">Estimated wait: 5 minutes</p>
-        <a onClick={() => this.props.cancelQueue()}>
-          <figure className="image is-64x64">
-            <img src='/static/asset/icon/cancel.svg' />
-          </figure>
-        </a>
-      </div>
-    );
-  }
-}
-
-class CallPage extends Component {
-	render() {
-		return (
-			<div style={{display: 'flex', alignItems: 'center', flexDirection: 'column', padding: 50}}>
-				<figure className="image is-128x128" style={{margin: 20}}>
-					<img src={this.props.imgsrc} />
-				</figure>
-				<p className="title">
-					Coversation Starter about {this.props.title}
-				</p>
-				<p className="subtitle">
-					<div className="box" style={{margin: 20}}>
-						<div className="content">
-							<ol type="1" style={{marginTop: 0}}>
-								<li>What are you most passionate about?</li>
-								<li>What makes you laugh out loud?</li>
-								<li>What was your favorite thing to do as a kid?</li>
-								<li>Who do you text the most?</li>
-								<li>What's your favorite TV show?</li>
-							</ol>
-						</div>
-					</div>
-				</p>
-				<p className="subtitle">Don’t be shy and talk at least 10 minutes! Then score her speaking skills.</p>
-				<p className="subtitle">2:05</p>
-        <a onClick={() => this.props.disconnectCall()}>
-          <figure className="image is-64x64">
-            <img src='/static/asset/icon/call.svg' />
-          </figure>
-        </a>
-			</div>
-		);
-	}
 }
 
 export default Speak
