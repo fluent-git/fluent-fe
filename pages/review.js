@@ -84,133 +84,103 @@ class Review extends Component {
     render() {
         return (
             <Layout loggedIn={this.state.loggedIn} username={this.state.username}>
-
-                <link type="text/css" rel="stylesheet" href="static/style.css" />
-
-                <br></br>
-
-                <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-                  <img src="static/asset/icon/girl.svg"/>
-
+              <link type="text/css" rel="stylesheet" href="static/style.css"/>
+              <br></br>
+              <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                <img src="static/asset/icon/girl.svg"/>
                   <br></br>
-
                   <form onSubmit={this.handleSubmit}>
-
-                  <div class="field is-horizontal">
-                    <div class="field-label">
-                      <label class="label" style={{width: '100px', position: 'relative', top:'12px'}}>Clarity</label>
-                    </div>
-
-                    
-                    <div class="field-body">
-                      <div class="field is-narrow">
-                        
-                      <div class="rate">
-                        <input type="radio" id="star5" name="clarity" value="5" onChange={this.handleClarity}/>
-                        <label for="star5" title="text">5 stars</label>
-                        <input type="radio" id="star4" name="clarity" value="4" onChange={this.handleClarity}/>
-                        <label for="star4" title="text">4 stars</label>
-                        <input type="radio" id="star3" name="clarity" value="3" onChange={this.handleClarity}/>
-                        <label for="star3" title="text">3 stars</label>
-                        <input type="radio" id="star2" name="clarity" value="2" onChange={this.handleClarity}/>
-                        <label for="star2" title="text">2 stars</label>
-                        <input type="radio" id="star1" name="clarity" value="1" onChange={this.handleClarity}/>
-                        <label for="star1" title="text">1 star</label>
+                    <div class="field is-horizontal">
+                      <div class="field-label">
+                        <label class="label" style={{width: '100px', position: 'relative', top:'12px'}}>Clarity</label>
                       </div>
-
+                      <div class="field-body">
+                        <div class="field is-narrow">
+                          <div class="rate">
+                            <input type="radio" id="star5" name="clarity" value="5" onChange={this.handleClarity}/>
+                            <label for="star5" title="text">5 stars</label>
+                            <input type="radio" id="star4" name="clarity" value="4" onChange={this.handleClarity}/>
+                            <label for="star4" title="text">4 stars</label>
+                            <input type="radio" id="star3" name="clarity" value="3" onChange={this.handleClarity}/>
+                            <label for="star3" title="text">3 stars</label>
+                            <input type="radio" id="star2" name="clarity" value="2" onChange={this.handleClarity}/>
+                            <label for="star2" title="text">2 stars</label>
+                            <input type="radio" id="star1" name="clarity" value="1" onChange={this.handleClarity}/>
+                            <label for="star1" title="text">1 star</label>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-
-                  <div class="field is-horizontal">
-                    <div class="field-label">
-                      <label class="label" style={{width: '100px', position: 'relative', top:'12px'}}>Pacing</label>
-                    </div>
-                    <div class="field-body">
-                      <div class="field is-narrow">
-
-                      <div class="rate">
-                        <input type="radio" id="star10" name="pacing" value="5" onChange={this.handlePacing}/>
-                        <label for="star10" title="text">5 stars</label>
-                        <input type="radio" id="star9" name="pacing" value="4" onChange={this.handlePacing}/>
-                        <label for="star9" title="text">4 stars</label>
-                        <input type="radio" id="star8" name="pacing" value="3" onChange={this.handlePacing}/>
-                        <label for="star8" title="text">3 stars</label>
-                        <input type="radio" id="star7" name="pacing" value="2" onChange={this.handlePacing}/>
-                        <label for="star7" title="text">2 stars</label>
-                        <input type="radio" id="star6" name="pacing" value="1" onChange={this.handlePacing}/>
-                        <label for="star6" title="text">1 star</label>
+                    <div class="field is-horizontal">
+                      <div class="field-label">
+                        <label class="label" style={{width: '100px', position: 'relative', top:'12px'}}>Pacing</label>
                       </div>
-
+                      <div class="field-body">
+                        <div class="field is-narrow">
+                          <div class="rate">
+                            <input type="radio" id="star10" name="pacing" value="5" onChange={this.handlePacing}/>
+                            <label for="star10" title="text">5 stars</label>
+                            <input type="radio" id="star9" name="pacing" value="4" onChange={this.handlePacing}/>
+                            <label for="star9" title="text">4 stars</label>
+                            <input type="radio" id="star8" name="pacing" value="3" onChange={this.handlePacing}/>
+                            <label for="star8" title="text">3 stars</label>
+                            <input type="radio" id="star7" name="pacing" value="2" onChange={this.handlePacing}/>
+                            <label for="star7" title="text">2 stars</label>
+                            <input type="radio" id="star6" name="pacing" value="1" onChange={this.handlePacing}/>
+                            <label for="star6" title="text">1 star</label>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-
-                  <div class="field is-horizontal">
-                    <div class="field-label">
-                      <label class="label" style={{width: '100px', position: 'relative', top:'12px'}}>Pronounciation</label>
-                    </div>
-                    <div class="field-body">
-                      <div class="field is-narrow">
-                        
-                      <div class="rate">
-                        <input type="radio" id="star15" name="pronounciation" value="5" onChange={this.handlePronounciation}/>
-                        <label for="star15" title="text">5 stars</label>
-                        <input type="radio" id="star14" name="pronounciation" value="4" onChange={this.handlePronounciation}/>
-                        <label for="star14" title="text">4 stars</label>
-                        <input type="radio" id="star13" name="pronounciation" value="3" onChange={this.handlePronounciation}/>
-                        <label for="star13" title="text">3 stars</label>
-                        <input type="radio" id="star12" name="pronounciation" value="2" onChange={this.handlePronounciation}/>
-                        <label for="star12" title="text">2 stars</label>
-                        <input type="radio" id="star11" name="pronounciation" value="1" onChange={this.handlePronounciation}/>
-                        <label for="star11" title="text">1 star</label>
+                    <div class="field is-horizontal">
+                      <div class="field-label">
+                        <label class="label" style={{width: '100px', position: 'relative', top:'12px'}}>Pronounciation</label>
                       </div>
-
+                      <div class="field-body">
+                        <div class="field is-narrow">
+                          <div class="rate">
+                            <input type="radio" id="star15" name="pronounciation" value="5" onChange={this.handlePronounciation}/>
+                            <label for="star15" title="text">5 stars</label>
+                            <input type="radio" id="star14" name="pronounciation" value="4" onChange={this.handlePronounciation}/>
+                            <label for="star14" title="text">4 stars</label>
+                            <input type="radio" id="star13" name="pronounciation" value="3" onChange={this.handlePronounciation}/>
+                            <label for="star13" title="text">3 stars</label>
+                            <input type="radio" id="star12" name="pronounciation" value="2" onChange={this.handlePronounciation}/>
+                            <label for="star12" title="text">2 stars</label>
+                            <input type="radio" id="star11" name="pronounciation" value="1" onChange={this.handlePronounciation}/>
+                            <label for="star11" title="text">1 star</label>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
-
-                  <div class="field is-horizontal">
-
+                    <div class="field is-horizontal">
                       <div class="field" style={{width: '100px'}}>
                         <div class="control" style={{maxWidth: '300px', width: '60vw'}}>
                           <textarea class="textarea" placeholder="Explain how did your partner perform" onChange={this.handleFeedback}></textarea>
                         </div>
-
-                    </div>
-                  </div>
-
-                  <div class="field is-horizontal">
-                    <div class="field-label">
-                  </div>
-                    <div class="field-body">
-                      
-                    <div class="field is-grouped">
-                        <p class="control">
-                          <a class="button is-primary">
-                            Submit
-                          </a>
-                        </p>
-                        <p class="control">
-                          <a class="button is-light">
-                            Report
-                          </a>
-                        </p>
                       </div>
-
                     </div>
-                  </div>
-
-                  <br></br>
-
+                    <div class="field is-horizontal">
+                      <div class="field-label">
+                    </div>
+                      <div class="field-body">
+                        <div class="field is-grouped">
+                          <p class="control">
+                            <button class="button is-primary">
+                              Submit
+                            </button>
+                          </p>
+                          <p class="control">
+                            <a class="button is-light">
+                              Report
+                            </a>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <br></br>
                   </form>
-                </div>
-
-
-
-
-
-
+              </div>
             </Layout>
         );
     }
