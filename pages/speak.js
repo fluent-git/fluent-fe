@@ -205,7 +205,17 @@ class Speak extends Component {
   reviewCallback(otherID,talkID){
     console.log('###### INI REVIEW CALLBACK #######')
     console.log('create review for user',otherID,', talkID',talkID)
-    this.setState({status: "Review"})
+    axios.post(endTalkUrl,
+      {
+        'talk_id': talkID
+      },
+      {
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      }
+    )
+    this.setState({statusMsg: "Review"})
   }
 
   componentDidMount(){
