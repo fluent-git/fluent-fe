@@ -3,7 +3,7 @@ import { Component } from 'react'
 class QueuePage extends Component {
 	render() {
 		return (
-			<div className="container" style={{display: 'flex', alignItems: 'center', flexDirection: 'column', padding: 50}}>
+			<div className="container" style={{display: 'flex', alignItems: 'center', flexDirection: 'column', padding: 50, textAlign: 'center'}}>
 				<img src='/static/asset/image/queue.svg' style={{width: 600}} />
 				<LoadBar />
 				<p className="title">Please wait till match...</p>
