@@ -30,7 +30,7 @@ class Speak extends Component {
           var username = sessionManager.getUsername()
           var userId = sessionManager.getUserId()
           var token = sessionManager.getToken()
-          this.state = { loggedIn: true, username: username, userId: userId, token: token,  status: notQueued, topic: "topic"  }
+          this.state = { loggedIn: true, username: username, userId: userId, token: token,  status: notQueued, topic: "topic", topicImg: "/static/asset/logo/logo.svg" }
       } else {
           var username = sessionManager.getUsername()
           var userId = sessionManager.getUserId()
@@ -109,7 +109,7 @@ class Speak extends Component {
       })
   }
     
-  async tryToQueue(this_topic){
+  async tryToQueue(thisTopic, topicImageSource){
     var isAllowed = await this.checkIfQueueIsAllowed({/* PAYLOAD HERE */})
     
     console.log({isAllowed})
@@ -120,8 +120,11 @@ class Speak extends Component {
     }
     
     var user_id = this.state.userId
-    var topic = this_topic.toLowerCase()
-    this.setState({topic: topic})
+    var topic = thisTopic.toLowerCase()
+    this.setState({
+      topic: topic,
+      topicImg: topicImageSource,
+    })
     console.log({user_id})
     console.log({topic})
   
@@ -187,6 +190,7 @@ class Speak extends Component {
     
   disconnectCall(){
     if(callConnection) callConnection.close()
+    this.setState({status: notQueued})
   }
   
   async cancelQueue(){
@@ -216,9 +220,13 @@ class Speak extends Component {
   }
 
   render() {
-    let currentRender = <SpeakPage tryToQueue={this.tryToQueue} />
-    if(this.state.status == queued) {
-      currentRender = <QueuePage />
+    let currentRender
+    if (this.state.status == notQueued) {
+      currentRender = <SpeakPage tryToQueue={this.tryToQueue} /> 
+    } else if(this.state.status == queued) {
+      currentRender = <QueuePage cancelQueue={this.cancelQueue} />
+    } else if (this.state.status == connected) {
+      currentRender = <CallPage imgsrc={this.state.topicImg} title={this.state.topic} disconnectCall={this.disconnectCall} />
     }
     return (
       <Layout loggedIn={this.state.loggedIn} username={this.state.username}>
@@ -296,7 +304,7 @@ class Box extends Component {
   }
   render() {
     return (
-      <a onClick={() => this.props.tryToQueue(this.props.title)}>
+      <a onClick={() => this.props.tryToQueue(this.props.title, this.props.imgsrc)}>
         <div 
           className="box" 
           style={{
@@ -321,12 +329,53 @@ class QueuePage extends Component {
   render() {
     return (
       <div className="container" style={{display: 'flex', alignItems: 'center', flexDirection: 'column', padding: 50}}>
-        <img src='/static/asset/image/queue.svg' style={{width: 800}} />
+        <img src='/static/asset/image/queue.svg' style={{width: 600}} />
+        <img src='/static/asset/icon/load.svg' style={{width: 64, margin: 20}} />
         <p className="title">Please wait till match...</p>
         <p className="subtitle">Estimated wait: 5 minutes</p>
+        <a onClick={() => this.props.cancelQueue()}>
+          <figure className="image is-64x64">
+            <img src='/static/asset/icon/cancel.svg' />
+          </figure>
+        </a>
       </div>
     );
   }
+}
+
+class CallPage extends Component {
+	render() {
+		return (
+			<div style={{display: 'flex', alignItems: 'center', flexDirection: 'column', padding: 50}}>
+				<figure className="image is-128x128" style={{margin: 20}}>
+					<img src={this.props.imgsrc} />
+				</figure>
+				<p className="title">
+					Coversation Starter about {this.props.title}
+				</p>
+				<p className="subtitle">
+					<div className="box" style={{margin: 20}}>
+						<div className="content">
+							<ol type="1" style={{marginTop: 0}}>
+								<li>What are you most passionate about?</li>
+								<li>What makes you laugh out loud?</li>
+								<li>What was your favorite thing to do as a kid?</li>
+								<li>Who do you text the most?</li>
+								<li>What's your favorite TV show?</li>
+							</ol>
+						</div>
+					</div>
+				</p>
+				<p className="subtitle">Don’t be shy and talk at least 10 minutes! Then score her speaking skills.</p>
+				<p className="subtitle">2:05</p>
+        <a onClick={() => this.props.disconnectCall()}>
+          <figure className="image is-64x64">
+            <img src='/static/asset/icon/call.svg' />
+          </figure>
+        </a>
+			</div>
+		);
+	}
 }
 
 export default Speak
