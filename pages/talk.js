@@ -61,7 +61,7 @@ class Talk extends React.Component{
         // Failure callback
         function error(err) {
             console.log(err)
-            alert("Audio input device error. Please refresh the website.")
+            throw("Audio input device error. Please refresh the website.")
         }
       )
       
@@ -111,7 +111,7 @@ class Talk extends React.Component{
     console.log({isAllowed})
     
     if(!isAllowed){
-      alert("Fluent is not open right now. Please come back later!")
+      console.log("Fluent is not open right now. Please come back later!")
       return
     }
   
@@ -133,11 +133,9 @@ class Talk extends React.Component{
     console.log(res.data)
   
     if(res.data.message === 'Queuing'){
-      alert("Please be patient, we are finding you a partner")
       this.setState({statusMsg: "Queued"})
 
       localPeer.on('call', async (incoming) => {
-        alert("We've found you a partner!")
   
         callConnection = incoming
   
@@ -163,7 +161,6 @@ class Talk extends React.Component{
         this.setState({statusMsg: "Connected"})
       })
     } else {
-      alert("Found a partner: "+res.data.user_id)
   
       var otherID = res.data.user_id
       var talkID = res.data.talk_id
@@ -195,7 +192,7 @@ class Talk extends React.Component{
           }
         }
       )
-    } else alert("You are not queued yet!")
+    }
     this.setState({statusMsg: "Not Queued"})
   }
   
