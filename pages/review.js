@@ -89,12 +89,18 @@ class Review extends Component {
 
                 <br></br>
 
+                <div align="middle">
+                    <img src="static/asset/icon/girl.svg"/>
+                </div>
+
                 <form onSubmit={this.handleSubmit}>
 
                 <div class="field is-horizontal">
                   <div class="field-label">
                     <label class="label">Clarity</label>
                   </div>
+
+                  
                   <div class="field-body">
                     <div class="field is-narrow">
                       
@@ -169,7 +175,7 @@ class Review extends Component {
                   </div>
                   <div class="field-body">
                     <div class="field">
-                      <div class="control">
+                      <div class="control" style={{width: '300px'}}>
                         <textarea class="textarea" placeholder="Explain how did your partner perform" onChange={this.handleFeedback}></textarea>
                       </div>
                     </div>
@@ -180,20 +186,20 @@ class Review extends Component {
                   <div class="field-label">
                 </div>
                   <div class="field-body">
-                    <div class="field">
-                      <div class="control">
-                        <button class="button is-primary">
-                          Submit Review
-                        </button>
-                      </div>
+                    
+                  <div class="field is-grouped">
+                      <p class="control">
+                        <a class="button is-primary">
+                          Submit
+                        </a>
+                      </p>
+                      <p class="control">
+                        <a class="button is-light">
+                          Report
+                        </a>
+                      </p>
                     </div>
-                    <div class="field is-grouped is-grouped-right">
-                     <p class="control">
-                       <a class="button is-light">
-                         Report
-                       </a>
-                     </p>
-                    </div>
+
                   </div>
                 </div>
 
