@@ -18,7 +18,6 @@ const notQueued = "notQueued"
 const connected = "connected"
 
 var localPeer = null
-var localStream = null
 var callConnection = null
 
 class Talk extends Component {
@@ -49,38 +48,7 @@ class Talk extends Component {
   init(){
     const script = document.createElement('script')
     script.src = 'https://cdn.jsdelivr.net/npm/peerjs@0.3.20/dist/peer.min.js'
-    script.onload = ()=>{
-      navigator.getUserMedia = (navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
-      // Get access to microphone
-      navigator.getUserMedia (
-        {video: false, audio: true},
-        
-        // Success callback
-        function success(localAudioStream) {
-            localStream = localAudioStream
-            console.log("localStream",localStream)
-        },
-        // Failure callback
-        function error(err) {
-            console.log(err)
-            alert("To continue using Fluent, allow us to access your microphone")
-            throw("Audio input device error. Please refresh the website.")
-        }
-      )
-        
-      localPeer = new Peer({
-        config: {'iceServers': [
-          { url: 'stun:165.22.105.219:65432' },
-          { url: 'turn:165.22.105.219:65432', username: 'peerjs', credential: 'h2olo2' }
-        ]}
-      });
-  
-      localPeer.on('open',async()=>{
-        console.log("localPeer",localPeer)
-        console.log(localPeer.id)
-      })
-    }
-    
+
     document.body.appendChild(script)
   }
 
@@ -117,7 +85,19 @@ class Talk extends Component {
       console.log("Fluent is not open right now. Please come back later!")
       return
     }
-    
+     
+    localPeer = new Peer({
+      config: {'iceServers': [
+        { url: 'stun:165.22.105.219:65432' },
+        { url: 'turn:165.22.105.219:65432', username: 'peerjs', credential: 'h2olo2' }
+      ]}
+    });
+
+    localPeer.on('open',async()=>{
+      console.log("localPeer",localPeer)
+      console.log(localPeer.id)
+    })
+
     this.setState({
       topic: topic,
       topicImg: topicImageSource,
@@ -126,7 +106,15 @@ class Talk extends Component {
     var topic = thisTopic.toLowerCase()
     console.log("user_id",user_id)
     console.log("topic",topic)
-  
+    
+    this.setState({status: queued})
+
+    navigator.mediaDevices.getUserMedia = (navigator.mediaDevices.getUserMedia || navigator.mediaDevices.webkitGetUserMedia || navigator.mediaDevices.mozGetUserMedia || navigator.mediaDevices.msGetUserMedia);
+    // Get access to microphone
+    const localStream = await navigator.mediaDevices.getUserMedia ({video: false, audio: true})
+    console.log(localStream)
+    await new Promise(resolve => setTimeout(resolve, 2000));
+
     var res = await axios.post(queueUrl,
       {
         "topic": topic,
@@ -142,7 +130,6 @@ class Talk extends Component {
     console.log(res.data)
   
     if(res.data.message === 'Queuing'){
-      this.setState({status: queued})
 
       localPeer.on('call', async (incoming) => {
         callConnection = incoming
@@ -163,7 +150,7 @@ class Talk extends Component {
   
         var otherID = res.data.user_id
         var talkID = res.data.talk_id
-        
+
         this.playStream(callConnection.remoteStream)
         callConnection.on('close',()=>this.reviewCallback(otherID,talkID))
         this.setState({status: connected})
