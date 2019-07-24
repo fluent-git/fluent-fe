@@ -96,78 +96,78 @@ class Talk extends Component {
     localPeer.on('open',async()=>{
       console.log("localPeer",localPeer)
       console.log(localPeer.id)
-    })
 
-    this.setState({
-      topic: topic,
-      topicImg: topicImageSource,
-    })
-    var user_id = this.state.userId
-    var topic = thisTopic.toLowerCase()
-    console.log("user_id",user_id)
-    console.log("topic",topic)
-    
-    this.setState({status: queued})
+      this.setState({
+        topic: topic,
+        topicImg: topicImageSource,
+      })
+      var user_id = this.state.userId
+      var topic = thisTopic.toLowerCase()
+      console.log("user_id",user_id)
+      console.log("topic",topic)
+      
+      this.setState({status: queued})
 
-    navigator.mediaDevices.getUserMedia = (navigator.mediaDevices.getUserMedia || navigator.mediaDevices.webkitGetUserMedia || navigator.mediaDevices.mozGetUserMedia || navigator.mediaDevices.msGetUserMedia);
-    // Get access to microphone
-    const localStream = await navigator.mediaDevices.getUserMedia ({video: false, audio: true})
-    console.log(localStream)
-    await new Promise(resolve => setTimeout(resolve, 2000));
+      navigator.mediaDevices.getUserMedia = (navigator.mediaDevices.getUserMedia || navigator.mediaDevices.webkitGetUserMedia || navigator.mediaDevices.mozGetUserMedia || navigator.mediaDevices.msGetUserMedia);
+      // Get access to microphone
+      const localStream = await navigator.mediaDevices.getUserMedia ({video: false, audio: true})
+      console.log(localStream)
+      await new Promise(resolve => setTimeout(resolve, 2000));
 
-    var res = await axios.post(queueUrl,
-      {
-        "topic": topic,
-        "user_id": user_id,
-        "peerjs_id": localPeer.id
-      },
-      {
-        "headers": {
-          "Content-Type": "application/json"
-        }
-      }
-    )
-    console.log(res.data)
-  
-    if(res.data.message === 'Queuing'){
-
-      localPeer.on('call', async (incoming) => {
-        callConnection = incoming
-        callConnection.answer(localStream)
-        console.log("queuer",{callConnection})
-  
-        var res = await axios.post(startTalkUrl,
-          {
-            "user_id":user_id
-          },
-          {
-            "headers": {
-              "Content-Type": "application/json"
-            }
+      var res = await axios.post(queueUrl,
+        {
+          "topic": topic,
+          "user_id": user_id,
+          "peerjs_id": localPeer.id
+        },
+        {
+          "headers": {
+            "Content-Type": "application/json"
           }
-        )
-        console.log(res.data)
-  
+        }
+      )
+      console.log(res.data)
+    
+      if(res.data.message === 'Queuing'){
+
+        localPeer.on('call', async (incoming) => {
+          callConnection = incoming
+          callConnection.answer(localStream)
+          console.log("queuer",{callConnection})
+    
+          var res = await axios.post(startTalkUrl,
+            {
+              "user_id":user_id
+            },
+            {
+              "headers": {
+                "Content-Type": "application/json"
+              }
+            }
+          )
+          console.log(res.data)
+    
+          var otherID = res.data.user_id
+          var talkID = res.data.talk_id
+
+          this.playStream(callConnection.remoteStream)
+          callConnection.on('close',()=>this.reviewCallback(otherID,talkID))
+          this.setState({status: connected})
+        })
+      } else {
         var otherID = res.data.user_id
         var talkID = res.data.talk_id
-
-        this.playStream(callConnection.remoteStream)
+    
+        callConnection = localPeer.call(res.data.peerjs_id,localStream)
+        console.log("caller",{callConnection})
+        callConnection.on('stream', (stream)=>{
+          console.log(stream)
+          this.playStream(stream)
+        })
         callConnection.on('close',()=>this.reviewCallback(otherID,talkID))
         this.setState({status: connected})
-      })
-    } else {
-      var otherID = res.data.user_id
-      var talkID = res.data.talk_id
-  
-      callConnection = localPeer.call(res.data.peerjs_id,localStream)
-      console.log("caller",{callConnection})
-      callConnection.on('stream', (stream)=>{
-        console.log(stream)
-        this.playStream(stream)
-      })
-      callConnection.on('close',()=>this.reviewCallback(otherID,talkID))
-      this.setState({status: connected})
-    }
+      }
+    })
   }
     
   disconnectCall(){
