@@ -38,7 +38,8 @@ class Register extends Component {
       const email = this.state.email
       const password = this.state.password
       console.log({email,username,password})
-      const url = `https://api.fluent.id/users/`
+      const registerUrl = `https://api.fluent.id/users/`
+      const loginUrl = `https://api.fluent.id/login/`
       this.setState({ loading: "is-loading" })
   
       const obj = {
@@ -48,12 +49,22 @@ class Register extends Component {
       }
       console.log(obj)
       try {
-        const response = await Axios.post(url, obj)
-        // TODO: Implement real token from backend once implemented in backend
-        const token = "abc"   // Dummy token
-        const username = response.data.username
-        const userId = response.data.user.id
-        sessionManager.signIn(username, userId, token)
+        var response = await Axios.post(registerUrl, obj) //register
+        
+        response = await Axios.post(loginUrl, {
+          "username": username,
+          "password": password
+        })
+        if (response.data.message == 'OK') {
+          const token = response.data.token
+          const userId = response.data.user.id
+          sessionManager.signIn(username, userId, token)
+        } else {
+          console.log('Login failed.')
+          let error = new Error(response.data.message)
+          error.response = response
+          throw error
+        }
       } catch (error) {
         console.error(
           'You have an error in your code or there are Network issues.',
