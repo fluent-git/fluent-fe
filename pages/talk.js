@@ -58,7 +58,7 @@ class Talk extends Component {
         // Success callback
         function success(localAudioStream) {
             localStream = localAudioStream
-            console.log({localStream})
+            console.log("localStream",localStream)
         },
         // Failure callback
         function error(err) {
@@ -76,7 +76,7 @@ class Talk extends Component {
       });
   
       localPeer.on('open',async()=>{
-        console.log({localPeer})
+        console.log("localPeer",localPeer)
         console.log(localPeer.id)
       })
     }
@@ -111,7 +111,7 @@ class Talk extends Component {
   async tryToQueue(thisTopic, topicImageSource){
     var isAllowed = await this.checkIfQueueIsAllowed({/* PAYLOAD HERE */})
     
-    console.log({isAllowed})
+    console.log("isAllowed",isAllowed)
     
     if(!isAllowed){
       console.log("Fluent is not open right now. Please come back later!")
@@ -124,8 +124,8 @@ class Talk extends Component {
     })
     var user_id = this.state.userId
     var topic = thisTopic.toLowerCase()
-    console.log({user_id})
-    console.log({topic})
+    console.log("user_id",user_id)
+    console.log("topic",topic)
   
     var res = await axios.post(queueUrl,
       {
@@ -147,7 +147,7 @@ class Talk extends Component {
       localPeer.on('call', async (incoming) => {
         callConnection = incoming
         callConnection.answer(localStream)
-        this.playStream(callConnection.remoteStream)
+        console.log("queuer",{callConnection})
   
         var res = await axios.post(startTalkUrl,
           {
@@ -163,7 +163,8 @@ class Talk extends Component {
   
         var otherID = res.data.user_id
         var talkID = res.data.talk_id
-  
+        
+        this.playStream(callConnection.remoteStream)
         callConnection.on('close',()=>this.reviewCallback(otherID,talkID))
         this.setState({status: connected})
       })
@@ -172,7 +173,7 @@ class Talk extends Component {
       var talkID = res.data.talk_id
   
       callConnection = localPeer.call(res.data.peerjs_id,localStream)
-      console.log(callConnection)
+      console.log("caller",{callConnection})
       callConnection.on('stream', (stream)=>{
         console.log(stream)
         this.playStream(stream)

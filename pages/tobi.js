@@ -56,7 +56,7 @@ class Tobi extends React.Component{
         // Success callback
         function success(localAudioStream) {
             localStream = localAudioStream
-            console.log({localStream})
+            console.log("localStream",localStream)
         },
         // Failure callback
         function error(err) {
@@ -73,7 +73,7 @@ class Tobi extends React.Component{
       });
   
       localPeer.on('open',async()=>{
-        console.log({localPeer})
+        console.log("localPeer",localPeer)
         console.log(localPeer.id)
       })
     }
@@ -108,7 +108,7 @@ class Tobi extends React.Component{
   async tryToQueue(){
     var isAllowed = await this.checkIfQueueIsAllowed({/* PAYLOAD HERE */})
     
-    console.log({isAllowed})
+    console.log("isAllowed",isAllowed)
     
     if(!isAllowed){
       alert("Fluent is not open right now. Please come back later!")
@@ -116,7 +116,7 @@ class Tobi extends React.Component{
     }
   
     var user_id = this.state.userId
-    console.log({user_id})
+    console.log("user_id",user_id)
   
     var res = await axios.post(queueUrl,
       {
