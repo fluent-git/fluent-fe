@@ -50,6 +50,9 @@ const ProfileButton = props => (
     <div className="navbar-start">
     </div>
     <div className="navbar-end">
+      <Link prefetch href="/contact">
+        <a className="navbar-item">Contact Us</a>
+      </Link>
       <Link prefetch href="/tobi">
         <a className="navbar-item">Tobi</a>
       </Link>
@@ -79,6 +82,9 @@ const LoginButton = props => (
     <div className="navbar-end">
       <Link prefetch href="/">
         <a className="navbar-item">Home</a>
+      </Link>
+      <Link prefetch href="/contact">
+        <a className="navbar-item">Contact Us</a>
       </Link>
       <div className="navbar-item">
         <div className="buttons">
