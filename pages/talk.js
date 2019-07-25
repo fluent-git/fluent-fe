@@ -41,6 +41,7 @@ class Talk extends Component {
       this.cancelQueue = this.cancelQueue.bind(this)
       this.disconnectCall = this.disconnectCall.bind(this)
       this.reviewCallback = this.reviewCallback.bind(this)
+      this.destroyPeerAndStream = this.destroyPeerAndStream.bind(this)
       this.checkIfQueueIsAllowed = this.checkIfQueueIsAllowed.bind(this)
   
   }
@@ -76,6 +77,11 @@ class Talk extends Component {
       })
   }
     
+  destroyPeerAndStream(peer,stream){
+    peer.destroy()
+    stream.getTracks().forEach(track=>track.stop())
+  }
+
   async tryToQueue(thisTopic, topicImageSource){
     var isAllowed = await this.checkIfQueueIsAllowed({/* PAYLOAD HERE */})
     
@@ -110,7 +116,7 @@ class Talk extends Component {
 
       navigator.mediaDevices.getUserMedia = (navigator.mediaDevices.getUserMedia || navigator.mediaDevices.webkitGetUserMedia || navigator.mediaDevices.mozGetUserMedia || navigator.mediaDevices.msGetUserMedia);
       // Get access to microphone
-      const localStream = await navigator.mediaDevices.getUserMedia ({video: false, audio: true})
+      var localStream = await navigator.mediaDevices.getUserMedia ({video: false, audio: true})
       console.log(localStream)
       await new Promise(resolve => setTimeout(resolve, 2000));
 
@@ -151,7 +157,10 @@ class Talk extends Component {
           var talkID = res.data.talk_id
 
           this.playStream(callConnection.remoteStream)
-          callConnection.on('close',()=>this.reviewCallback(otherID,talkID))
+          callConnection.on('close',()=>{
+            this.destroyPeerAndStream(localPeer,localStream)
+            this.reviewCallback(otherID,talkID)
+          })
           this.setState({status: connected})
         })
       } else {
@@ -164,14 +173,19 @@ class Talk extends Component {
           console.log(stream)
           this.playStream(stream)
         })
-        callConnection.on('close',()=>this.reviewCallback(otherID,talkID))
+        callConnection.on('close',()=>{
+          this.destroyPeerAndStream(localPeer,localStream)
+          this.reviewCallback(otherID,talkID)
+        })
         this.setState({status: connected})
       }
     })
   }
     
   disconnectCall(){
-    if(callConnection) callConnection.close()
+    if(callConnection){
+      callConnection.close()
+    }
     this.setState({status: notQueued})
   }
   
