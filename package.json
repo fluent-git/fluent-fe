@@ -16,6 +16,7 @@
     "next-cookies": "^1.0.4",
     "node-sass": "^4.12.0",
     "react": "16.8.6",
-    "react-dom": "16.8.6"
+    "react-dom": "16.8.6",
+    "react-ga": "^2.6.0"
   }
 }

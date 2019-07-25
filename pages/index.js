@@ -3,9 +3,16 @@ import Layout from '../components/layout'
 import cookie from 'js-cookie'
 import sessionManager from '../utils/session'
 import Router from 'next/router'
+import { initGA, logPageView } from '../utils/analytics'
 
 class Home extends Component {
-
+  componentDidMount () {
+    if (!window.GA_INITIALIZED) {
+      initGA()
+      window.GA_INITIALIZED = true
+    }
+    logPageView()
+  }
   constructor(props) {
     super(props)
     if (sessionManager.isLoggedIn()) {
