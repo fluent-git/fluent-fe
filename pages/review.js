@@ -23,6 +23,7 @@ class Review extends Component {
         this.handlePacing = this.handlePacing.bind(this)
         this.handlePronounciation = this.handlePronounciation.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
+        this.handleReport = this.handleReport.bind(this)
         
     }
 
@@ -40,6 +41,10 @@ class Review extends Component {
 
     handlePronounciation (event) {
       this.setState({pronounciation: event.target.value})
+    }
+
+    handleReport (event) {
+      Router.push('/report')
     }
 
     async handleSubmit (event) {
@@ -89,6 +94,7 @@ class Review extends Component {
               <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                 <img src="static/asset/icon/user.svg"/>
                   <br></br>
+                  <h1 className="title">Please Review Your Conversation</h1>
                   <form onSubmit={this.handleSubmit}>
                     <div class="field is-horizontal">
                       <div class="field-label">
@@ -159,9 +165,7 @@ class Review extends Component {
                             </button>
                           </p>
                           <p class="control">
-                            <a class="button is-light">
-                              Report
-                            </a>
+                            <a class="button is-light" onClick={this.handleReport}>Report</a>
                           </p>
                         </div>
                       </div>
