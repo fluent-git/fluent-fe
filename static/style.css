@@ -96,6 +96,10 @@
       transform: translate(19px, 0);
     }
 }
-.yay {
-    color: gray;
+
+/* Talk Page */
+
+.talk-page .box:hover {
+    box-shadow: 0 2px 3px rgba(233, 35, 35, 0.1), 0 0 0 1px rgba(182, 0, 0, 0.1);
+    background-color: #F4E3E1;
 }

@@ -6,7 +6,8 @@ class TalkPage extends Component {
 	}
 	render(){
 		return(
-			<div className="columns">
+			<div className="columns talk-page">
+				<link type="text/css" rel="stylesheet" href="static/style.css"/>
 				<div className="column has-background-grey-light is-narrow is-hidden-mobile">
 					<div className="columns" style={{width: 300, padding: 30, flexDirection: 'column'}}>         
 						<TileHeader tryToQueue={this.props.tryToQueue} imgsrc='/static/asset/topic/free-purple.svg' title="Free Talk"/>
