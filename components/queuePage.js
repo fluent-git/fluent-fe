@@ -4,8 +4,14 @@ class QueuePage extends Component {
 	render() {
 		return (
 			<div className="container" style={{display: 'flex', alignItems: 'center', flexDirection: 'column', padding: 50, textAlign: 'center'}}>
+				<link type="text/css" rel="stylesheet" href="static/style.css"/>
 				<img src='/static/asset/image/queue.svg' style={{width: 450}} />
-				<LoadBar />
+				<div className="lds-ellipsis">
+					<div className="one" style={{background: 'rgba(106, 104, 250, 0.9)'}}></div>
+					<div className="two" style={{background: 'rgba(106, 104, 250, 0.5)'}}></div>
+					<div className="three" style={{background: 'rgba(106, 104, 250, 0.25)'}}></div>
+					<div className="four" style={{background: 'rgba(106, 104, 250, 0.5)'}}></div>
+				</div>
 				<p className="title">Please wait till match...</p>
 				<TimerCountDown />
 				<a onClick={() => this.props.cancelQueue()}>
@@ -14,44 +20,6 @@ class QueuePage extends Component {
 					</figure>
 				</a>
 			</div>
-		);
-	}
-}
-
-const imgsource = '/static/asset/icon/load-'
-const imgext = '.svg'
-class LoadBar extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			count: 1,
-			imgsrc: '/static/asset/icon/load-1.svg',
-		}
-		this.intervalHandle;
-		this.changePicture = this.changePicture.bind(this);
-		this.startAnimation = this.startAnimation.bind(this);
-	}
-
-	changePicture() {
-		var count = (this.state.count % 3) + 1;
-		var imgsrc = imgsource + count + imgext;
-		this.setState({
-			count: count,
-			imgsrc: imgsrc,
-		})
-	}
-
-	startAnimation() {
-		this.intervalHandle = setInterval(this.changePicture, 220);
-	}
-
-	componentDidMount() {
-		this.startAnimation();
-	}
-
-	render() {
-		return (
-			<img src={this.state.imgsrc} style={{width: 64, margin: 20}} />
 		);
 	}
 }
