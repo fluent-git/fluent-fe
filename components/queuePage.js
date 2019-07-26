@@ -28,8 +28,8 @@ class TimerCountDown extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			seconds: '00',
-			minutes: '05'
+			seconds: '--',
+			minutes: '--'
 		}
 		this.secondsRemaining;
 		this.intervalHandle;
@@ -75,11 +75,33 @@ class TimerCountDown extends Component {
 	
 	startCountDown(){
 		this.intervalHandle = setInterval(this.tick, 1000);
-		let time = this.state.minutes;
-		this.secondsRemaining = time*60;
 	}
 
-	componentDidMount(){
+	componentWillMount(){
+		let time = Math.floor(Math.random() * 300) + 180; 
+		var min = Math.floor(time / 60);
+		var sec = time - (min*60);
+
+		if(sec < 10) {
+			this.setState({
+				seconds: "0" + sec,
+			})
+		} else {
+			this.setState({
+				seconds: sec,
+			})
+		}
+		
+		if(min<10) {
+			this.setState({
+				minutes: "0" + min,
+			})
+		} else {
+			this.setState({
+				minutes: min,
+			})
+		}
+		this.secondsRemaining = time;
 		this.startCountDown();
 	}
 
