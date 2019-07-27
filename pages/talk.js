@@ -3,20 +3,14 @@ import Layout from '../components/layout'
 import CallPage from '../components/callPage'
 import QueuePage from '../components/queuePage'
 import TalkPage from '../components/talkPage'
+import Modal from '../components/modal'
 import sessionManager from '../utils/session'
 import Router from 'next/router'
 import axios from 'axios'
-
-const baseUrl = 'https://api.fluent.id'
-const checkUrl = baseUrl+'/queue/check/'
-const queueUrl = baseUrl+'/queue/start/'
-const cancelUrl = baseUrl+'/queue/cancel/'
-const startTalkUrl = baseUrl+'/talk/start/'
-const endTalkUrl = baseUrl+'/talk/end/'
-
-const queued = "queued"
-const notQueued = "notQueued"
-const connected = "connected"
+import {
+  baseUrl, checkUrl, queueUrl, cancelUrl, startTalkUrl, endTalkUrl, 
+  queued, notQueued, connected
+} from '../utils/constants'
 
 var localPeer = null
 var callConnection = null
@@ -29,12 +23,30 @@ class Talk extends Component {
           var username = sessionManager.getUsername()
           var userId = sessionManager.getUserId()
           var token = sessionManager.getToken()
-          this.state = { loggedIn: true, username: username, userId: userId, token: token,  status: notQueued, topic: "topic", topicImg: "/static/asset/logo/logo.svg" }
+          this.state = { 
+            loggedIn: true, 
+            username: username, 
+            userId: userId, 
+            token: token,  
+            status: notQueued, 
+            topic: "topic", 
+            topicImg: "/static/asset/logo/logo.svg", 
+            modal: false, 
+            modalContent: "",
+          }
       } else {
           var username = sessionManager.getUsername()
           var userId = sessionManager.getUserId()
           var token = sessionManager.getToken()
-          this.state = { loggedIn: false, username: "", userId: 0, token: "", status: notQueued }
+          this.state = { 
+            loggedIn: false, 
+            username: "", 
+            userId: 0, 
+            token: "", 
+            status: notQueued, 
+            modal: false,
+            modalContent: "",
+          }
       }
 
       this.init = this.init.bind(this)
@@ -46,7 +58,7 @@ class Talk extends Component {
       this.reviewCallback = this.reviewCallback.bind(this)
       this.destroyPeerAndStream = this.destroyPeerAndStream.bind(this)
       this.getQueueCheckMessage = this.getQueueCheckMessage.bind(this)
-  
+      this.onClose = this.onClose.bind(this)
   }
 
   init(){
@@ -72,7 +84,11 @@ class Talk extends Component {
     return axios.post(checkUrl, params)
       .then((res)=>
         {
-          return res.data.message;
+          return {
+            msg:res.data.message,
+            start:res.data.start,
+            end:res.data.end
+          };
         }
       )
       .catch((err)=>{
@@ -87,17 +103,25 @@ class Talk extends Component {
   }
 
   async tryToQueue(thisTopic, topicImageSource){
-    var queueCheckResponse = await this.getQueueCheckMessage({/* PAYLOAD HERE */})
+    var topic = thisTopic.toLowerCase()
+    var queueCheckResponse = await this.getQueueCheckMessage({"topic": topic})
     
     console.log("queue check response",queueCheckResponse)
     
-    if(queueCheckResponse === "ERROR_TIME"){
-      console.log("Fluent is not open right now. Please come back later!")
+    if(queueCheckResponse.msg === "ERR_TIME"){
+      let modalContent = "Sorry, we are not open right now. Please come back at " + queueCheckResponse.start + ".00 - " + queueCheckResponse.end + ".00 WIB"
+      this.setState({
+        modal: true,
+        modalContent: modalContent,
+      })
       return
     }
 
-    if(queueCheckResponse === "ERROR_TOPIC"){
-      console.log("This topic is not open yet. Please try another topic!")
+    if(queueCheckResponse.msg === "ERR_TOPIC") {
+      this.setState({
+        modal: true,
+        modalContent: "This topic is not open yet. Please try another topic!",
+      })
       return
     }
      
@@ -117,7 +141,6 @@ class Talk extends Component {
         topicImg: topicImageSource,
       })
       var user_id = this.state.userId
-      var topic = thisTopic.toLowerCase()
       console.log("user_id",user_id)
       console.log("topic",topic)
       
@@ -231,23 +254,30 @@ class Talk extends Component {
     )
     Router.push('/review')
   }
+  onClose() {
+    this.setState({modal: false})
+  }
 
-  componentDidMount(){
+  componentDidMount() {
     this.init()
   }
 
   render() {
-    let currentRender
+    let currentRender, currentModal
     if (this.state.status == notQueued) {
       currentRender = <TalkPage tryToQueue={this.tryToQueue} /> 
     } else if(this.state.status == queued) {
       currentRender = <QueuePage cancelQueue={this.cancelQueue} />
     } else if (this.state.status == connected) {
       currentRender = <CallPage imgsrc={this.state.topicImg} title={this.state.topic} disconnectCall={this.disconnectCall} />
+    } 
+    if (this.state.modal) {
+      currentModal = <Modal content={this.state.modalContent} onClose={this.onClose}/>
     }
     return (
       <Layout loggedIn={this.state.loggedIn} username={this.state.username}>
         <div id="talk">
+          {currentModal}
           {currentRender}
         </div>
       </Layout>
