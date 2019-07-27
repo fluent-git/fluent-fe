@@ -4,8 +4,14 @@ class QueuePage extends Component {
 	render() {
 		return (
 			<div className="container" style={{display: 'flex', alignItems: 'center', flexDirection: 'column', padding: 50, textAlign: 'center'}}>
+				<link type="text/css" rel="stylesheet" href="static/style.css"/>
 				<img src='/static/asset/image/queue.svg' style={{width: 450}} />
-				<LoadBar />
+				<div className="lds-ellipsis">
+					<div className="one" style={{background: 'rgba(106, 104, 250, 0.9)'}}></div>
+					<div className="two" style={{background: 'rgba(106, 104, 250, 0.5)'}}></div>
+					<div className="three" style={{background: 'rgba(106, 104, 250, 0.25)'}}></div>
+					<div className="four" style={{background: 'rgba(106, 104, 250, 0.5)'}}></div>
+				</div>
 				<p className="title">Please wait till match...</p>
 				<TimerCountDown />
 				<a onClick={() => this.props.cancelQueue()}>
@@ -18,50 +24,12 @@ class QueuePage extends Component {
 	}
 }
 
-const imgsource = '/static/asset/icon/load-'
-const imgext = '.svg'
-class LoadBar extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			count: 1,
-			imgsrc: '/static/asset/icon/load-1.svg',
-		}
-		this.intervalHandle;
-		this.changePicture = this.changePicture.bind(this);
-		this.startAnimation = this.startAnimation.bind(this);
-	}
-
-	changePicture() {
-		var count = (this.state.count % 3) + 1;
-		var imgsrc = imgsource + count + imgext;
-		this.setState({
-			count: count,
-			imgsrc: imgsrc,
-		})
-	}
-
-	startAnimation() {
-		this.intervalHandle = setInterval(this.changePicture, 220);
-	}
-
-	componentDidMount() {
-		this.startAnimation();
-	}
-
-	render() {
-		return (
-			<img src={this.state.imgsrc} style={{width: 64, margin: 20}} />
-		);
-	}
-}
-
 class TimerCountDown extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			seconds: '00',
-			minutes: '05'
+			seconds: '--',
+			minutes: '--'
 		}
 		this.secondsRemaining;
 		this.intervalHandle;
@@ -107,11 +75,33 @@ class TimerCountDown extends Component {
 	
 	startCountDown(){
 		this.intervalHandle = setInterval(this.tick, 1000);
-		let time = this.state.minutes;
-		this.secondsRemaining = time*60;
 	}
 
-	componentDidMount(){
+	componentWillMount(){
+		let time = Math.floor(Math.random() * 300) + 180; 
+		var min = Math.floor(time / 60);
+		var sec = time - (min*60);
+
+		if(sec < 10) {
+			this.setState({
+				seconds: "0" + sec,
+			})
+		} else {
+			this.setState({
+				seconds: sec,
+			})
+		}
+		
+		if(min<10) {
+			this.setState({
+				minutes: "0" + min,
+			})
+		} else {
+			this.setState({
+				minutes: min,
+			})
+		}
+		this.secondsRemaining = time;
 		this.startCountDown();
 	}
 
