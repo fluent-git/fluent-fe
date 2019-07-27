@@ -6,17 +6,10 @@ import TalkPage from '../components/talkPage'
 import sessionManager from '../utils/session'
 import Router from 'next/router'
 import axios from 'axios'
-
-const baseUrl = 'https://api.fluent.id'
-const checkUrl = baseUrl+'/queue/check/'
-const queueUrl = baseUrl+'/queue/start/'
-const cancelUrl = baseUrl+'/queue/cancel/'
-const startTalkUrl = baseUrl+'/talk/start/'
-const endTalkUrl = baseUrl+'/talk/end/'
-
-const queued = "queued"
-const notQueued = "notQueued"
-const connected = "connected"
+import {
+  baseUrl, checkUrl, queueUrl, cancelUrl, startTalkUrl, endTalkUrl, 
+  queued, notQueued, connected, errorTime, errorTopic
+} from '../utils/constants'
 
 var localPeer = null
 var callConnection = null
