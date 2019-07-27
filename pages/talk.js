@@ -60,15 +60,11 @@ class Talk extends Component {
     document.body.appendChild(audio)
   }
     
-  async checkIfQueueIsAllowed(params){
+  async getQueueCheckMessage(params){
     return axios.post(checkUrl, params)
       .then((res)=>
         {
-          if(res.data.message === 'OK'){
-            return true
-          } else {
-            return false
-          }
+          return res.data.message;
         }
       )
       .catch((err)=>{
@@ -83,12 +79,17 @@ class Talk extends Component {
   }
 
   async tryToQueue(thisTopic, topicImageSource){
-    var isAllowed = await this.checkIfQueueIsAllowed({/* PAYLOAD HERE */})
+    var queueCheckResponse = await this.getQueueCheckMessage({/* PAYLOAD HERE */})
     
-    console.log("isAllowed",isAllowed)
+    console.log("queue check response",queueCheckResponse)
     
-    if(!isAllowed){
+    if(queueCheckResponse === "ERROR_TIME"){
       console.log("Fluent is not open right now. Please come back later!")
+      return
+    }
+
+    if(queueCheckResponse === "ERROR_TOPIC"){
+      console.log("This topic is not open yet. Please try another topic!")
       return
     }
      
