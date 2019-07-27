@@ -37,7 +37,7 @@ const Layout = props => (
       </nav>
     </header>
     {props.children}
-    <footer className="footer">
+    <footer className="footer is-hidden-mobile">
       <div className="content has-text-centered">
         <span>Copyright 2019 Fluent</span>
       </div>

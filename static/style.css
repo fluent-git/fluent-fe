@@ -96,6 +96,16 @@
       transform: translate(19px, 0);
     }
 }
+@media only screen and (max-width: 768px) {
+    .queue-page {
+        height: 90vh;
+    }
+}
+@media only screen and (max-height: 688px) {
+    .queue-page .title {
+        margin-top: 2em;
+    }
+}
 
 /* Talk Page */
 .talk-page .box:hover {
@@ -153,12 +163,12 @@
     .content-wrapper {
         padding: 25px;
     }
-    .talk-page .title {
+    #talk .title {
         font-size: 1.7em;
     }
 }
 @media only screen and (max-width: 400px) {
-    .talk-page .title {
+    #talk .title {
         font-size: 1.6em;
     }
     .talk-page .box {

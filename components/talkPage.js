@@ -6,7 +6,7 @@ class TalkPage extends Component {
 	}
 	render(){
 		return(
-			<div className="columns talk-page">
+			<div className="columns talk-page" style={{margin: 0}}>
 				<link type="text/css" rel="stylesheet" href="static/style.css"/>
 				<div className="column has-background-grey-light is-narrow is-hidden-mobile">
 					<div className="columns header-wrapper" style={{flexDirection: 'column'}}>         
