@@ -24,6 +24,24 @@ var SessionManager = (function() {
         }
     }
 
+    var startReview = function(otherId, talkId){
+        cookie.set('otherId',otherId)
+        cookie.set('talkId',talkId)
+    }
+
+    var endReview = function(){
+        cookie.remove('otherId')
+        cookie.remove('talkId')
+    }
+
+    var getOtherId = function(){
+        return cookie.get('otherId')
+    }
+
+    var getTalkId = function(){
+        return cookie.get('talkId')
+    }
+
     var signIn = function(username, userId, token) {
         cookie.set('username', username)
         cookie.set('userId',userId)
@@ -43,6 +61,10 @@ var SessionManager = (function() {
         getUsername: getUsername,
         getUserId: getUserId,
         getToken: getToken,
+        startReview: startReview,
+        endReview: endReview,
+        getOtherId: getOtherId,
+        getTalkId: getTalkId,
         signIn: signIn,
         signOut: signOut
     }

@@ -4,6 +4,7 @@ import CallPage from '../components/callPage'
 import QueuePage from '../components/queuePage'
 import TalkPage from '../components/talkPage'
 import sessionManager from '../utils/session'
+import Router from 'next/router'
 import axios from 'axios'
 
 const baseUrl = 'https://api.fluent.id'
@@ -42,7 +43,7 @@ class Talk extends Component {
       this.disconnectCall = this.disconnectCall.bind(this)
       this.reviewCallback = this.reviewCallback.bind(this)
       this.destroyPeerAndStream = this.destroyPeerAndStream.bind(this)
-      this.checkIfQueueIsAllowed = this.checkIfQueueIsAllowed.bind(this)
+      this.getQueueCheckMessage = this.getQueueCheckMessage.bind(this)
   
   }
 
@@ -154,19 +155,19 @@ class Talk extends Component {
           )
           console.log(res.data)
     
-          var otherID = res.data.user_id
-          var talkID = res.data.talk_id
+          var otherId = res.data.user_id
+          var talkId = res.data.talk_id
 
           this.playStream(callConnection.remoteStream)
           callConnection.on('close',()=>{
             this.destroyPeerAndStream(localPeer,localStream)
-            this.reviewCallback(otherID,talkID)
+            this.reviewCallback(otherId,talkId)
           })
           this.setState({status: connected})
         })
       } else {
-        var otherID = res.data.user_id
-        var talkID = res.data.talk_id
+        var otherId = res.data.user_id
+        var talkId = res.data.talk_id
     
         callConnection = localPeer.call(res.data.peerjs_id,localStream)
         console.log("caller",{callConnection})
@@ -176,7 +177,7 @@ class Talk extends Component {
         })
         callConnection.on('close',()=>{
           this.destroyPeerAndStream(localPeer,localStream)
-          this.reviewCallback(otherID,talkID)
+          this.reviewCallback(otherId,talkId)
         })
         this.setState({status: connected})
       }
@@ -206,12 +207,13 @@ class Talk extends Component {
     this.setState({status: notQueued})
   }
     
-  reviewCallback(otherID,talkID){
+  reviewCallback(otherId,talkId){
     console.log('###### INI REVIEW CALLBACK #######')
-    console.log('create review for user',otherID,', talkID',talkID)
+    console.log('create review for user',otherId,', talkId',talkId)
+    sessionManager.startReview(otherId,talkId)
     axios.post(endTalkUrl,
       {
-        'talk_id': talkID
+        'talk_id': talkId
       },
       {
         "headers": {
@@ -219,7 +221,7 @@ class Talk extends Component {
         }
       }
     )
-    this.setState({status: "Review"})
+    Router.push('/review')
   }
 
   componentDidMount(){

@@ -156,17 +156,17 @@ class Tobi extends React.Component{
         )
         console.log(res.data)
   
-        var otherID = res.data.user_id
-        var talkID = res.data.talk_id
+        var otherId = res.data.user_id
+        var talkId = res.data.talk_id
   
-        callConnection.on('close',()=>this.reviewCallback(otherID,talkID))
+        callConnection.on('close',()=>this.reviewCallback(otherId,talkId))
         this.setState({statusMsg: "Connected"})
       })
     } else {
       alert("Found a partner: "+res.data.user_id)
   
-      var otherID = res.data.user_id
-      var talkID = res.data.talk_id
+      var otherId = res.data.user_id
+      var talkId = res.data.talk_id
   
       callConnection = localPeer.call(res.data.peerjs_id,localStream)
       console.log(callConnection)
@@ -174,7 +174,7 @@ class Tobi extends React.Component{
         console.log(stream)
         this.playStream(stream)
       })
-      callConnection.on('close',()=>this.reviewCallback(otherID,talkID))
+      callConnection.on('close',()=>this.reviewCallback(otherId,talkId))
       this.setState({statusMsg: "Connected"})
     }
   }
@@ -199,12 +199,12 @@ class Tobi extends React.Component{
     this.setState({statusMsg: "Not Queued"})
   }
   
-  reviewCallback(otherID,talkID){
+  reviewCallback(otherId,talkId){
     console.log('###### INI REVIEW CALLBACK #######')
-    console.log('create review for user',otherID,', talkID',talkID)
+    console.log('create review for user',otherId,', talkId',talkId)
     axios.post(endTalkUrl,
       {
-        'talk_id': talkID
+        'talk_id': talkId
       },
       {
         "headers": {
@@ -228,7 +228,7 @@ class Tobi extends React.Component{
               <tbody>
                 <tr>
                   <td>username: {this.state.username}</td>
-                  <td>user ID: {this.state.userId}</td>
+                  <td>user Id: {this.state.userId}</td>
                 </tr>
               </tbody>
             </table>
