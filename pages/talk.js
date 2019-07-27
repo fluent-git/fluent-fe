@@ -20,6 +20,7 @@ const connected = "connected"
 
 var localPeer = null
 var callConnection = null
+var audioPlayer = null
 
 class Talk extends Component {
   constructor(props) {
@@ -38,6 +39,7 @@ class Talk extends Component {
 
       this.init = this.init.bind(this)
       this.playStream = this.playStream.bind(this)
+      this.killStream = this.killStream.bind(this)
       this.tryToQueue = this.tryToQueue.bind(this)
       this.cancelQueue = this.cancelQueue.bind(this)
       this.disconnectCall = this.disconnectCall.bind(this)
@@ -55,10 +57,15 @@ class Talk extends Component {
   }
 
   playStream(stream) {
-    const audio = document.createElement('audio')
-    audio.srcObject = stream
-    audio.autoplay = true
-    document.body.appendChild(audio)
+    audioPlayer = document.createElement('audio')
+    audioPlayer.srcObject = stream
+    audioPlayer.autoplay = true
+    document.body.appendChild(audioPlayer)
+  }
+
+  killStream(){
+    audioPlayer.remove()
+    audioPlayer = null
   }
     
   async getQueueCheckMessage(params){
@@ -159,6 +166,7 @@ class Talk extends Component {
           var talkId = res.data.talk_id
 
           this.playStream(callConnection.remoteStream)
+          callConnection.on('stream',this.playStream)
           callConnection.on('close',()=>{
             this.destroyPeerAndStream(localPeer,localStream)
             this.reviewCallback(otherId,talkId)
@@ -186,9 +194,9 @@ class Talk extends Component {
     
   disconnectCall(){
     if(callConnection){
+      this.killStream()
       callConnection.close()
     }
-    this.setState({status: notQueued})
   }
   
   async cancelQueue(){
