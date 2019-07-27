@@ -84,7 +84,11 @@ class Talk extends Component {
     return axios.post(checkUrl, params)
       .then((res)=>
         {
-          return res.data.message;
+          return {
+            msg:res.data.message,
+            start:res.data.start,
+            end:res.data.end
+          };
         }
       )
       .catch((err)=>{
@@ -99,20 +103,21 @@ class Talk extends Component {
   }
 
   async tryToQueue(thisTopic, topicImageSource){
-    var queueCheckResponse = await this.getQueueCheckMessage({/* PAYLOAD HERE */})
+    var topic = thisTopic.toLowerCase()
+    var queueCheckResponse = await this.getQueueCheckMessage({"topic": topic})
     
     console.log("queue check response",queueCheckResponse)
     
-    //TODO: fetch time from backend
-    if(queueCheckResponse === "ERROR_TIME"){
+    if(queueCheckResponse.msg === "ERR_TIME"){
+      let modalContent = "Sorry, we are not open right now. Please come back at " + queueCheckResponse.start + ".00 - " + queueCheckResponse.end + ".00 WIB"
       this.setState({
         modal: true,
-        modalContent: "Sorry, we are not open right now. Please come back at 19.00 - 21.00 WIB.",
+        modalContent: modalContent,
       })
       return
     }
 
-    if(queueCheckResponse === "ERROR_TOPIC") {
+    if(queueCheckResponse.msg === "ERR_TOPIC") {
       this.setState({
         modal: true,
         modalContent: "This topic is not open yet. Please try another topic!",
@@ -136,7 +141,6 @@ class Talk extends Component {
         topicImg: topicImageSource,
       })
       var user_id = this.state.userId
-      var topic = thisTopic.toLowerCase()
       console.log("user_id",user_id)
       console.log("topic",topic)
       
