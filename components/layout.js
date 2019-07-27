@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import '../styles/styles.sass'
 import sessionManager from '../utils/session'
+import Router from 'next/router'
 
 const toggleStyles = (event) => {
   document.querySelector('#burger').classList.toggle('is-active')
@@ -58,9 +59,11 @@ const ProfileButton = props => (
           {props.username}
         </a>
         <div className="navbar-dropdown">
-          <a className="navbar-item">
-            Profile
-          </a>
+          <Link prefetch href="/profile">
+            <a className="navbar-item">
+              Profile
+            </a>
+          </Link>
           <hr className="navbar-divider"/>
           <a className="navbar-item" onClick={sessionManager.signOut}>
             Sign Out
