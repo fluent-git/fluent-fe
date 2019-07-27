@@ -12,7 +12,7 @@ class QueuePage extends Component {
 					<div className="three" style={{background: 'rgba(106, 104, 250, 0.25)'}}></div>
 					<div className="four" style={{background: 'rgba(106, 104, 250, 0.5)'}}></div>
 				</div>
-				<p className="title">Please wait till match...</p>
+				<p className="title">This may take a few minutes...</p>
 				<TimerCountDown />
 				<a onClick={() => this.props.cancelQueue()}>
 					<figure className="image is-64x64" style={{margin: 20}}>
@@ -109,7 +109,7 @@ class TimerCountDown extends Component {
 		return(
 			<div>
 				<p className="subtitle">
-					Estimated wait {this.state.minutes}:{this.state.seconds}
+					Estimated queue time: {this.state.minutes}:{this.state.seconds}
 				</p>
 			</div>
 		);

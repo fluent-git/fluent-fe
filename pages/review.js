@@ -18,11 +18,11 @@ class Review extends Component {
             var token = sessionManager.getToken()
         }
 
-        this.state = { user: '', clarity: '', pacing: '', pronounciation: '', note: ''}
+        this.state = { user: '', clarity: '', pacing: '', pronunciation: '', note: ''}
         this.handleFeedback = this.handleFeedback.bind(this)
         this.handleClarity = this.handleClarity.bind(this)
         this.handlePacing = this.handlePacing.bind(this)
-        this.handlePronounciation = this.handlePronounciation.bind(this)
+        this.handlePronunciation = this.handlePronunciation.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
         this.handleReport = this.handleReport.bind(this)
         
@@ -40,8 +40,8 @@ class Review extends Component {
       this.setState({pacing: event.target.value})
     }
 
-    handlePronounciation (event) {
-      this.setState({pronounciation: event.target.value})
+    handlePronunciation (event) {
+      this.setState({pronunciation: event.target.value})
     }
 
     handleReport (event) {
@@ -53,7 +53,7 @@ class Review extends Component {
         this.setState({ error: '' })
         const clarity = this.state.clarity
         const pacing = this.state.pacing
-        const pronounciation = this.state.pronounciation
+        const pronunciation = this.state.pronunciation
         const note = this.state.note
         const url = `https://api.fluent.id/reviews/`
         this.setState({ loading: "is-loading" })
@@ -67,7 +67,7 @@ class Review extends Component {
             "user": otherId,
             "clarity": clarity,
             "pacing": pacing,
-            "pronunciation": pronounciation,
+            "pronunciation": pronunciation,
             "note": note,
             "talk_id": talkId
           })
@@ -100,78 +100,78 @@ class Review extends Component {
               <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                 <img src="static/asset/icon/user.svg"/>
                   <br></br>
-                  <h1 className="title">Please Review Your Conversation</h1>
+                  <h1 className="title">Please review your conversation partner!</h1>
                   <form onSubmit={this.handleSubmit}>
-                    <div class="field is-horizontal">
-                      <div class="field-label">
-                        <label class="label" style={{width: '100px', position: 'relative', top:'6px'}}>Clarity</label>
+                    <div className="field is-horizontal">
+                      <div className="field-label">
+                        <label className="label" style={{width: '100px', position: 'relative', top:'6px'}}>Clarity</label>
                       </div>
-                      <div class="control">
-                        <div class="select" name="clarity">
+                      <div className="control">
+                        <div className="select" name="clarity">
                           <select onChange={this.handleClarity}>
-                            <option value="0">Please Give Rating</option>
-                            <option value="1">1 - Beginner</option>
-                            <option value="2">2</option>
-                            <option value="3">3 - Intermediate</option>
-                            <option value="4">4</option>
-                            <option value="5">5 - Expert</option>
+                            <option value="0" disabled selected>Select a rating</option>
+                            <option value="1">Difficult to understand</option>
+                            <option value="2">Unnatural speech, no intonation</option>
+                            <option value="3">Speech is good overall</option>
+                            <option value="4">Speech is very clear with intonation</option>
+                            <option value="5">Speech is natural and effective</option>
                           </select>
                         </div>
                       </div>
                       </div>
-                    <div class="field is-horizontal">
-                      <div class="field-label">
-                        <label class="label" style={{width: '100px', position: 'relative', top:'6px'}}>Pacing</label>
+                    <div className="field is-horizontal">
+                      <div className="field-label">
+                        <label className="label" style={{width: '100px', position: 'relative', top:'6px'}}>Pacing</label>
                       </div>
-                      <div class="control">
-                        <div class="select" name="pacing">
+                      <div className="control">
+                        <div className="select" name="pacing">
                           <select onChange={this.handlePacing}>
-                            <option value="0">Please Give Rating</option>
-                            <option value="1">1 - Beginner</option>
-                            <option value="2">2</option>
-                            <option value="3">3 - Intermediate</option>
-                            <option value="4">4</option>
-                            <option value="5">5 - Expert</option>
+                            <option value="0" disabled selected>Select a rating</option>
+                            <option value="1">Lots of stops or pauses</option>
+                            <option value="2">Too slow</option>
+                            <option value="3">Speed is good</option>
+                            <option value="4">Too fast</option>
+                            <option value="5">Words are slurred</option>
                           </select>
                         </div>
                       </div>
                     </div>
-                    <div class="field is-horizontal">
-                      <div class="field-label">
-                        <label class="label" style={{width: '100px', position: 'relative', top:'6px'}}>Pronounciation</label>
+                    <div className="field is-horizontal">
+                      <div className="field-label">
+                        <label className="label" style={{width: '100px', position: 'relative', top:'6px'}}>Pronunciation</label>
                       </div>
-                      <div class="control">
-                        <div class="select" name="pronounciation">
-                          <select onChange={this.handlePronounciation}>
-                            <option value="0">Please Give Rating</option>
-                            <option value="1">1 - Beginner</option>
-                            <option value="2">2</option>
-                            <option value="3">3 - Intermediate</option>
-                            <option value="4">4</option>
-                            <option value="5">5 - Expert</option>
+                      <div className="control">
+                        <div className="select" name="pronunciation">
+                          <select onChange={this.handlePronunciation}>
+                            <option value="0" disabled selected>Select a rating</option>
+                            <option value="1">Has difficulty pronouncing words</option>
+                            <option value="2">Some words are mispronounced</option>
+                            <option value="3">Correctly pronounces most words</option>
+                            <option value="4">Almost no pronunciation mistakes</option>
+                            <option value="5">Near-native pronunciation</option>
                           </select>
                         </div>
                       </div>
                     </div>
-                    <div class="field is-horizontal">
-                      <div class="field" style={{width: '100px'}}>
-                        <div class="control" style={{maxWidth: '300px', width: '60vw'}}>
-                          <textarea class="textarea" placeholder="Explain how did your partner perform" onChange={this.handleFeedback}></textarea>
+                    <div className="field is-horizontal">
+                      <div className="field" style={{width: '100px'}}>
+                        <div className="control" style={{maxWidth: '300px', width: '60vw'}}>
+                          <textarea className="textarea" placeholder="Explain how did your partner perform" onChange={this.handleFeedback}></textarea>
                         </div>
                       </div>
                     </div>
-                    <div class="field is-horizontal">
-                      <div class="field-label">
+                    <div className="field is-horizontal">
+                      <div className="field-label">
                     </div>
-                      <div class="field-body">
-                        <div class="field is-grouped">
-                          <p class="control">
-                            <button class="button is-primary">
+                      <div className="field-body">
+                        <div className="field is-grouped">
+                          <p className="control">
+                            <button className="button is-primary">
                               Submit
                             </button>
                           </p>
-                          <p class="control">
-                            <a class="button is-light" onClick={this.handleReport}>Report</a>
+                          <p className="control">
+                            <a className="button is-light" onClick={this.handleReport}>Report</a>
                           </p>
                         </div>
                       </div>

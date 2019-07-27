@@ -14,8 +14,7 @@ class TalkPage extends Component {
 						<div className="column">
 							<p className="title" style={{color: '#3C3C72'}}>Talk</p>
 							<p className="subtitle">
-								Talking with stranger and polish your speaking skill. 
-								What do you waiting for? Choose your topic!   
+								Talk with community members and practice your speaking skill!  
 							</p>
 						</div>
 					</div> 
