@@ -54,13 +54,14 @@ class Profile extends Component {
                     <h1 className="title">Talk History</h1>
                     <br></br>
                     <div className="card-box table-responsive">
-                        <table id="datatable" className="table table-striped table-bordered" width="100%">
+                        <table id="datatable" className="table table-striped is-striped table-bordered" width="100%">
                             <thead>
                                 <tr>
                                     <th>Date</th>
                                     <th>Time</th>
                                     <th>Topic</th>
                                     <th>Duration</th>
+                                 
                                 </tr>
                             </thead>
                             <tbody>
@@ -68,12 +69,20 @@ class Profile extends Component {
                                     const { id, start_time, topic, duration } = talkList
                                     const callDate = start_time.substring(0, 10)
                                     const callTime = start_time.substring(11, 16)
+                                    var date = new Date(null);
+                                    date.setSeconds(duration); // specify value for SECONDS here
+                                    var timeString = date.toISOString().substr(11, 8);
                                     return (
                                         <tr key={id}>
                                             <td>{callDate}</td>
                                             <td>{callTime}</td>
                                             <td>{topic}</td>
-                                            <td>{duration}</td>
+                                            <td>{timeString}</td>
+                                            <td>
+                                            <button class="button is-primary">
+                                                Details
+                                            </button>
+                                            </td>
                                         </tr>
                                     )
                                 })}
