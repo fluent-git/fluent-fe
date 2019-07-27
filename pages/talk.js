@@ -103,7 +103,7 @@ class Talk extends Component {
      
     localPeer = new Peer({
       config: {'iceServers': [
-        { url: 'stun:165.22.105.219:65432' },
+        { url: 'stun:stun.l.google.com:19302' },
         { url: 'turn:165.22.105.219:65432', username: 'peerjs', credential: 'h2olo2' }
       ]}
     });
