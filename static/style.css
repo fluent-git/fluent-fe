@@ -197,3 +197,55 @@
         height: 100px;
     }
 }
+
+/* Call Page */
+.call-page {
+    padding: 50px;
+}
+.call-page .box {
+    margin: 20px 0;
+}
+.call-page .subtitle {
+    margin-bottom: 0px
+}
+.timer-wrapper {
+    margin: 20px;
+}
+@media only screen and (max-width: 768px) {
+    .call-page {
+        height: 90vh;
+    }
+}
+@media only screen and (max-width: 530px) {
+    .call-page {
+        padding: 30px;
+    }
+    .call-page .box {
+        padding: 1.25rem 0.5rem 1.25rem 0rem;
+    }
+    #talk .subtitle {
+        font-size: 1.1rem;
+    }
+    .call-page .title {
+        margin: 0;
+    }
+}
+@media only screen and (max-width: 440px) {
+    .call-page {
+        padding: 15px;
+    }
+    .call-page .box {
+        padding: 0.75rem 0.2rem 0.75rem 0rem;
+    }
+    .call-page .box {
+        margin: 10px 0;
+    }
+    .timer-wrapper {
+        margin: 10px;
+    }
+}
+@media only screen and (max-width: 350px) {
+    #talk .subtitle {
+        font-size: 0.9rem;
+    }
+}

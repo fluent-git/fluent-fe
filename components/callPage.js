@@ -3,16 +3,17 @@ import { Component } from 'react'
 class CallPage extends Component {
 	render() {
 		return (
-			<div style={{display: 'flex', alignItems: 'center', flexDirection: 'column', padding: 50, textAlign: 'center'}}>
+			<div className="call-page" style={{display: 'flex', alignItems: 'center', flexDirection: 'column', textAlign: 'center', justifyContent:'center'}}>
+				<link type="text/css" rel="stylesheet" href="static/style.css"/>
 				<figure className="image is-128x128 is-hidden-mobile" style={{margin: 20}}>
 					<img src={this.props.imgsrc} />
 				</figure>
 				<p className="title">
 					Coversation Starter about {this.props.title}
 				</p>
-				<p className="subtitle">
-					<div className="box" style={{margin: 20, textAlign: 'left', boxShadow: '0 2px 3px rgba(233, 35, 35, 0.1), 0 0 0 1px rgba(182, 0, 0, 0.1)'}}>
-						<div className="content">
+				<div className="box" style={{textAlign: 'left', boxShadow: '0 2px 3px rgba(233, 35, 35, 0.1), 0 0 0 1px rgba(182, 0, 0, 0.1)'}}>
+					<div className="content">
+						<p className="subtitle">
 							<ol type="1" style={{marginTop: 0}}>
 								<li>What are you most passionate about?</li>
 								<li>What makes you laugh out loud?</li>
@@ -20,16 +21,16 @@ class CallPage extends Component {
 								<li>Who do you text the most?</li>
 								<li>What's your favorite TV show?</li>
 							</ol>
-						</div>
+						</p>
 					</div>
-				</p>
+				</div>
 				<p className="subtitle">Don’t be shy and talk at least 10 minutes! Then score her speaking skills.</p>
 				<TimerCountUp />
-        <a onClick={() => this.props.disconnectCall()} style={{margin: 20}}>
-          <figure className="image is-64x64">
-            <img src='/static/asset/icon/call.svg' />
-          </figure>
-        </a>
+				<a onClick={() => this.props.disconnectCall()}>
+					<figure className="image is-64x64">
+						<img src='/static/asset/icon/call.svg' />
+					</figure>
+				</a>
 			</div>
 		);
 	}
@@ -87,8 +88,8 @@ class TimerCountUp extends Component {
 
 	render() {
 		return(
-			<div>
-				<p className="subtitle">
+			<div className="timer-wrapper">
+				<p className="subtitle" style={{fontWeight: 'bold'}}>
 					{this.state.minutes}:{this.state.seconds}
 				</p>
 			</div>
