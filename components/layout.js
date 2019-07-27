@@ -53,9 +53,6 @@ const ProfileButton = props => (
       <Link prefetch href="/contact">
         <a className="navbar-item">Contact Us</a>
       </Link>
-      <Link prefetch href="/tobi">
-        <a className="navbar-item">Tobi</a>
-      </Link>
       <div className="navbar-item has-dropdown is-hoverable">
         <a className="navbar-link is-primary is-link">
           {props.username}
