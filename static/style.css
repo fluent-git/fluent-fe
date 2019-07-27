@@ -96,10 +96,156 @@
       transform: translate(19px, 0);
     }
 }
+@media only screen and (max-width: 768px) {
+    .queue-page {
+        height: 90vh;
+    }
+}
+@media only screen and (max-height: 688px) {
+    .queue-page .title {
+        margin-top: 2em;
+    }
+}
 
 /* Talk Page */
-
 .talk-page .box:hover {
     box-shadow: 0 2px 3px rgba(233, 35, 35, 0.1), 0 0 0 1px rgba(182, 0, 0, 0.1);
     background-color: #F4E3E1;
+}
+.header-wrapper {
+    width: 25vw;
+    min-width: 300px;
+    padding: 6vw 30px; 
+}
+.content-wrapper {
+    padding: 5vw;
+}
+.tile-wrapper {
+    margin: 2vw 5vw;
+}
+.tile-box {
+    height: 300px;
+}
+.tile-box-talk {
+    height: 200px;
+}
+@media only screen and (max-width: 1600px) {
+    .content-wrapper {
+        padding: 3vw;
+    }
+    .tile-wrapper {
+        margin: 1vw 3vw;
+    }
+    .header-wrapper {
+        padding: 3vw 30px; 
+    }
+}
+@media only screen and (max-width: 1150px) {
+    .content-wrapper {
+        padding: 3vw;
+    }
+    .tile-wrapper {
+        margin: 1vw;
+    }
+    .header-wrapper {
+        padding: 3vw 30px; 
+    }
+}
+@media only screen and (max-width: 768px) {
+    .content-wrapper {
+        padding: 50px;
+    }
+    .tile-wrapper {
+        margin: auto;
+    }
+}
+@media only screen and (max-width: 450px) {
+    .content-wrapper {
+        padding: 25px;
+    }
+    #talk .title {
+        font-size: 1.7em;
+    }
+}
+@media only screen and (max-width: 400px) {
+    #talk .title {
+        font-size: 1.6em;
+    }
+    .talk-page .box {
+        padding: 0rem;
+    }
+    .tile-box {
+        height: 250px;
+    }
+    .tile-box-talk {
+        height: 190px;
+    }
+    .talk-page .image.is-128x128 {
+        width: 110px;
+        height: 110px;
+    }
+}
+@media only screen and (max-width: 374px) {
+    .tile-box {
+        height: 200px;
+    }
+    .tile-box-talk {
+        height: 160px;
+    }
+    .talk-page .image.is-128x128 {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+/* Call Page */
+.call-page {
+    padding: 50px;
+}
+.call-page .box {
+    margin: 20px 0;
+}
+.call-page .subtitle {
+    margin-bottom: 0px
+}
+.timer-wrapper {
+    margin: 20px;
+}
+@media only screen and (max-width: 768px) {
+    .call-page {
+        height: 90vh;
+    }
+}
+@media only screen and (max-width: 530px) {
+    .call-page {
+        padding: 30px;
+    }
+    .call-page .box {
+        padding: 1.25rem 0.5rem 1.25rem 0rem;
+    }
+    #talk .subtitle {
+        font-size: 1.1rem;
+    }
+    .call-page .title {
+        margin: 0;
+    }
+}
+@media only screen and (max-width: 440px) {
+    .call-page {
+        padding: 15px;
+    }
+    .call-page .box {
+        padding: 0.75rem 0.2rem 0.75rem 0rem;
+    }
+    .call-page .box {
+        margin: 10px 0;
+    }
+    .timer-wrapper {
+        margin: 10px;
+    }
+}
+@media only screen and (max-width: 350px) {
+    #talk .subtitle {
+        font-size: 0.9rem;
+    }
 }
