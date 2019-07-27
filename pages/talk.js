@@ -247,7 +247,9 @@ class Talk extends Component {
     }
     return (
       <Layout loggedIn={this.state.loggedIn} username={this.state.username}>
-        {currentRender}
+        <div id="talk">
+          {currentRender}
+        </div>
       </Layout>
     );
   }

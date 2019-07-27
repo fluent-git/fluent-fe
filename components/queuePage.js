@@ -3,7 +3,7 @@ import { Component } from 'react'
 class QueuePage extends Component {
 	render() {
 		return (
-			<div className="container" style={{display: 'flex', alignItems: 'center', flexDirection: 'column', padding: 50, textAlign: 'center'}}>
+			<div className="container queue-page" style={{display: 'flex', alignItems: 'center', flexDirection: 'column', padding: 50, textAlign: 'center', justifyContent:'center'}}>
 				<link type="text/css" rel="stylesheet" href="static/style.css"/>
 				<img src='/static/asset/image/queue.svg' style={{width: 450}} />
 				<div className="lds-ellipsis">

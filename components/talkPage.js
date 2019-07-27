@@ -6,10 +6,10 @@ class TalkPage extends Component {
 	}
 	render(){
 		return(
-			<div className="columns talk-page">
+			<div className="columns talk-page" style={{margin: 0}}>
 				<link type="text/css" rel="stylesheet" href="static/style.css"/>
 				<div className="column has-background-grey-light is-narrow is-hidden-mobile">
-					<div className="columns" style={{width: 300, padding: 30, flexDirection: 'column'}}>         
+					<div className="columns header-wrapper" style={{flexDirection: 'column'}}>         
 						<TileHeader tryToQueue={this.props.tryToQueue} imgsrc='/static/asset/topic/free-purple.svg' title="Free Talk"/>
 						<div className="column">
 							<p className="title" style={{color: '#3C3C72'}}>Talk</p>
@@ -20,7 +20,7 @@ class TalkPage extends Component {
 						</div>
 					</div> 
 				</div>
-				<div className="column has-background-grey-lighter" style={{padding: 50}}>
+				<div className="column content-wrapper has-background-grey-lighter">
 					<div className="columns is-mobile is-multiline"> 
 							<div className="is-hidden-tablet" style={{width: '100%'}}><TileTalk tryToQueue={this.props.tryToQueue} imgsrc='/static/asset/topic/free.svg' title="Free Talk"/></div>
 							<Tile tryToQueue={this.props.tryToQueue} imgsrc='/static/asset/topic/culture.svg' title="Culture"/>
@@ -47,7 +47,7 @@ class Tile extends Component {
 	}
 	render(){
 		return (
-			<div className="column container">
+			<div className="tile-wrapper column container">
 				<Box tryToQueue={this.props.tryToQueue}  title={this.props.title} imgsrc={this.props.imgsrc}/>
 			</div>
 		);
@@ -88,13 +88,12 @@ class Box extends Component {
 		return (
 			<a onClick={() => this.props.tryToQueue(this.props.title, this.props.imgsrc)}>
 				<div 
-					className="box" 
+					className="box tile-box" 
 					style={{
 						display: 'flex', 
 						flexDirection:'column', 
 						alignItems: 'center',
-						justifyContent:'space-around',
-						height: 300}}>
+						justifyContent:'space-around'}}>
 					<figure className="image is-128x128">
 						<img src={this.props.imgsrc} />
 					</figure>
@@ -115,13 +114,12 @@ class BoxTalk extends Component {
 		return (
 			<a onClick={() => this.props.tryToQueue(this.props.title, this.props.imgsrc)}>
 				<div 
-					className="box" 
+					className="box tile-box-talk" 
 					style={{
 						display: 'flex', 
 						flexDirection:'row', 
 						alignItems: 'center',
-						justifyContent:'space-around',
-						height: 200}}>
+						justifyContent:'space-around'}}>
 					<figure className="image is-128x128">
 						<img src={this.props.imgsrc} />
 					</figure>
