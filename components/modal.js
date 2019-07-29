@@ -9,7 +9,7 @@ class Modal extends Component {
                     <div className="modal-content">
                         <div className="modal-top">
                             <figure class="image">
-                                <img src='/static/asset/icon/warn.svg' />
+                                <img src={this.props.imgSrc} />
                             </figure>
                             <p className="subtitle">{this.props.content}</p>
                         </div>

@@ -33,6 +33,7 @@ class Talk extends Component {
             topicImg: "/static/asset/logo/logo.svg", 
             modal: false, 
             modalContent: "",
+            modalImgSrc: "",
           }
       } else {
           var username = sessionManager.getUsername()
@@ -46,6 +47,7 @@ class Talk extends Component {
             status: notQueued, 
             modal: false,
             modalContent: "",
+            modalImgSrc: "",
           }
       }
 
@@ -113,6 +115,7 @@ class Talk extends Component {
       this.setState({
         modal: true,
         modalContent: modalContent,
+        modalImgSrc: "/static/asset/icon/warn.svg",
       })
       return
     }
@@ -121,10 +124,17 @@ class Talk extends Component {
       this.setState({
         modal: true,
         modalContent: "This topic is not open yet. Please try another topic!",
+        modalImgSrc: "/static/asset/icon/warn.svg",
       })
       return
     }
      
+    this.setState({
+      modal: true,
+      modalContent: "Please wait, we are trying to queue you...",
+      modalImgSrc: "/static/asset/icon/queue_load.gif",
+    })
+
     localPeer = new Peer({
       config: {'iceServers': [
         { url: 'stun:stun.l.google.com:19302' },
@@ -144,7 +154,9 @@ class Talk extends Component {
       console.log("user_id",user_id)
       console.log("topic",topic)
       
-      this.setState({status: queued})
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
+      this.setState({status: queued, modal: false, })
 
       navigator.mediaDevices.getUserMedia = (navigator.mediaDevices.getUserMedia || navigator.mediaDevices.webkitGetUserMedia || navigator.mediaDevices.mozGetUserMedia || navigator.mediaDevices.msGetUserMedia);
       // Get access to microphone
@@ -152,18 +164,30 @@ class Talk extends Component {
       console.log(localStream)
       await new Promise(resolve => setTimeout(resolve, 2000));
 
-      var res = await axios.post(queueUrl,
-        {
-          "topic": topic,
-          "user_id": user_id,
-          "peerjs_id": localPeer.id
-        },
-        {
-          "headers": {
-            "Content-Type": "application/json"
+      try{
+        var res = await axios.post(queueUrl,
+          {
+            "topic": topic,
+            "user_id": user_id,
+            "peerjs_id": localPeer.id
+          },
+          {
+            "headers": {
+              "Content-Type": "application/json"
+            }
           }
-        }
-      )
+        )
+      } catch(err) {
+        this.destroyPeerAndStream(localPeer,localStream)
+        this.setState({
+          status: notQueued,
+          modal: true,
+          modalContent: "There was an error queueing you. Please try another topic!",
+          modalImgSrc: "/static/asset/icon/warn.svg",
+        })
+        this.cancelQueue()
+        return
+      }
       console.log(res.data)
     
       if(res.data.message === 'Queuing'){
@@ -272,7 +296,7 @@ class Talk extends Component {
       currentRender = <CallPage imgsrc={this.state.topicImg} title={this.state.topic} disconnectCall={this.disconnectCall} />
     } 
     if (this.state.modal) {
-      currentModal = <Modal content={this.state.modalContent} onClose={this.onClose}/>
+      currentModal = <Modal content={this.state.modalContent} imgSrc={this.state.modalImgSrc} onClose={this.onClose}/>
     }
     return (
       <Layout loggedIn={this.state.loggedIn} username={this.state.username}>
