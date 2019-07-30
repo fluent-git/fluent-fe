@@ -29,13 +29,13 @@ class Contact extends Component {
                                   <div class="field">
                                     <label class="label">Name (optional)</label>
                                       <div class="control">
-                                        <input class="form-control input" id="name" name="name" placeholder="Name" type="text" required/>
+                                        <input class="form-control input" id="name" name="name" placeholder="Name" type="text"/>
                                       </div>
                                   </div>
                                   <div class="field">
                                     <label class="label">Email (optional)</label>
                                       <div class="control">
-                                        <input class="form-control input" id="email" name="_replyto" placeholder="Email" type="email" required/>
+                                        <input class="form-control input" id="email" name="_replyto" placeholder="Email" type="email"/>
                                       </div>
                                   </div>
                                   <div class="field">
