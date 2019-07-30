@@ -25,7 +25,7 @@ class CallPage extends Component {
 					</div>
 				</div>
 				<p className="subtitle">Don’t be shy and talk at least 10 minutes! Then score her speaking skills.</p>
-				<TimerCountUp />
+				<TimerCountUp cfun={this.props.cfun}/>
 				<a onClick={() => this.props.disconnectCall()}>
 					<figure className="image is-64x64">
 						<img src='/static/asset/icon/call.svg' />
@@ -75,6 +75,8 @@ class TimerCountUp extends Component {
 		}
 
 		this.secondsElapsed++;
+		var noOp = (x)=>{}
+		(this.props.cfun||noOp)(this.secondsElapsed)
 	}
 	
 	startCountUp(){

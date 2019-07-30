@@ -9,7 +9,7 @@ import Router from 'next/router'
 import axios from 'axios'
 import {
   baseUrl, checkUrl, queueUrl, cancelUrl, startTalkUrl, endTalkUrl, 
-  queued, notQueued, connected
+  queued, notQueued, connected, minimumCallTimeForReview
 } from '../utils/constants'
 
 var localPeer = null
@@ -34,6 +34,7 @@ class Talk extends Component {
             modal: false, 
             modalContent: "",
             modalImgSrc: "",
+            callSeconds: 0,
           }
       } else {
           var username = sessionManager.getUsername()
@@ -48,6 +49,7 @@ class Talk extends Component {
             modal: false,
             modalContent: "",
             modalImgSrc: "",
+            callSeconds: 0,
           }
       }
 
@@ -263,6 +265,25 @@ class Talk extends Component {
   }
     
   reviewCallback(otherId,talkId){
+    if(this.state.callSeconds <= minimumCallTimeForReview){
+      axios.post(endTalkUrl,
+        {
+          'talk_id': talkId
+        },
+        {
+          "headers": {
+            "Content-Type": "application/json"
+          }
+        }
+      )
+      this.setState({
+        status: notQueued,
+        modal: true,
+        modalContent: "Reviews can only be given for calls longer than one minute. Please talk more to give and receive feedback!",
+        modalImgSrc: "/static/asset/icon/warn.svg",
+      })
+      return
+    }
     console.log('###### INI REVIEW CALLBACK #######')
     console.log('create review for user',otherId,', talkId',talkId)
     sessionManager.startReview(otherId,talkId)
@@ -280,6 +301,10 @@ class Talk extends Component {
   }
   onClose() {
     this.setState({modal: false})
+  }
+
+  timerListener(passedTimeInSeconds){
+    this.setState({callSeconds: passedTimeInSeconds})
   }
 
   componentDidMount() {

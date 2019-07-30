@@ -10,3 +10,4 @@ export const endTalkUrl = baseUrl+'/talk/end/'
 export const queued = "queued"
 export const notQueued = "notQueued"
 export const connected = "connected"
+export const minimumCallTimeForReview = 60
