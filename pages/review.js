@@ -124,7 +124,7 @@ class Review extends Component {
                         <label className="label" style={{width: '100px', position: 'relative', top:'6px'}}>Pacing</label>
                       </div>
                       <div className="control">
-                        <div className="select" name="pacing">
+                        <div className="select is-fullwidth" name="pacing">
                           <select onChange={this.handlePacing}>
                             <option value="0" disabled selected>Select a rating</option>
                             <option value="1">Lots of stops or pauses</option>

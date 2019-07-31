@@ -16,12 +16,12 @@ const Layout = props => (
       <meta name="viewport" content="initial-scale=1.0, width=device-width"/>
     </Head>
     <header>
-      <nav className="navbar has-shadow is-spaced" role="navigation" aria-label="main navigation">
+      <nav className="navbar has-shadow is-spaced is-primary sticky" role="navigation" aria-label="main navigation">
         <div className="container">
           <div className="navbar-brand">
             <a className="navbar-item">
               <Link prefetch href="/">
-                <img src="/static/asset/logo/logo.svg"/>
+                <img src="/static/asset/logo/logo-white.svg"/>
               </Link>
             </a>
             <a id="burger" onClick={toggleStyles} 
@@ -97,7 +97,7 @@ const LoginButton = props => (
       <div className="navbar-item">
         <div className="buttons">
           <Link prefetch href="/register">
-            <a className="button is-link">Register</a>
+            <a className="button is-primary">Register</a>
           </Link>
         </div>
       </div>
