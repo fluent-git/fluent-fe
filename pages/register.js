@@ -81,6 +81,10 @@ class Register extends Component {
   
       this.setState({ loading: "" })
     }
+
+    componentDidMount() {
+      document.querySelector("body").classList.add("has-navbar-fixed-top")
+    }
   
     render () {
       return (
@@ -142,7 +146,7 @@ class Register extends Component {
 
                                                         <div className="field is-grouped">
                                                             <div className="control">
-                                                            <button className={`button ${this.state.loading}`} type="submit">Submit</button>
+                                                            <button className={`button is-primary ${this.state.loading}`} type="submit">Submit</button>
                                                             </div>
                                                         </div>
                                                     </form>

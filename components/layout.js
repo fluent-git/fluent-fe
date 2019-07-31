@@ -17,7 +17,7 @@ const Layout = props => (
       <meta name="viewport" content="initial-scale=1.0, width=device-width"/>
     </Head>
     <header>
-      <nav className="navbar has-shadow is-spaced is-primary sticky" role="navigation" aria-label="main navigation">
+      <nav className="navbar has-shadow is-spaced is-primary navbar is-fixed-top" role="navigation" aria-label="main navigation">
         <div className="container">
           <div className="navbar-brand">
             <a className="navbar-item">

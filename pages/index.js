@@ -29,6 +29,10 @@ class Home extends Component {
     }
   }
 
+  componentDidMount() {
+    document.querySelector("body").classList.add("has-navbar-fixed-top")
+  }
+
   render () {
     return (
       <Layout loggedIn={this.state.loggedIn} username={this.state.username}>

@@ -321,9 +321,10 @@ class Talk extends Component {
   timerListener(passedTimeInSeconds){
     this.setState({callSeconds: passedTimeInSeconds})
   }
-
+  
   componentDidMount() {
     this.init()
+    document.querySelector("body").classList.add("has-navbar-fixed-top")
   }
 
   render() {

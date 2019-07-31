@@ -16,37 +16,41 @@ class Contact extends Component {
         }
       }
 
+      componentDidMount() {
+        document.querySelector("body").classList.add("has-navbar-fixed-top")
+      }
+
       render() {
           return (
             <Layout>
                 <link type="text/css" rel="stylesheet" href="static/style.css"/>
                  <br></br>
                    <section id="contact">
-                      <div class="container">
-                          <div class="row">
-                              <div class="col-lg-8 mx-auto text-center">
+                      <div className="container">
+                          <div className="row">
+                              <div className="col-lg-8 mx-auto text-center">
                                 <form id="contactform" action="https://formspree.io/fluent.id@gmail.com" method="POST">
-                                  <div class="field">
-                                    <label class="label">Name (optional)</label>
-                                      <div class="control">
-                                        <input class="form-control input" id="name" name="name" placeholder="Name" type="text"/>
+                                  <div className="field">
+                                    <label className="label">Name (optional)</label>
+                                      <div className="control">
+                                        <input className="form-control input" id="name" name="name" placeholder="Name" type="text"/>
                                       </div>
                                   </div>
-                                  <div class="field">
-                                    <label class="label">Email (optional)</label>
-                                      <div class="control">
-                                        <input class="form-control input" id="email" name="_replyto" placeholder="Email" type="email"/>
+                                  <div className="field">
+                                    <label className="label">Email (optional)</label>
+                                      <div className="control">
+                                        <input className="form-control input" id="email" name="_replyto" placeholder="Email" type="email"/>
                                       </div>
                                   </div>
-                                  <div class="field">
-                                    <label class="label">Message</label>
-                                      <div class="control">
-                                        <textarea class="textarea form-control" id="comments" name="message" placeholder="Message" rows="5"></textarea>
+                                  <div className="field">
+                                    <label className="label">Message</label>
+                                      <div className="control">
+                                        <textarea className="textarea form-control" id="comments" name="message" placeholder="Message" rows="5"></textarea>
                                       </div>
                                   </div>
-                                  <div class="field is-grouped">
-                                    <div class="control">
-                                      <button class="button is-link" type="submit">Send</button>
+                                  <div className="field is-grouped">
+                                    <div className="control">
+                                      <button className="button is-link" type="submit">Send</button>
                                     </div>
                                   </div>
                                 </form>                             
