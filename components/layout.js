@@ -41,6 +41,8 @@ const Layout = props => (
     {props.children}
     <footer className="footer is-hidden-mobile">
       <div className="content has-text-centered">
+        <span>Made with 💛 in Jakarta, Indonesia</span>
+        <br></br>
         <span>Copyright 2019 Fluent</span>
       </div>
     </footer>
