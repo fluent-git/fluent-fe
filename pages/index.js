@@ -39,8 +39,12 @@ class Home extends Component {
         <section className="section">
           <div className="container">
             <h1 className="title">
-              Please login first
+              {/* Di Bawah Hanya Temporary, tolong di ganti kalau sudah jadi */}
+              Welcome To Fluent! A Community for you to Practice Speaking English!
+              <br></br>
+              Coming Soon! Stay Tuned
             </h1>
+            <img src="static/asset/image/home.png"/>
           </div>
         </section>
       </Layout>
