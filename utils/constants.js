@@ -5,8 +5,10 @@ export const queueUrl = baseUrl+'/queue/start/'
 export const cancelUrl = baseUrl+'/queue/cancel/'
 export const startTalkUrl = baseUrl+'/talk/start/'
 export const endTalkUrl = baseUrl+'/talk/end/'
+export const topicDetailUrl = baseUrl+'/topics/'
 
 // talk status 
 export const queued = "queued"
 export const notQueued = "notQueued"
 export const connected = "connected"
+export const minimumCallTimeForReview = 60

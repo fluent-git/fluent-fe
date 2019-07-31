@@ -12,6 +12,7 @@ const toggleStyles = (event) => {
 const Layout = props => (
   <div>
     <Head>
+      <link href = "/static/asset/logo/favicon.png" rel="icon" type="image/png"/>
       <title>Fluent</title>
       <meta name="viewport" content="initial-scale=1.0, width=device-width"/>
     </Head>
@@ -40,6 +41,8 @@ const Layout = props => (
     {props.children}
     <footer className="footer is-hidden-mobile">
       <div className="content has-text-centered">
+        <span>Made with 💛 in Jakarta, Indonesia</span>
+        <br></br>
         <span>Copyright 2019 Fluent</span>
       </div>
     </footer>
