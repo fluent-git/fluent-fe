@@ -25,7 +25,7 @@ class CallPage extends Component {
 							<li>What is the most epic thing you’ve ever done? (Brag about it, its anonymous)</li>
 							<li>What is something that you are obsessed with?</li>
 							<li>How should success be measured? By that measurement, who is the most successful person you know?</li> </ol>;
-		} else if (topic == "opinion sharing") {
+		} else if (topic == "opinion") {
 			renderTopic = 	<ol type="1" style={{marginTop: 0}}>
 							<li>What do you think about our education system? How could it be improved?</li>
 							<li>What is a possible solution to traffic jam? Why is it not implemented yet?</li>
