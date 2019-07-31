@@ -14,6 +14,7 @@ import {
 
 var localPeer = null
 var callConnection = null
+var dataConnection = null
 var audioPlayer = null
 
 class Talk extends Component {
@@ -194,6 +195,10 @@ class Talk extends Component {
     
       if(res.data.message === 'Queuing'){
 
+        localPeer.on('connection', async (incoming) => {
+          dataConnection = incoming
+        })
+
         localPeer.on('call', async (incoming) => {
           callConnection = incoming
           callConnection.answer(localStream)
@@ -225,7 +230,9 @@ class Talk extends Component {
       } else {
         var otherId = res.data.user_id
         var talkId = res.data.talk_id
-    
+        
+        dataConnection = localPeer.connect(res.data.peerjs_id)
+
         callConnection = localPeer.call(res.data.peerjs_id,localStream)
         console.log("caller",{callConnection})
         callConnection.on('stream', (stream)=>{
