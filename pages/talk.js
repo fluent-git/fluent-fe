@@ -9,7 +9,7 @@ import Router from 'next/router'
 import axios from 'axios'
 import {
   baseUrl, checkUrl, queueUrl, cancelUrl, startTalkUrl, endTalkUrl, 
-  queued, notQueued, connected, minimumCallTimeForReview
+  queued, notQueued, connected, minimumCallTimeForReview, topicDetailUrl
 } from '../utils/constants'
 
 var localPeer = null
@@ -35,6 +35,7 @@ class Talk extends Component {
             modalContent: "",
             modalImgSrc: "",
             callSeconds: 0,
+            starters: [],
           }
       } else {
           var username = sessionManager.getUsername()
@@ -50,6 +51,7 @@ class Talk extends Component {
             modalContent: "",
             modalImgSrc: "",
             callSeconds: 0,
+            starters: [],
           }
       }
 
@@ -106,7 +108,7 @@ class Talk extends Component {
     stream.getTracks().forEach(track=>track.stop())
   }
 
-  async tryToQueue(thisTopic, topicImageSource){
+  async tryToQueue(thisTopic, thisTopicId, topicImageSource){
     var topic = thisTopic.toLowerCase()
     
     // if (topic != "travel" && topic != "hobbies" && topic != "free talk" && topic != "opinion") {
@@ -205,6 +207,8 @@ class Talk extends Component {
     
       if(res.data.message === 'Queuing'){
 
+        var conversationStarters = axios.get(topicDetailUrl+thisTopicId).data.conversation_starters
+
         localPeer.on('call', async (incoming) => {
           callConnection = incoming
           callConnection.answer(localStream)
@@ -231,7 +235,7 @@ class Talk extends Component {
             this.destroyPeerAndStream(localPeer,localStream)
             this.reviewCallback(otherId,talkId)
           })
-          this.setState({status: connected})
+          this.setState({status: connected, starters: conversationStarters})
         })
       } else {
         var otherId = res.data.user_id

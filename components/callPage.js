@@ -3,6 +3,7 @@ import { Component } from 'react'
 class CallPage extends Component {
 	render() {
 		var topic = this.props.title;
+		/*
 		let renderTopic
 		if(topic == "travel") {
 			renderTopic = 	<ol type="1" style={{marginTop: 0}}>
@@ -40,7 +41,7 @@ class CallPage extends Component {
 							<li>Who do you text the most?</li>
 							<li>What's your favorite TV show?</li> </ol>;
 		}
-
+		*/
 		return (
 			<div className="call-page" style={{display: 'flex', alignItems: 'center', flexDirection: 'column', textAlign: 'center', justifyContent:'center'}}>
 				<link type="text/css" rel="stylesheet" href="static/style.css"/>
@@ -48,12 +49,18 @@ class CallPage extends Component {
 					<img src={this.props.imgsrc} />
 				</figure>
 				<p className="title">
-					Coversation Starter about {this.props.title}
+					Coversation Starter about {topic}
 				</p>
 				<div className="box" style={{textAlign: 'left', boxShadow: '0 2px 3px rgba(233, 35, 35, 0.1), 0 0 0 1px rgba(182, 0, 0, 0.1)'}}>
 					<div className="content">
 						<p className="subtitle">
-							{renderTopic}
+							<ol type="1" style={{marginTop: 0}}>
+								{this.props.starters.forEach(
+									function(element){
+										return <li>{element}</li>
+									}
+								)}
+							</ol>
 						</p>
 					</div>
 				</div>
