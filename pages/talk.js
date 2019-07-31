@@ -108,6 +108,17 @@ class Talk extends Component {
 
   async tryToQueue(thisTopic, topicImageSource){
     var topic = thisTopic.toLowerCase()
+    
+    if (topic != "travel" && topic != "hobbies" && topic != "free talk" && topic != "opinion") {
+      let modalContent = "This Topic Will Be Coming Soon! Stay Tuned!"
+      this.setState({
+        modal: true,
+        modalContent: modalContent,
+        modalImgSrc: "/static/asset/icon/warn.svg",
+      })
+      return
+    }
+
     var queueCheckResponse = await this.getQueueCheckMessage({"topic": topic})
     
     console.log("queue check response",queueCheckResponse)
