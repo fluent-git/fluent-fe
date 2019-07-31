@@ -1,6 +1,5 @@
 import { Component } from 'react'
 import Layout from '../components/layout'
-import cookie from 'js-cookie'
 import sessionManager from '../utils/session'
 import Router from 'next/router'
 import { initGA, logPageView } from '../utils/analytics'
@@ -12,7 +11,9 @@ class Home extends Component {
       window.GA_INITIALIZED = true
     }
     logPageView()
+    document.querySelector("body").classList.add("has-navbar-fixed-top")
   }
+
   constructor(props) {
     super(props)
     if (sessionManager.isLoggedIn()) {
@@ -27,10 +28,6 @@ class Home extends Component {
       var token = sessionManager.getToken()
       this.state = { loggedIn: false, username: "", userId: 0, token: "" }
     }
-  }
-
-  componentDidMount() {
-    document.querySelector("body").classList.add("has-navbar-fixed-top")
   }
 
   render () {
