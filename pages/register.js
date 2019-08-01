@@ -12,10 +12,11 @@ class Register extends Component {
         Router.push('/')
       }
   
-      this.state = { username: '', email: '', password: '', error: '', loading: '', loggedIn: false }
+      this.state = { username: '', email: '', password: '', level: 1, error: '', loading: '', loggedIn: false }
       this.handleUsername = this.handleUsername.bind(this)
       this.handlePassword = this.handlePassword.bind(this)
       this.handleEmail = this.handleEmail.bind(this)
+      this.handleLevel = this.handleLevel.bind(this)
       this.handleSubmit = this.handleSubmit.bind(this)
     }
   
@@ -30,6 +31,10 @@ class Register extends Component {
     handlePassword (event) {
       this.setState({ password: event.target.value })
     }
+
+    handleLevel (event) {
+      this.setState({ level: event.target.value })
+    }
   
     async handleSubmit (event) {
       event.preventDefault()
@@ -37,7 +42,7 @@ class Register extends Component {
       const username = this.state.username
       const email = this.state.email
       const password = this.state.password
-      console.log({email,username,password})
+      const level = parseInt(this.state.level)
       const registerUrl = `https://api.fluent.id/users/`
       const loginUrl = `https://api.fluent.id/login/`
       this.setState({ loading: "is-loading" })
@@ -45,7 +50,8 @@ class Register extends Component {
       const obj = {
         "email": email, 
         "username": username,
-        "password": password
+        "password": password,
+        "level": level
       }
       console.log(obj)
       try {
@@ -74,6 +80,10 @@ class Register extends Component {
       }
   
       this.setState({ loading: "" })
+    }
+
+    componentDidMount() {
+      document.querySelector("body").classList.add("has-navbar-fixed-top")
     }
   
     render () {
@@ -123,9 +133,20 @@ class Register extends Component {
                                                             </div>
                                                         </div>
 
-                                                        <div class="field is-grouped">
-                                                            <div class="control">
-                                                            <button className={`button ${this.state.loading}`} type="submit">Submit</button>
+                                                        <div className="field">
+                                                            <label className="label">Skill Level</label>
+                                                            <div className="select is-fullwidth">
+                                                              <select onChange={this.handleLevel}>
+                                                                <option value="1">Beginner</option>
+                                                                <option value="2">Intermediate</option>
+                                                                <option value="3">Profficient</option>
+                                                              </select>
+                                                            </div>
+                                                        </div>
+
+                                                        <div className="field is-grouped">
+                                                            <div className="control">
+                                                            <button className={`button is-primary ${this.state.loading}`} type="submit">Submit</button>
                                                             </div>
                                                         </div>
                                                     </form>

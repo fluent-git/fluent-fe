@@ -9,7 +9,7 @@ import Router from 'next/router'
 import axios from 'axios'
 import {
   baseUrl, checkUrl, queueUrl, cancelUrl, startTalkUrl, endTalkUrl, 
-  queued, notQueued, connected, minimumCallTimeForReview
+  queued, notQueued, connected, minimumCallTimeForReview, topicDetailUrl
 } from '../utils/constants'
 
 var localPeer = null
@@ -36,6 +36,7 @@ class Talk extends Component {
             modalContent: "",
             modalImgSrc: "",
             callSeconds: 0,
+            starters: [],
           }
       } else {
           var username = sessionManager.getUsername()
@@ -51,6 +52,7 @@ class Talk extends Component {
             modalContent: "",
             modalImgSrc: "",
             callSeconds: 0,
+            starters: [],
           }
       }
 
@@ -109,6 +111,17 @@ class Talk extends Component {
 
   async tryToQueue(thisTopic, topicImageSource){
     var topic = thisTopic.toLowerCase()
+    
+    // if (topic != "travel" && topic != "hobbies" && topic != "free talk" && topic != "opinion") {
+    //   let modalContent = "This Topic Will Be Coming Soon! Stay Tuned!"
+    //   this.setState({
+    //     modal: true,
+    //     modalContent: modalContent,
+    //     modalImgSrc: "/static/asset/icon/warn.svg",
+    //   })
+    //   return
+    // }
+
     var queueCheckResponse = await this.getQueueCheckMessage({"topic": topic})
     
     console.log("queue check response",queueCheckResponse)
@@ -195,6 +208,20 @@ class Talk extends Component {
     
       if(res.data.message === 'Queuing'){
 
+        var starters = await axios.post(
+          topicDetailUrl,
+          {
+            "topic": topic
+          },
+          {
+            "headers": {
+              "Content-Type": "application/json"
+            }
+          }
+        )
+        starters = starters.data.conversation_starters
+        console.log('starters',starters)
+
         localPeer.on('connection', async (incoming) => {
           dataConnection = incoming
         })
@@ -225,7 +252,7 @@ class Talk extends Component {
             this.destroyPeerAndStream(localPeer,localStream)
             this.reviewCallback(otherId,talkId)
           })
-          this.setState({status: connected})
+          this.setState({status: connected, starters: starters})
         })
       } else {
         var otherId = res.data.user_id
@@ -313,9 +340,10 @@ class Talk extends Component {
   timerListener(passedTimeInSeconds){
     this.setState({callSeconds: passedTimeInSeconds})
   }
-
+  
   componentDidMount() {
     this.init()
+    document.querySelector("body").classList.add("has-navbar-fixed-top")
   }
 
   render() {
@@ -325,7 +353,7 @@ class Talk extends Component {
     } else if(this.state.status == queued) {
       currentRender = <QueuePage cancelQueue={this.cancelQueue} />
     } else if (this.state.status == connected) {
-      currentRender = <CallPage imgsrc={this.state.topicImg} title={this.state.topic} disconnectCall={this.disconnectCall} />
+      currentRender = <CallPage imgsrc={this.state.topicImg} title={this.state.topic} disconnectCall={this.disconnectCall} starters={this.state.starters} />
     } 
     if (this.state.modal) {
       currentModal = <Modal content={this.state.modalContent} imgSrc={this.state.modalImgSrc} onClose={this.onClose}/>
