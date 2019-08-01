@@ -53,15 +53,9 @@ class CallPage extends Component {
 				</p>
 				<div className="box" style={{textAlign: 'left', boxShadow: '0 2px 3px rgba(233, 35, 35, 0.1), 0 0 0 1px rgba(182, 0, 0, 0.1)'}}>
 					<div className="content">
-						<p className="subtitle">
-							<ol type="1" style={{marginTop: 0}}>
-								{this.props.starters.forEach(
-									function(element){
-										return <li>{element}</li>
-									}
-								)}
-							</ol>
-						</p>
+						<ol type="1" style={{marginTop: 0}}>
+							{this.props.starters.map((element)=>(<li className="subtitle" >{element}</li>))}
+						</ol>
 					</div>
 				</div>
 				<p className="subtitle">Don’t be shy and talk at least 10 minutes! Then score her speaking skills.</p>

@@ -108,7 +108,7 @@ class Talk extends Component {
     stream.getTracks().forEach(track=>track.stop())
   }
 
-  async tryToQueue(thisTopic, thisTopicId, topicImageSource){
+  async tryToQueue(thisTopic, topicImageSource){
     var topic = thisTopic.toLowerCase()
     
     // if (topic != "travel" && topic != "hobbies" && topic != "free talk" && topic != "opinion") {
@@ -207,7 +207,19 @@ class Talk extends Component {
     
       if(res.data.message === 'Queuing'){
 
-        var conversationStarters = axios.get(topicDetailUrl+thisTopicId).data.conversation_starters
+        var starters = await axios.post(
+          topicDetailUrl,
+          {
+            "topic": topic
+          },
+          {
+            "headers": {
+              "Content-Type": "application/json"
+            }
+          }
+        )
+        starters = starters.data.conversation_starters
+        console.log('starters',starters)
 
         localPeer.on('call', async (incoming) => {
           callConnection = incoming
@@ -235,7 +247,7 @@ class Talk extends Component {
             this.destroyPeerAndStream(localPeer,localStream)
             this.reviewCallback(otherId,talkId)
           })
-          this.setState({status: connected, starters: conversationStarters})
+          this.setState({status: connected, starters: starters})
         })
       } else {
         var otherId = res.data.user_id
@@ -333,7 +345,7 @@ class Talk extends Component {
     } else if(this.state.status == queued) {
       currentRender = <QueuePage cancelQueue={this.cancelQueue} />
     } else if (this.state.status == connected) {
-      currentRender = <CallPage imgsrc={this.state.topicImg} title={this.state.topic} disconnectCall={this.disconnectCall} />
+      currentRender = <CallPage imgsrc={this.state.topicImg} title={this.state.topic} disconnectCall={this.disconnectCall} starters={this.state.starters} />
     } 
     if (this.state.modal) {
       currentModal = <Modal content={this.state.modalContent} imgSrc={this.state.modalImgSrc} onClose={this.onClose}/>
