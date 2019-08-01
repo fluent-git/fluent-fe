@@ -263,8 +263,7 @@ class Talk extends Component {
           this.destroyPeerAndStream(localPeer,localStream)
           this.reviewCallback(otherId,talkId)
         })
-        this.setState({status: connected})
-      }
+        this.setState({status: connected, starters: starters})
     })
   }
     
