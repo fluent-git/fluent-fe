@@ -32,6 +32,10 @@ class Report extends Component {
       this.setState({ reason: event.target.value })
     }
 
+    componentDidMount() {
+      document.querySelector("body").classList.add("has-navbar-fixed-top")
+    }
+
     async handleSubmit (event) {
         event.preventDefault()
         this.setState({ error: '' })

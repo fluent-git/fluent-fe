@@ -61,6 +61,10 @@ class Login extends Component {
     this.setState({ loading: "" })
   }
 
+  componentDidMount() {
+    document.querySelector("body").classList.add("has-navbar-fixed-top")
+  }
+
   render () {
     return (
       <Layout loggedIn={this.state.loggedIn} username={this.state.username}>
@@ -104,7 +108,7 @@ class Login extends Component {
 
                                                     <div className="field is-grouped">
                                                         <div className="control">
-                                                            <button className={`button ${this.state.loading}`} type="submit">Submit</button>
+                                                            <button className={`button is-primary ${this.state.loading}`} type="submit">Submit</button>
                                                         </div>
                                                     </div>
                                                 </form>

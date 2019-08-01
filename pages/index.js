@@ -1,6 +1,5 @@
 import { Component } from 'react'
 import Layout from '../components/layout'
-import cookie from 'js-cookie'
 import sessionManager from '../utils/session'
 import Router from 'next/router'
 import { initGA, logPageView } from '../utils/analytics'
@@ -12,7 +11,9 @@ class Home extends Component {
       window.GA_INITIALIZED = true
     }
     logPageView()
+    document.querySelector("body").classList.add("has-navbar-fixed-top")
   }
+
   constructor(props) {
     super(props)
     if (sessionManager.isLoggedIn()) {
@@ -35,8 +36,12 @@ class Home extends Component {
         <section className="section">
           <div className="container">
             <h1 className="title">
-              Please login first
+              {/* Di Bawah Hanya Temporary, tolong di ganti kalau sudah jadi */}
+              Welcome To Fluent! A Community for you to Practice Speaking English!
+              <br></br>
+              Coming Soon! Stay Tuned
             </h1>
+            <img src="static/asset/image/home.png"/>
           </div>
         </section>
       </Layout>

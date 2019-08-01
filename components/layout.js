@@ -17,12 +17,12 @@ const Layout = props => (
       <meta name="viewport" content="initial-scale=1.0, width=device-width"/>
     </Head>
     <header>
-      <nav className="navbar has-shadow is-spaced" role="navigation" aria-label="main navigation">
+      <nav className="navbar has-shadow is-spaced is-primary navbar is-fixed-top" role="navigation" aria-label="main navigation">
         <div className="container">
           <div className="navbar-brand">
             <a className="navbar-item">
               <Link prefetch href="/">
-                <img src="/static/asset/logo/logo.svg"/>
+                <img src="/static/asset/logo/logo-white.svg"/>
               </Link>
             </a>
             <a id="burger" onClick={toggleStyles} 
@@ -54,12 +54,9 @@ const ProfileButton = props => (
     <div className="navbar-start">
     </div>
     <div className="navbar-end">
-      <Link prefetch href="/contact">
-        <a className="navbar-item">Contact Us</a>
-      </Link>
-      <div className="navbar-item has-dropdown is-hoverable">
+      <div className="navbar-item has-dropdown is-hoverable" id="navbar-dropdown">
         <a className="navbar-link is-primary is-link">
-          {props.username}
+          Hi, {props.username}!
         </a>
         <div className="navbar-dropdown">
           <Link prefetch href="/profile">
@@ -68,6 +65,9 @@ const ProfileButton = props => (
             </a>
           </Link>
           <hr className="navbar-divider"/>
+          <Link prefetch href="/contact">
+            <a className="navbar-item">Contact Us</a>
+          </Link>
           <a className="navbar-item" onClick={sessionManager.signOut}>
             Sign Out
           </a>
@@ -100,7 +100,7 @@ const LoginButton = props => (
       <div className="navbar-item">
         <div className="buttons">
           <Link prefetch href="/register">
-            <a className="button is-link">Register</a>
+            <a className="button is-primary">Register</a>
           </Link>
         </div>
       </div>
