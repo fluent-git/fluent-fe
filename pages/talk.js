@@ -65,6 +65,7 @@ class Talk extends Component {
       this.reviewCallback = this.reviewCallback.bind(this)
       this.destroyPeerAndStream = this.destroyPeerAndStream.bind(this)
       this.getQueueCheckMessage = this.getQueueCheckMessage.bind(this)
+      this.checkDataChannelJson = this.checkDataChannelJson.bind(this)
       this.onClose = this.onClose.bind(this)
   }
 
@@ -224,6 +225,9 @@ class Talk extends Component {
 
         localPeer.on('connection', async (incoming) => {
           dataConnection = incoming
+          dataConnection.on('data', this.checkDataChannelJson)
+          dataConnection.on('close',()=>console.log('closed data channel'))
+          console.log('connected datastream.', dataConnection)
         })
 
         localPeer.on('call', async (incoming) => {
@@ -259,6 +263,10 @@ class Talk extends Component {
         var talkId = res.data.talk_id
         
         dataConnection = localPeer.connect(res.data.peerjs_id)
+        console.log('connected datastream.', dataConnection)
+
+        dataConnection.on('data', this.checkDataChannelJson)
+        dataConnection.on('close',()=>console.log('closed data channel'))
 
         callConnection = localPeer.call(res.data.peerjs_id,localStream)
         console.log("caller",{callConnection})
@@ -275,12 +283,28 @@ class Talk extends Component {
     })
   }
     
-  disconnectCall(){
-    if(callConnection){
+  async checkDataChannelJson(data){
+    console.log(data)
+    if(data.msg === 'END_CALL'){
+      console.log('pingin back')
+      await dataConnection.send({msg: 'END_CALL'})
+      console.log('close datachannel')
+      if(callConnection.open){
+       dataConnection.close()
+       callConnection.close()
+      }
+    }
+    // TO DO: add support for sending text data such as text-to-speech transcriptions. 
+  }
+
+  async disconnectCall(){
+    await dataConnection.send({msg: 'END_CALL'})
+    console.log('sent close message')
+    if(callConnection.open){
       this.killStream()
       callConnection.close()
     }
-  }
+}
   
   async cancelQueue(){
     if(this.state.status === queued) {
