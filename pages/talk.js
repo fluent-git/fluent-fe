@@ -292,7 +292,7 @@ class Talk extends Component {
   }
     
   reviewCallback(otherId,talkId){
-    if(this.state.callSeconds <= minimumCallTimeForReview){
+    /*if(this.state.callSeconds <= minimumCallTimeForReview){
       axios.post(endTalkUrl,
         {
           'talk_id': talkId
@@ -310,7 +310,7 @@ class Talk extends Component {
         modalImgSrc: "/static/asset/icon/warn.svg",
       })
       return
-    }
+    }*/
     console.log('###### INI REVIEW CALLBACK #######')
     console.log('create review for user',otherId,', talkId',talkId)
     sessionManager.startReview(otherId,talkId)
