@@ -205,21 +205,21 @@ class Talk extends Component {
       }
       console.log(res.data)
     
-      if(res.data.message === 'Queuing'){
-
-        var starters = await axios.post(
-          topicDetailUrl,
-          {
-            "topic": topic
-          },
-          {
-            "headers": {
-              "Content-Type": "application/json"
-            }
+      var starters = await axios.post(
+        topicDetailUrl,
+        {
+          "topic": topic
+        },
+        {
+          "headers": {
+            "Content-Type": "application/json"
           }
-        )
-        starters = starters.data.conversation_starters
-        console.log('starters',starters)
+        }
+      )
+      starters = starters.data.conversation_starters
+      console.log('starters',starters)
+
+      if(res.data.message === 'Queuing'){
 
         localPeer.on('call', async (incoming) => {
           callConnection = incoming
