@@ -123,6 +123,10 @@ body.has-navbar-fixed-top {
     box-shadow: 0 2px 3px rgba(233, 35, 35, 0.1), 0 0 0 1px rgba(182, 0, 0, 0.1);
     background-color: #F4E3E1;
 }
+.talk-page .inactive:hover {
+    box-shadow: 0 2px 3px rgba(233, 35, 35, 0.1), 0 0 0 1px rgba(182, 0, 0, 0.1);
+    background-color: rgba(0,0,0,0.5);
+}
 .header-wrapper {
     width: 25vw;
     min-width: 300px;
