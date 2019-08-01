@@ -17,8 +17,8 @@ const Layout = props => (
       <meta name="viewport" content="initial-scale=1.0, width=device-width"/>
     </Head>
     <header>
-      <nav className="navbar has-shadow is-spaced is-primary navbar is-fixed-top" role="navigation" aria-label="main navigation">
-        <div className="container">
+      <nav className="navbar is-spaced is-primary navbar is-fixed-top" role="navigation" aria-label="main navigation">
+        <div className="container" style={{maxWidth:"none", margin: "none"}}>
           <div className="navbar-brand">
             <a className="navbar-item">
               <Link prefetch href="/">
