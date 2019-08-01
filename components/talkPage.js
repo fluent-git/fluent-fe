@@ -86,22 +86,44 @@ class Box extends Component {
 		super(props)
 	}
 	render() {
+		var theTopic = this.props.title;
+		let displayImage
+		if (theTopic == "Travel" || theTopic == "Hobbies" || theTopic == "Opinion" || theTopic == "Free Talk") {
+		displayImage = 
+			<div 
+				className="box tile-box" 
+				style={{
+					display: 'flex', 
+					flexDirection:'column', 
+					alignItems: 'center',
+					justifyContent:'space-around'}}>
+				<figure className="image is-128x128">
+					<img src={this.props.imgsrc} />
+				</figure>
+				<p className="title">
+					{theTopic}
+				</p>
+			</div>;
+		} else {
+			displayImage = 
+			<div 
+				className="box inactive tile-box" 
+				style={{
+					display: 'flex', 
+					flexDirection:'column', 
+					alignItems: 'center',
+					justifyContent:'space-around'}}>
+				<figure className="image is-128x128">
+					<img src={this.props.imgsrc} />
+				</figure>
+				<p className="title">
+				{theTopic}
+				</p>
+			</div>;
+		}
 		return (
 			<a onClick={() => this.props.tryToQueue(this.props.title, this.props.imgsrc)}>
-				<div 
-					className="box tile-box" 
-					style={{
-						display: 'flex', 
-						flexDirection:'column', 
-						alignItems: 'center',
-						justifyContent:'space-around'}}>
-					<figure className="image is-128x128">
-						<img src={this.props.imgsrc} />
-					</figure>
-					<p className="title">
-						{this.props.title}
-					</p>
-				</div>
+				{displayImage}
 			</a>
 		);
 	}
