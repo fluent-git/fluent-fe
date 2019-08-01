@@ -43,7 +43,7 @@ class Register extends Component {
       const email = this.state.email
       const password = this.state.password
       const level = parseInt(this.state.level)
-      const registerUrl = `https://api.fluent.id/users/`
+      const registerUrl = `https://api.fluent.id/register/`
       const loginUrl = `https://api.fluent.id/login/`
       this.setState({ loading: "is-loading" })
   
