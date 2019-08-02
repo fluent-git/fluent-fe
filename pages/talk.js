@@ -82,7 +82,7 @@ class Talk extends Component {
   }
 
   killStream(){
-    audioPlayer.remove()
+    if(audioPlayer) audioPlayer.remove()
     audioPlayer = null
   }
     
