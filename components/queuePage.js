@@ -3,16 +3,22 @@ import { Component } from 'react'
 class QueuePage extends Component {
 	constructor(props) {
 		super(props)
+		this.handleUnload = this.handleUnload.bind(this)
 	}
 
 	componentDidMount(){
-		window.addEventListener("beforeunload", function (ev){  
-			ev.preventDefault();
-			console.log(this)
-			console.log(this.props.cancelQueue)
-			this.props.cancelQueue();
-			return ev.returnValue = 'Are you sure you want to close?';
-		}.bind(this));
+		window.addEventListener("beforeunload", this.handleUnload);
+	}
+
+	componentWillUnmount(){
+		console.log('ok kill')
+		window.removeEventListener("beforeunload", this.handleUnload);
+	}
+
+	handleUnload = function(ev){  
+		ev.preventDefault();
+		this.props.cancelQueue();
+		return ev.returnValue = 'Are you sure you want to close?';
 	}
 
 	render() {
