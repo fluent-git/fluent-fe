@@ -15,6 +15,9 @@ import {
 var localPeer = null
 var callConnection = null
 var audioPlayer = null
+var otherId = -1
+var talkId = -1
+
 
 class Talk extends Component {
   constructor(props) {
@@ -241,21 +244,21 @@ class Talk extends Component {
           )
           console.log(res.data)
     
-          var otherId = res.data.user_id
-          var talkId = res.data.talk_id
+          otherId = res.data.user_id
+          talkId = res.data.talk_id
 
           this.playStream(callConnection.remoteStream)
           callConnection.on('stream',this.playStream)
           callConnection.on('close',()=>{
             this.destroyPeerAndStream(localPeer,localStream)
-            this.reviewCallback(otherId,talkId)
+            this.reviewCallback()
           })
           this.setState({status: connected})
-          console.log('queueer',this.state.starters)
+          console.log('queuer',this.state.starters)
         })
       } else {
-        var otherId = res.data.user_id
-        var talkId = res.data.talk_id
+        otherId = res.data.user_id
+        talkId = res.data.talk_id
     
         callConnection = localPeer.call(res.data.peerjs_id,localStream)
         console.log("caller",{callConnection})
@@ -265,7 +268,7 @@ class Talk extends Component {
         })
         callConnection.on('close',()=>{
           this.destroyPeerAndStream(localPeer,localStream)
-          this.reviewCallback(otherId,talkId)
+          this.reviewCallback()
         })
         this.setState({status: connected})
         console.log(this.state.starters)
@@ -279,6 +282,7 @@ class Talk extends Component {
       callConnection.close()
       callConnection = null
     }
+    this.reviewCallback()
   }
   
   async cancelQueue(){
@@ -297,7 +301,7 @@ class Talk extends Component {
     this.setState({status: notQueued})
   }
     
-  reviewCallback(otherId,talkId){
+  reviewCallback(){
     /*if(this.state.callSeconds <= minimumCallTimeForReview){
       axios.post(endTalkUrl,
         {
