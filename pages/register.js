@@ -139,7 +139,7 @@ class Register extends Component {
                                                               <select onChange={this.handleLevel}>
                                                                 <option value="1">Beginner</option>
                                                                 <option value="2">Intermediate</option>
-                                                                <option value="3">Profficient</option>
+                                                                <option value="3">Proficient</option>
                                                               </select>
                                                             </div>
                                                         </div>
