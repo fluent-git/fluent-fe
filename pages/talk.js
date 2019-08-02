@@ -205,7 +205,7 @@ class Talk extends Component {
       }
       console.log(res.data)
     
-      var starters = await axios.post(
+      var starters = axios.post(
         topicDetailUrl,
         {
           "topic": topic
@@ -215,9 +215,12 @@ class Talk extends Component {
             "Content-Type": "application/json"
           }
         }
-      )
-      starters = starters.data.conversation_starters
-      console.log('starters',starters)
+      ).then((res)=>{
+        starters = res.data.conversation_starters
+        console.log('starters',starters)
+        this.setState({starters: starters})
+      })
+      
 
       if(res.data.message === 'Queuing'){
 
@@ -247,7 +250,8 @@ class Talk extends Component {
             this.destroyPeerAndStream(localPeer,localStream)
             this.reviewCallback(otherId,talkId)
           })
-          this.setState({status: connected, starters: starters})
+          this.setState({status: connected})
+          console.log('queueer',this.state.starters)
         })
       } else {
         var otherId = res.data.user_id
@@ -263,7 +267,9 @@ class Talk extends Component {
           this.destroyPeerAndStream(localPeer,localStream)
           this.reviewCallback(otherId,talkId)
         })
-        this.setState({status: connected, starters: starters})
+        this.setState({status: connected})
+        console.log(this.state.starters)
+      }
     })
   }
     
