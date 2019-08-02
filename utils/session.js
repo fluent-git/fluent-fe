@@ -55,6 +55,10 @@ var SessionManager = (function() {
         cookie.remove('token')
         Router.push('/login')
     }
+
+    var talkDetails = function(talkId) {
+        cookie.set('talkId',talkId)
+    }
   
     return {
         isLoggedIn: isLoggedIn,
@@ -66,7 +70,8 @@ var SessionManager = (function() {
         getOtherId: getOtherId,
         getTalkId: getTalkId,
         signIn: signIn,
-        signOut: signOut
+        signOut: signOut,
+        talkDetails: talkDetails
     }
   
 })();
