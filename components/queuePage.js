@@ -1,6 +1,20 @@
 import { Component } from 'react'
 
 class QueuePage extends Component {
+	constructor(props) {
+		super(props)
+	}
+
+	componentDidMount(){
+		window.addEventListener("beforeunload", function (ev){  
+			ev.preventDefault();
+			console.log(this)
+			console.log(this.props.cancelQueue)
+			this.props.cancelQueue();
+			return ev.returnValue = 'Are you sure you want to close?';
+		}.bind(this));
+	}
+
 	render() {
 		return (
 			<div className="container queue-page" style={{display: 'flex', alignItems: 'center', flexDirection: 'column', padding: 50, textAlign: 'center', justifyContent:'center'}}>
