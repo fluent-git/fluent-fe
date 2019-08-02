@@ -271,6 +271,7 @@ class Talk extends Component {
     if(callConnection){
       this.killStream()
       callConnection.close()
+      callConnection = null
     }
   }
   
