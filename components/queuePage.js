@@ -98,7 +98,7 @@ class TimerCountDown extends Component {
 	}
 
 	componentWillMount(){
-		let time = Math.floor(Math.random() * 300) + 180; 
+		let time = Math.floor(Math.random() * 180) + 150; 
 		var min = Math.floor(time / 60);
 		var sec = time - (min*60);
 
