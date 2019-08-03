@@ -143,6 +143,7 @@ class Register extends Component {
                                                               </select>
                                                             </div>
                                                         </div>
+                                                        <p style={{color: 'black', marginBottom: 10}}>Already have an account? <b><a href="/login">Sign In</a></b></p>
 
                                                         <div className="field is-grouped">
                                                             <div className="control">

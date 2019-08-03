@@ -105,7 +105,7 @@ class Login extends Component {
                                                             <input className="input" type="password" placeholder="Password" onChange={this.handlePassword}/>
                                                         </div>
                                                     </div>
-                                                    <p style={{color: 'black', marginBottom: 10}}>Tidak punya akun? <b><a href="/register">Daftar</a></b> di sini.</p>
+                                                    <p style={{color: 'black', marginBottom: 10}}>New to Fluent? <b><a href="/register">Create an account</a></b> to get started today.</p>
                                                     <div className="field is-grouped">
                                                         <div className="control">
                                                             <button className={`button is-primary ${this.state.loading}`} type="submit">Submit</button>
