@@ -33,6 +33,7 @@ class QueuePage extends Component {
 					<div className="four" style={{background: 'rgba(106, 104, 250, 0.5)'}}></div>
 				</div>
 				<p className="title">This may take a few minutes...</p>
+				<p>What do you think of Fluent?<a href="https://docs.google.com/forms/d/1dcf3KYo46Pzlkoyyi4INPxqBRwEupNqTxrCbl9VSsg4" target="_blank"> Please kindly fill this form.</a></p>
 				<TimerCountDown topic={this.props.topic} />
 				<a onClick={() => this.props.cancelQueue()}>
 					<figure className="image is-64x64" style={{margin: 20}}>
