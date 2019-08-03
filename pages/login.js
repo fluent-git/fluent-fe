@@ -80,8 +80,8 @@ class Login extends Component {
                                     <div className="tile">
                                         <div className="tile is-parent is-vertical">
                                             <article className="tile is-child notification is-primary">
-                                                <p className="title">Welcome to Fluent!</p>
-                                                <p className="subtitle">Where you can improve your english easily and without hassle.</p>
+                                                <p className="title">Learn English Conversation for free.</p>
+                                                <p className="subtitle">A fun conversation learning app that lets you make friends as you learn English!</p>
                                             </article>
                                         </div>
                                         <div className="tile is-parent">
