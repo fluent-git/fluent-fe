@@ -354,7 +354,7 @@ class Talk extends Component {
     if (this.state.status == notQueued) {
       currentRender = <TalkPage tryToQueue={this.tryToQueue} /> 
     } else if(this.state.status == queued) {
-      currentRender = <QueuePage cancelQueue={this.cancelQueue} />
+      currentRender = <QueuePage cancelQueue={this.cancelQueue} topic={this.state.topic} />
     } else if (this.state.status == connected) {
       currentRender = <CallPage imgsrc={this.state.topicImg} title={this.state.topic} disconnectCall={this.disconnectCall} starters={this.state.starters} />
     } 

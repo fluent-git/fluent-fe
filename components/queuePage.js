@@ -33,7 +33,7 @@ class QueuePage extends Component {
 					<div className="four" style={{background: 'rgba(106, 104, 250, 0.5)'}}></div>
 				</div>
 				<p className="title">This may take a few minutes...</p>
-				<TimerCountDown />
+				<TimerCountDown topic={this.props.topic} />
 				<a onClick={() => this.props.cancelQueue()}>
 					<figure className="image is-64x64" style={{margin: 20}}>
 						<img src='/static/asset/icon/cancel.svg' />
@@ -55,9 +55,11 @@ class TimerCountDown extends Component {
 		this.intervalHandle;
 		this.startCountDown = this.startCountDown.bind(this);
 		this.tick = this.tick.bind(this);
+		this.topic = this.props.topic.charAt(0).toUpperCase() + this.props.topic.slice(1);
 	}
 
 	tick() {
+		/* Counting down system -----
 		if (this.secondsRemaining == 0) {
 			clearInterval(this.intervalHandle);
 			this.setState({
@@ -91,6 +93,34 @@ class TimerCountDown extends Component {
 		}
 
 		this.secondsRemaining--
+		----- End of Counting down system */
+
+		/* Counting up system */
+		var min = Math.floor(this.secondsRemaining / 60);
+		var sec = this.secondsRemaining - (min*60);
+
+		if(sec < 10) {
+			this.setState({
+				seconds: "0" + sec,
+			})
+		} else {
+			this.setState({
+				seconds: sec,
+			})
+		}
+
+		if(min<10) {
+			this.setState({
+				minutes: "0" + min,
+			})
+		} else {
+			this.setState({
+				minutes: min,
+			})
+		}
+
+		this.secondsRemaining++
+		/* ----- End of Counting up system */
 	}
 	
 	startCountDown(){
@@ -98,9 +128,17 @@ class TimerCountDown extends Component {
 	}
 
 	componentWillMount(){
+		/* Counting down system -----
 		let time = Math.floor(Math.random() * 180) + 150; 
 		var min = Math.floor(time / 60);
 		var sec = time - (min*60);
+		----- End of Counting down system */
+
+		/* Counting up system */
+		let time = 0; 
+		var min = 0;
+		var sec = 0;
+		/* ----- End of Counting up system */
 
 		if(sec < 10) {
 			this.setState({
@@ -129,7 +167,8 @@ class TimerCountDown extends Component {
 		return(
 			<div>
 				<p className="subtitle">
-					Estimated queue time: {this.state.minutes}:{this.state.seconds}
+					{/* Estimated queue time: {this.state.minutes}:{this.state.seconds} */}
+					{this.topic} - {this.state.minutes}:{this.state.seconds} 
 				</p>
 			</div>
 		);
