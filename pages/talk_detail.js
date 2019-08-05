@@ -20,7 +20,7 @@ class TalkDetail extends Component {
             this.state = { loggedIn: false, username: "", userId: 0, token: "", data: [] }
         }
 
-        this.state = { clarity: '', pacing: '', pronunciation: '', note: '', nbspPadding: 31, topic: '', duration: 0, time: ''}
+        this.state = { clarity: '', pacing: '', pronunciation: '', note: '', nbspPadding: 31, topic: '', duration: 0, time: '', available: ''}
     }
 
     async getTalkDetails() {
@@ -44,6 +44,9 @@ class TalkDetail extends Component {
                        time: datas.talk_id.start_time
                        })
       } catch (error) {
+        // Maybe the other user did not leave review, eitherways we will display no review left
+        this.setState({available: 'false'})
+
         console.error(
           'You have an error in your code or there are Network issues.',
           error
@@ -81,6 +84,8 @@ class TalkDetail extends Component {
                   "Near-native pronunciation"
                 ];
 
+      const available = this.state.available
+
       let getFeedback
       const feedback = this.state.note;
       if (feedback == "") {
@@ -109,17 +114,13 @@ class TalkDetail extends Component {
                       <p>  Topic: {this.state.topic} {"\n"}</p>
                       <p>  Duration: {timeString}</p></div>
 
-        return (
-            <Layout loggedIn={this.state.loggedIn} username={this.state.username}>
-              <link type="text/css" rel="stylesheet" href="static/style.css"/>
-              <br></br>
-              <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-                <img src="static/asset/icon/user.svg"/>
-                  <br></br>
-                  <h1 className="title" style={{'textAlign': 'center'}}>Score Speaking Skills</h1>
-                  {showDetails}
-                  <br></br>
-                  <form onSubmit={this.handleSubmit}>
+      let renderData
+
+      if (available == "false") {
+        renderData = <h1 className="title" style={{'textAlign': 'center'}}>Sorry! Your partner did not leave any reviews</h1>
+      } else {
+        renderData = 
+        <form onSubmit={this.handleSubmit}>
                     <div className="field is-horizontal">
                       <div className="field-label">
                         <label className="label" style={{width: '100px', position: 'relative', top:'6px', 'text-align':'left'}}>Clarity</label>
@@ -165,7 +166,28 @@ class TalkDetail extends Component {
                       </div>
                     </div>
                     <br></br>
-                  </form>
+                  </form>;
+      }
+
+      let showDetailsOrNot
+      if (available == "false") {
+        showDetailsOrNot = <p></p>
+      } else {
+        showDetailsOrNot = showDetails;
+      }
+
+        return (
+            <Layout loggedIn={this.state.loggedIn} username={this.state.username}>
+              <link type="text/css" rel="stylesheet" href="static/style.css"/>
+              <br></br>
+              <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                <img src="static/asset/icon/user.svg"/>
+                  <br></br>
+                  <h1 className="title" style={{'textAlign': 'center'}}>Score Speaking Skills</h1>
+                  {showDetailsOrNot}
+                  <br></br>
+                  {renderData}
+                  <br></br>
               </div>
             </Layout>
         );
