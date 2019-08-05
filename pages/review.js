@@ -9,16 +9,18 @@ class Review extends Component {
     constructor(props) {
         super(props)
         if (sessionManager.isLoggedIn()) {
-            var username = sessionManager.getUsername()
-            var userId = sessionManager.getUserId()
-            var token = sessionManager.getToken()
+          var username = sessionManager.getUsername()
+          var userId = sessionManager.getUserId()
+          var token = sessionManager.getToken()
+          var loggedIn = true
         } else {
-            var username = sessionManager.getUsername()
-            var userId = sessionManager.getUserId()
-            var token = sessionManager.getToken()
+          var username = sessionManager.getUsername()
+          var userId = sessionManager.getUserId()
+          var token = sessionManager.getToken()
+          var loggedIn = false
         }
 
-        this.state = { user: '', clarity: '', pacing: '', pronunciation: '', note: '', nbspPadding: 31}
+        this.state = { user: '', clarity: '', pacing: '', pronunciation: '', note: '', nbspPadding: 31, loggedIn: loggedIn, username: username, userId: userId, token: token}
         this.handleFeedback = this.handleFeedback.bind(this)
         this.handleClarity = this.handleClarity.bind(this)
         this.handlePacing = this.handlePacing.bind(this)

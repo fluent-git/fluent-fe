@@ -43,7 +43,7 @@ const Layout = props => (
       <div className="content has-text-centered">
         <span>Made with 💛 in Jakarta, Indonesia</span>
         <br></br>
-        <span>Copyright 2019 Fluent</span>
+        <span>Copyright 2019 Fluent | <a href="https://docs.google.com/forms/d/1dcf3KYo46Pzlkoyyi4INPxqBRwEupNqTxrCbl9VSsg4" target="_blank">bit.ly/fluent-feedback</a></span>
       </div>
     </footer>
   </div>

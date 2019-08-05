@@ -80,8 +80,8 @@ class Login extends Component {
                                     <div className="tile">
                                         <div className="tile is-parent is-vertical">
                                             <article className="tile is-child notification is-primary">
-                                                <p className="title">Welcome to Fluent!</p>
-                                                <p className="subtitle">Where you can improve your english easily and without hassle.</p>
+                                                <p className="title">Learn English Conversation for free.</p>
+                                                <p className="subtitle">A fun conversation learning app that lets you make friends as you learn English!</p>
                                             </article>
                                         </div>
                                         <div className="tile is-parent">
@@ -105,7 +105,7 @@ class Login extends Component {
                                                             <input className="input" type="password" placeholder="Password" onChange={this.handlePassword}/>
                                                         </div>
                                                     </div>
-
+                                                    <p style={{color: 'black', marginBottom: 10}}>New to Fluent? <b><a href="/register">Create an account</a></b> to get started today.</p>
                                                     <div className="field is-grouped">
                                                         <div className="control">
                                                             <button className={`button is-primary ${this.state.loading}`} type="submit">Submit</button>

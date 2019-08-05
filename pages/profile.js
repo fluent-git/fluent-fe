@@ -2,6 +2,7 @@ import { Component } from 'react'
 import Layout from '../components/layout';
 import sessionManager from '../utils/session'
 import Axios from 'axios';
+import Router from 'next/router'
 
 class Profile extends Component {
     constructor(props) {
@@ -18,6 +19,7 @@ class Profile extends Component {
             this.state = { loggedIn: false, username: "", userId: 0, token: "", data: [] }
         }  
         this.getUserProfile = this.getUserProfile.bind(this)
+        this.handleTalkDetail = this.handleTalkDetail.bind(this)
     }
 
     async getUserProfile() {
@@ -40,6 +42,13 @@ class Profile extends Component {
         this.setState({ loading: "" })
     }
 
+    handleTalkDetail (event) {
+        const talkId = event.target.value
+        console.log(talkId)
+        sessionManager.talkDetails(talkId)
+        Router.push('/talk_detail')
+      }
+
     componentWillMount() {
         this.getUserProfile()
     }
@@ -49,13 +58,15 @@ class Profile extends Component {
       }
 
     render() {
+        const username = sessionManager.getUsername()
+        var titleName = <h1 className="title">Talk History for {username}</h1>;
         return (
             <Layout loggedIn={this.state.loggedIn} username={this.state.username}>
-                <br></br>
+                <br style={{lineHeight: '50px'}}></br>
                 <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                     <img src="static/asset/icon/user.svg"/>
                     <br></br>
-                    <h1 className="title">Talk History</h1>
+                    {titleName}
                     <br></br>
                     <div className="card-box table-responsive">
                         <table id="datatable" className="table table-striped is-striped table-bordered" width="100%">
@@ -65,7 +76,6 @@ class Profile extends Component {
                                     <th>Time</th>
                                     <th>Topic</th>
                                     <th>Duration</th>
-                                 
                                 </tr>
                             </thead>
                             <tbody>
@@ -83,9 +93,7 @@ class Profile extends Component {
                                             <td>{topic}</td>
                                             <td>{timeString}</td>
                                             <td>
-                                            <button class="button is-primary">
-                                                Details
-                                            </button>
+                                             <button className="button is-primary" value={id} onClick={this.handleTalkDetail}>Details</button>
                                             </td>
                                         </tr>
                                     )

@@ -101,8 +101,8 @@ class Register extends Component {
                                         <div class="tile">
                                             <div class="tile is-parent is-vertical">
                                                 <article class="tile is-child notification is-primary">
-                                                    <p class="title">Welcome to Fluent!</p>
-                                                    <p class="subtitle">Where you can improve your english easily and without hassle.</p>
+                                                  <p className="title">Learn English Conversation for free.</p>
+                                                  <p className="subtitle">A fun conversation learning app that lets you make friends as you learn English!</p>
                                                 </article>
                                             </div>
                                             <div class="tile is-parent">
@@ -143,6 +143,7 @@ class Register extends Component {
                                                               </select>
                                                             </div>
                                                         </div>
+                                                        <p style={{color: 'black', marginBottom: 10}}>Already have an account? <b><a href="/login">Sign In</a></b></p>
 
                                                         <div className="field is-grouped">
                                                             <div className="control">

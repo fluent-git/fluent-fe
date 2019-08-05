@@ -9,16 +9,18 @@ class Report extends Component {
     constructor(props) {
         super(props)
         if (sessionManager.isLoggedIn()) {
-            var username = sessionManager.getUsername()
-            var userId = sessionManager.getUserId()
-            var token = sessionManager.getToken()
+          var username = sessionManager.getUsername()
+          var userId = sessionManager.getUserId()
+          var token = sessionManager.getToken()
+          var loggedIn = true
         } else {
-            var username = sessionManager.getUsername()
-            var userId = sessionManager.getUserId()
-            var token = sessionManager.getToken()
+          var username = sessionManager.getUsername()
+          var userId = sessionManager.getUserId()
+          var token = sessionManager.getToken()
+          var loggedIn = false
         }
 
-        this.state = { user: '', reason: '', note: '', talk_id: ''}
+        this.state = { user: '', reason: '', note: '', talk_id: '', loggedIn: loggedIn, username: username, userId: userId, token: token}
         this.handleComment = this.handleComment.bind(this)
         this.handleReason = this.handleReason.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)

@@ -33,16 +33,29 @@ class Home extends Component {
   render () {
     return (
       <Layout loggedIn={this.state.loggedIn} username={this.state.username}>
-        <section className="section">
-          <div className="container">
-            <h1 className="title">
-              {/* Di Bawah Hanya Temporary, tolong di ganti kalau sudah jadi */}
-              Welcome To Fluent! A Community for you to Practice Speaking English!
-              <br></br>
-              Coming Soon! Stay Tuned
-            </h1>
-            <img src="static/asset/image/home.png"/>
-          </div>
+        <link type="text/css" rel="stylesheet" href="static/style.css"/>
+        <section className="dashboard">
+          <section className="sectionStyle home center">
+            <div className="center content">
+              <div className="center">
+                <div className="title">
+                  <div className="stripe">
+                  </div>
+                  <div className="content-stripe">
+                    <h1>Fluent, Komunitas Bahasa Dibuat Untukmu</h1>
+                    <a href="/login">
+                      <div className="join-button">
+                        <p>Ayo Mulai</p>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div className="image-container">
+                <img src="/static/asset/image/home.png" />
+              </div>
+            </div>
+          </section>
         </section>
       </Layout>
     );

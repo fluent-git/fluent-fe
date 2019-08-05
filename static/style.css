@@ -331,3 +331,137 @@ body.has-navbar-fixed-top {
 .is-disabled-image {
     opacity: 0.2;
 }
+
+
+/* Dashboard */
+
+.dashboard h1 {
+    font-size: 3em;
+}
+
+@media only screen and (max-width: 670px) {
+    .dashboard h1 {
+        font-size: 2em;
+    }
+}
+/* Home */
+
+.sectionStyle {
+    margin: 0;
+    height: auto;
+    width: 100%;
+}
+.home {
+    background-color: #F7E2E1;
+    height: 80vh;
+}
+.logoStyle {
+    height: 3em;
+}
+.menu {
+    display:flex;
+    position: absolute;
+    top: 0;
+    justify-content: space-around;
+    padding: 1em 0;
+    align-items: center;
+}
+.signin-button {
+    padding: 0.1em 2em;
+    border-radius: 10px;
+    border: 2px solid #3c3c72;
+}
+.dashboard .center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.stripe {
+    width: 15px;
+    height: auto;
+    background-color: #3c3c72;
+}
+.content > div{
+    flex: 1;
+}
+.home .title {
+    display: flex;
+    padding-left: 10vw;
+}
+.content img {
+    width: 100%;
+}
+.join-button {
+    background-color: #b1aad4;
+    padding: 0.1em 1.5em;
+    border-radius: 1.5em;
+    display: inline-block;
+}
+.signin-button p, .join-button p {
+    margin: 0;
+    font-weight: bold;
+    color: #3c3c72;
+}
+.join-button p {
+    font-size: 1em;
+}
+.content-stripe {
+    padding: 1em;
+    max-width: 630px;
+}
+.home h1 {
+    font-size: 2em;
+}
+@media only screen and (max-width: 1400px) {
+    .home h1 {
+        font-size: 1.8em;
+    }
+    .home .title {
+        padding-left: 8vw; 
+    }
+}
+@media only screen and (max-width: 800px) {
+    .home h1 {
+        font-size: 1.6em;
+    }
+}
+@media only screen and (max-width: 768px) {
+    .home {
+        height: 95vh;
+    }
+    div.image-container {
+        flex: 0;
+    }
+    .home .title {
+        padding-left: 10vw; 
+    }
+    .content-stripe {
+        max-width: 550px;
+    }
+    .join-button p {
+        font-size: 0.8em;
+    }
+    .join-button {
+        padding: 0.1em 1.2em;
+        border-radius: 1.2em;
+    }
+}
+@media only screen and (max-width: 600px) {
+    .home h1 {
+        font-size: 1.6em;
+    }
+}
+@media only screen and (max-width: 400px) {
+    .home h1 {
+        font-size: 1.4em;
+    }
+    .join-button {
+        padding: 0.1em 1em;
+        border-radius: 1em;
+    }
+}
+@media only screen and (max-width: 360px) {
+    .home h1 {
+        font-size: 1.2em;
+    }
+}
