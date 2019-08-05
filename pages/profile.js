@@ -59,7 +59,7 @@ class Profile extends Component {
 
     render() {
         const username = sessionManager.getUsername()
-        var titleName = <h1 className="title">Talk History for {username}</h1>;
+        var titleName = <h1 className="title">{username}</h1>;
         return (
             <Layout loggedIn={this.state.loggedIn} username={this.state.username}>
                 <br style={{lineHeight: '50px'}}></br>
