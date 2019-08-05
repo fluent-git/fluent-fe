@@ -25,15 +25,15 @@ class TalkPage extends Component {
 								<TileTalk tryToQueue={this.props.tryToQueue} isEnabled='True' imgsrc='/static/asset/topic/free.svg' title="Free Talk"/>
 							</div>
 							<Tile tryToQueue={this.props.tryToQueue} isEnabled='True' imgsrc='/static/asset/topic/game.svg' title="Hobbies"/>
-							<Tile tryToQueue={this.props.tryToQueue} isEnabled='True' imgsrc='/static/asset/topic/trend.svg' title="Opinion"/>
-							<Tile tryToQueue={this.props.tryToQueue} isEnabled='True' imgsrc='/static/asset/topic/place.svg' title="Travel"/>
+							<Tile tryToQueue={this.props.tryToQueue} isEnabled='True' imgsrc='/static/asset/topic/tech.svg' title="Tech"/>
+							<Tile tryToQueue={this.props.tryToQueue} isEnabled='True' imgsrc='/static/asset/topic/food.svg' title="Food"/>
+							<Tile tryToQueue={this.props.tryToQueue} imgsrc='/static/asset/topic/trend.svg' title="Opinion"/>
+							<Tile tryToQueue={this.props.tryToQueue} imgsrc='/static/asset/topic/place.svg' title="Travel"/>
 							<Tile tryToQueue={this.props.tryToQueue} imgsrc='/static/asset/topic/culture.svg' title="Culture"/>
-							<Tile tryToQueue={this.props.tryToQueue} imgsrc='/static/asset/topic/food.svg' title="Food"/>
 							<Tile tryToQueue={this.props.tryToQueue} imgsrc='/static/asset/topic/health.svg' title="Health"/>
 							<Tile tryToQueue={this.props.tryToQueue} imgsrc='/static/asset/topic/job.svg' title="Job"/>
 							<Tile tryToQueue={this.props.tryToQueue} imgsrc='/static/asset/topic/movie.svg' title="Movie"/>
 							<Tile tryToQueue={this.props.tryToQueue} imgsrc='/static/asset/topic/politic.svg' title="Politic"/>
-							<Tile tryToQueue={this.props.tryToQueue} imgsrc='/static/asset/topic/tech.svg' title="Tech"/>
 					</div>
 				</div>
 			</div>
