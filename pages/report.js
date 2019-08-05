@@ -3,6 +3,7 @@ import Layout from '../components/layout';
 import sessionManager from '../utils/session'
 import Router from 'next/router'
 import Axios from 'axios';
+import SessionManager from '../utils/session';
 
 class Report extends Component {
     constructor(props) {
@@ -45,14 +46,19 @@ class Report extends Component {
         this.setState({ loading: "is-loading" })
     
         try {
+          const otherId = sessionManager.getOtherId()
+          const talkId = sessionManager.getTalkId()
+          console.log({otherId,talkId})
+
           const response = await Axios.post(url, {
-            "user": 1,
+            "user": otherId,
             "reason": reason,
             "note": note,
-            "talk_id": 1
+            "talk_id": talkId
           })
           if (response.data.id != 0) {
             console.log('Success')
+            SessionManager.endReview()
             Router.push('/')
           } else {
             console.log('Login failed.')

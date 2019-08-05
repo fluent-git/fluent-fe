@@ -1,6 +1,26 @@
 import { Component } from 'react'
 
 class QueuePage extends Component {
+	constructor(props) {
+		super(props)
+		this.handleUnload = this.handleUnload.bind(this)
+	}
+
+	componentDidMount(){
+		window.addEventListener("beforeunload", this.handleUnload);
+	}
+
+	componentWillUnmount(){
+		console.log('ok kill')
+		window.removeEventListener("beforeunload", this.handleUnload);
+	}
+
+	handleUnload = function(ev){  
+		ev.preventDefault();
+		this.props.cancelQueue();
+		return ev.returnValue = 'Are you sure you want to close?';
+	}
+
 	render() {
 		return (
 			<div className="container queue-page" style={{display: 'flex', alignItems: 'center', flexDirection: 'column', padding: 50, textAlign: 'center', justifyContent:'center'}}>

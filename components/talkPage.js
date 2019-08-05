@@ -10,7 +10,7 @@ class TalkPage extends Component {
 				<link type="text/css" rel="stylesheet" href="static/style.css"/>
 				<div className="column has-background-grey-light is-narrow is-hidden-mobile">
 					<div className="columns header-wrapper" style={{flexDirection: 'column'}}>         
-						<TileHeader tryToQueue={this.props.tryToQueue} imgsrc='/static/asset/topic/free-purple.svg' title="Free Talk"/>
+						<TileHeader tryToQueue={this.props.tryToQueue} isEnabled='True' imgsrc='/static/asset/topic/free-purple.svg' title="Free Talk"/>
 						<div className="column">
 							<p className="title" style={{color: '#3C3C72'}}>Talk</p>
 							<p className="subtitle">
@@ -22,11 +22,11 @@ class TalkPage extends Component {
 				<div className="column content-wrapper has-background-grey-lighter">
 					<div className="columns is-mobile is-multiline"> 
 							<div className="is-hidden-tablet" style={{width: '100%'}}>
-								<TileTalk tryToQueue={this.props.tryToQueue} imgsrc='/static/asset/topic/free.svg' title="Free Talk"/>
+								<TileTalk tryToQueue={this.props.tryToQueue} isEnabled='True' imgsrc='/static/asset/topic/free.svg' title="Free Talk"/>
 							</div>
-							<Tile tryToQueue={this.props.tryToQueue} imgsrc='/static/asset/topic/game.svg' title="Hobbies"/>
-							<Tile tryToQueue={this.props.tryToQueue} imgsrc='/static/asset/topic/trend.svg' title="Opinion"/>
-							<Tile tryToQueue={this.props.tryToQueue} imgsrc='/static/asset/topic/place.svg' title="Travel"/>
+							<Tile tryToQueue={this.props.tryToQueue} isEnabled='True' imgsrc='/static/asset/topic/game.svg' title="Hobbies"/>
+							<Tile tryToQueue={this.props.tryToQueue} isEnabled='True' imgsrc='/static/asset/topic/trend.svg' title="Opinion"/>
+							<Tile tryToQueue={this.props.tryToQueue} isEnabled='True' imgsrc='/static/asset/topic/place.svg' title="Travel"/>
 							<Tile tryToQueue={this.props.tryToQueue} imgsrc='/static/asset/topic/culture.svg' title="Culture"/>
 							<Tile tryToQueue={this.props.tryToQueue} imgsrc='/static/asset/topic/food.svg' title="Food"/>
 							<Tile tryToQueue={this.props.tryToQueue} imgsrc='/static/asset/topic/health.svg' title="Health"/>
@@ -49,7 +49,7 @@ class Tile extends Component {
 	render(){
 		return (
 			<div className="tile-wrapper column container">
-				<Box tryToQueue={this.props.tryToQueue} title={this.props.title} imgsrc={this.props.imgsrc}/>
+				<Box tryToQueue={this.props.tryToQueue} isEnabled={this.props.isEnabled} title={this.props.title} imgsrc={this.props.imgsrc}/>
 			</div>
 		);
 	}
@@ -62,7 +62,7 @@ class TileTalk extends Component {
 	render(){
 		return (
 			<div className="column container">
-				<BoxTalk tryToQueue={this.props.tryToQueue} title={this.props.title} imgsrc={this.props.imgsrc}/>
+				<BoxTalk tryToQueue={this.props.tryToQueue} isEnabled={this.props.isEnabled}  title={this.props.title} imgsrc={this.props.imgsrc}/>
 			</div>
 		);
 	}
@@ -75,7 +75,7 @@ class TileHeader extends Component {
 	render(){
 		return (
 			<div className="column container">
-				<Box tryToQueue={this.props.tryToQueue} title={this.props.title} imgsrc={this.props.imgsrc}/>
+				<Box tryToQueue={this.props.tryToQueue} isEnabled={this.props.isEnabled}  title={this.props.title} imgsrc={this.props.imgsrc}/>
 			</div>
 		);
 	}
@@ -89,14 +89,14 @@ class Box extends Component {
 		return (
 			<a onClick={() => this.props.tryToQueue(this.props.title, this.props.imgsrc)}>
 				<div 
-					className="box tile-box" 
+					className={this.props.isEnabled === 'True'? "box tile-box" : "box tile-box inactive is-disabled-topic"}
 					style={{
 						display: 'flex', 
 						flexDirection:'column', 
 						alignItems: 'center',
 						justifyContent:'space-around'}}>
-					<figure className="image is-128x128">
-						<img src={this.props.imgsrc} />
+					<figure className={this.props.isEnabled === 'True'? "image is-128x128" : "image is-128x128 is-disabled-image"}>
+						<img src={this.props.imgsrc}/>
 					</figure>
 					<p className="title">
 						{this.props.title}

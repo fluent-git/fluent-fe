@@ -1,6 +1,26 @@
 import { Component } from 'react'
 
 class CallPage extends Component {
+	constructor(props){
+		super(props)
+		this.handleUnload = this.handleUnload.bind(this)
+	}
+
+	componentDidMount(){
+		window.addEventListener("beforeunload", this.handleUnload);
+	}
+
+	componentWillUnmount(){
+		console.log('ok kill')
+		window.removeEventListener("beforeunload", this.handleUnload);
+	}
+
+	handleUnload = function(ev){  
+		ev.preventDefault();
+		this.props.disconnectCall();
+		return ev.returnValue = 'Are you sure you want to close?';
+	}
+
 	render() {
 		var topic = this.props.title;
 		/*
@@ -49,7 +69,7 @@ class CallPage extends Component {
 					<img src={this.props.imgsrc} />
 				</figure>
 				<p className="title">
-					Coversation Starter about {topic}
+					Conversation Starters about {topic}
 				</p>
 				<div className="box" style={{textAlign: 'left', boxShadow: '0 2px 3px rgba(233, 35, 35, 0.1), 0 0 0 1px rgba(182, 0, 0, 0.1)'}}>
 					<div className="content">
@@ -58,7 +78,7 @@ class CallPage extends Component {
 						</ol>
 					</div>
 				</div>
-				<p className="subtitle">Don’t be shy and talk at least 10 minutes! Then score her speaking skills.</p>
+				<p className="subtitle">Don’t be shy and talk for at least a few minutes!</p>
 				<TimerCountUp cfun={this.props.cfun}/>
 				<a onClick={() => this.props.disconnectCall()}>
 					<figure className="image is-64x64">

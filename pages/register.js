@@ -43,7 +43,7 @@ class Register extends Component {
       const email = this.state.email
       const password = this.state.password
       const level = parseInt(this.state.level)
-      const registerUrl = `https://api.fluent.id/users/`
+      const registerUrl = `https://api.fluent.id/register/`
       const loginUrl = `https://api.fluent.id/login/`
       this.setState({ loading: "is-loading" })
   
@@ -139,7 +139,7 @@ class Register extends Component {
                                                               <select onChange={this.handleLevel}>
                                                                 <option value="1">Beginner</option>
                                                                 <option value="2">Intermediate</option>
-                                                                <option value="3">Profficient</option>
+                                                                <option value="3">Proficient</option>
                                                               </select>
                                                             </div>
                                                         </div>
