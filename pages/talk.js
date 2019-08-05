@@ -39,6 +39,7 @@ class Talk extends Component {
             modalImgSrc: "",
             callSeconds: 0,
             starters: [],
+            tips: [],
           }
       } else {
           var username = sessionManager.getUsername()
@@ -55,6 +56,7 @@ class Talk extends Component {
             modalImgSrc: "",
             callSeconds: 0,
             starters: [],
+            tips: [],
           }
       }
 
@@ -220,8 +222,8 @@ class Talk extends Component {
         }
       ).then((res)=>{
         starters = res.data.conversation_starters
-        console.log('starters',starters)
-        this.setState({starters: starters})
+        let tips = res.data.tips
+        this.setState({starters: starters, tips: tips})
       })
       
 
@@ -354,7 +356,7 @@ class Talk extends Component {
     if (this.state.status == notQueued) {
       currentRender = <TalkPage tryToQueue={this.tryToQueue} /> 
     } else if(this.state.status == queued) {
-      currentRender = <QueuePage cancelQueue={this.cancelQueue} topic={this.state.topic} />
+      currentRender = <QueuePage cancelQueue={this.cancelQueue} topic={this.state.topic} tips={this.state.tips} />
     } else if (this.state.status == connected) {
       currentRender = <CallPage imgsrc={this.state.topicImg} title={this.state.topic} disconnectCall={this.disconnectCall} starters={this.state.starters} />
     } 
