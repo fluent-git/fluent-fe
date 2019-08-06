@@ -33,7 +33,8 @@ class QueuePage extends Component {
 					<div className="four" style={{background: 'rgba(106, 104, 250, 0.5)'}}></div>
 				</div>
 				<p className="title">This may take a few minutes...</p>
-				<p>What do you think of Fluent?<a href="https://docs.google.com/forms/d/1dcf3KYo46Pzlkoyyi4INPxqBRwEupNqTxrCbl9VSsg4" target="_blank"> Please kindly fill this form.</a></p>
+				<TipsDisplay tips={this.props.tips}/>
+				<br/>
 				<TimerCountDown topic={this.props.topic} />
 				<a onClick={() => this.props.cancelQueue()}>
 					<figure className="image is-64x64" style={{margin: 20}}>
@@ -42,6 +43,45 @@ class QueuePage extends Component {
 				</a>
 			</div>
 		);
+	}
+}
+
+class TipsDisplay extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			currentIndex: 0,
+		}
+		this.seconds = 0;
+		this.tick = this.tick.bind(this)
+	}
+
+	tick(){
+		if(this.props.tips.length){
+			if(3*this.seconds >= this.props.tips[this.state.currentIndex].split(' ').length){
+				this.seconds = 0
+				if(this.state.currentIndex+1 == this.props.tips.length){
+					this.setState({currentIndex: 0})
+				} else this.setState({currentIndex: this.state.currentIndex+1})
+			}
+			this.seconds++;
+		}
+	}
+
+	componentWillMount(){
+		this.intervalHandle = setInterval(this.tick, 1000);
+	}
+
+	componentWillUnmount(){
+		clearInterval(this.intervalHandle)
+	}
+
+	render(){
+		if (this.props.tips.length){
+			return <p>{this.props.tips[this.state.currentIndex]}</p>
+		} else {
+			return <p>What do you think of Fluent?<a href="https://docs.google.com/forms/d/1dcf3KYo46Pzlkoyyi4INPxqBRwEupNqTxrCbl9VSsg4" target="_blank"> Please kindly fill this form.</a></p>
+		}
 	}
 }
 
@@ -126,6 +166,10 @@ class TimerCountDown extends Component {
 	
 	startCountDown(){
 		this.intervalHandle = setInterval(this.tick, 1000);
+	}
+
+	componentWillUnmount(){
+		clearInterval(this.intervalHandle)
 	}
 
 	componentWillMount(){
