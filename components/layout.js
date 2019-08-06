@@ -89,6 +89,9 @@ const LoginButton = props => (
       <Link prefetch href="/contact">
         <a className="navbar-item">Contact Us</a>
       </Link>
+      <Link prefetch href="/download">
+        <a className="navbar-item">Download</a>
+      </Link>
       <div className="navbar-item">
         <div className="buttons">
           <Link prefetch href="/login">
