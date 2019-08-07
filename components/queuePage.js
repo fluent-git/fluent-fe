@@ -58,7 +58,7 @@ class TipsDisplay extends Component {
 
 	tick(){
 		if(this.props.tips.length){
-			if(3*this.seconds >= this.props.tips[this.state.currentIndex].split(' ').length){
+			if(2*this.seconds >= this.props.tips[this.state.currentIndex].split(' ').length){
 				this.seconds = 0
 				if(this.state.currentIndex+1 == this.props.tips.length){
 					this.setState({currentIndex: 0})

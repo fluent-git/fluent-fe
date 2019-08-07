@@ -230,6 +230,13 @@ class Talk extends Component {
       if(res.data.message === 'Queuing'){
 
         localPeer.on('call', async (incoming) => {
+
+          var ringtonePlayer = document.createElement('audio')
+          document.body.appendChild(ringtonePlayer)
+          ringtonePlayer.src = '../static/asset/audio/ringtone.mp3'
+          ringtonePlayer.autoplay = true
+          setTimeout(()=>{ringtonePlayer.remove()},2200)
+
           callConnection = incoming
           callConnection.answer(localStream)
           console.log("queuer",{callConnection})
