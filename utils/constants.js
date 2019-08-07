@@ -12,3 +12,6 @@ export const queued = "queued"
 export const notQueued = "notQueued"
 export const connected = "connected"
 export const minimumCallTimeForReview = 60
+
+// call page
+export const startersToShow = 3

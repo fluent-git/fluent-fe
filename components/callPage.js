@@ -1,9 +1,14 @@
 import { Component } from 'react'
+import { startersToShow } from '../utils/constants'
 
 class CallPage extends Component {
 	constructor(props){
 		super(props)
 		this.handleUnload = this.handleUnload.bind(this)
+		this.state = {
+			index: 0
+		}
+		this.getNextStarters = this.getNextStarters.bind(this)
 	}
 
 	componentDidMount(){
@@ -21,47 +26,16 @@ class CallPage extends Component {
 		return ev.returnValue = 'Are you sure you want to close?';
 	}
 
+	getNextStarters(){
+		this.setState({index: this.state.index+startersToShow})
+	}
+
 	render() {
 		var topic = this.props.title;
-		/*
-		let renderTopic
-		if(topic == "travel") {
-			renderTopic = 	<ol type="1" style={{marginTop: 0}}>
-							<li>When and where was the last time you went travelling?</li>
-							<li>Share about the activities that you did while travelling.</li>
-							<li>Was there something different from your home? Describe the difference</li>
-							<li>Where would be your next travel destination? Why?</li>
-							<li>What kinds of food did you try? Or what kinds of food do you want to try?</li> </ol>;
-		} else if (topic == "hobbies") {
-			renderTopic = 	<ol type="1" style={{marginTop: 0}}>
-							<li>Talk about movies/music/sports/games you like. Find something in common</li>
-							<li>What are the latest news about your hobbies?</li>
-							<li>How do you enjoy your hobby? Who do you usually spend it with?</li>
-							<li>Do you have a community who share the same hobby? What kinds of events do you guys do?</li>
-							<li>What do you like most about your hobby?</li> </ol>;
-		} else if (topic == "free talk") {
-			renderTopic = 	<ol type="1" style={{marginTop: 0}}>
-							<li>What is your dream, what do you wish to achieve? (Talk freely because no one would judge you about it since its anonymous)</li>
-							<li>Talk about an interesting story that happened in your high school.</li>
-							<li>What is the most epic thing you’ve ever done? (Brag about it, its anonymous)</li>
-							<li>What is something that you are obsessed with?</li>
-							<li>How should success be measured? By that measurement, who is the most successful person you know?</li> </ol>;
-		} else if (topic == "opinion") {
-			renderTopic = 	<ol type="1" style={{marginTop: 0}}>
-							<li>What do you think about our education system? How could it be improved?</li>
-							<li>What is a possible solution to traffic jam? Why is it not implemented yet?</li>
-							<li>What do you think about plastic usage? Is it good? Is it bad? Why?</li>
-							<li>What needs to change right now in our country? What is the impact?</li>
-							<li>Without the internet, people lack access to information. With the internet, people are misinformed by hoax and fake news. How can we solve this?</li> </ol>;
-		} else {
-			renderTopic = 	<ol type="1" style={{marginTop: 0}}>
-							<li>What are you most passionate about?</li>
-							<li>What makes you laugh out loud?</li>
-							<li>What was your favorite thing to do as a kid?</li>
-							<li>Who do you text the most?</li>
-							<li>What's your favorite TV show?</li> </ol>;
+		var starters = []
+		for(var idx = this.state.index; idx < this.state.index+startersToShow; idx++){
+			starters.push(this.props.starters[idx%this.props.starters.length])
 		}
-		*/
 		return (
 			<div className="call-page" style={{display: 'flex', alignItems: 'center', flexDirection: 'column', textAlign: 'center', justifyContent:'center'}}>
 				<link type="text/css" rel="stylesheet" href="static/style.css"/>
@@ -74,9 +48,16 @@ class CallPage extends Component {
 				<div className="box" style={{textAlign: 'left', boxShadow: '0 2px 3px rgba(233, 35, 35, 0.1), 0 0 0 1px rgba(182, 0, 0, 0.1)'}}>
 					<div className="content">
 						<ol type="1" style={{marginTop: 0}}>
-							{this.props.starters.map((element)=>(<li className="subtitle" >{element}</li>))}
+							{starters.map((element)=>(<li className="subtitle" >{element}</li>))}
 						</ol>
 					</div>
+				</div>
+				<div class="field is-grouped">
+					<p class="control">
+						<button class="button is-primary" onClick={this.getNextStarters}>
+							Show new conversation starters
+						</button>
+					</p>
 				</div>
 				<p className="subtitle">Don’t be shy and talk for at least a few minutes!</p>
 				<TimerCountUp cfun={this.props.cfun}/>
