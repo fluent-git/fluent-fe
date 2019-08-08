@@ -113,6 +113,14 @@ class Talk extends Component {
     stream.getTracks().forEach(track=>track.stop())
   }
 
+  async playRingtone(){
+    var ringtonePlayer = document.createElement('audio')
+    document.body.appendChild(ringtonePlayer)
+    ringtonePlayer.src = '../static/asset/audio/ringtone.mp3'
+    ringtonePlayer.autoplay = true
+    setTimeout(()=>{ringtonePlayer.remove()},2200)
+  }
+
   async tryToQueue(thisTopic, topicImageSource){
     var topic = thisTopic.toLowerCase()
     
@@ -231,11 +239,7 @@ class Talk extends Component {
 
         localPeer.on('call', async (incoming) => {
 
-          var ringtonePlayer = document.createElement('audio')
-          document.body.appendChild(ringtonePlayer)
-          ringtonePlayer.src = '../static/asset/audio/ringtone.mp3'
-          ringtonePlayer.autoplay = true
-          setTimeout(()=>{ringtonePlayer.remove()},2200)
+          this.playRingtone()
 
           callConnection = incoming
           callConnection.answer(localStream)
@@ -271,6 +275,7 @@ class Talk extends Component {
     
         callConnection = localPeer.call(res.data.peerjs_id,localStream)
         console.log("caller",{callConnection})
+        this.playRingtone()
         callConnection.on('stream', (stream)=>{
           console.log(stream)
           this.playStream(stream)
