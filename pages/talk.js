@@ -14,6 +14,7 @@ import {
 
 var localPeer = null
 var callConnection = null
+var dataConnection = null
 var audioPlayer = null
 var otherId = -1
 var talkId = -1
@@ -60,6 +61,10 @@ class Talk extends Component {
           }
       }
 
+
+      this.handshakeTimeDelta = 0
+      this.isCloseInitiator = false
+
       this.init = this.init.bind(this)
       this.playStream = this.playStream.bind(this)
       this.killStream = this.killStream.bind(this)
@@ -67,8 +72,10 @@ class Talk extends Component {
       this.cancelQueue = this.cancelQueue.bind(this)
       this.disconnectCall = this.disconnectCall.bind(this)
       this.reviewCallback = this.reviewCallback.bind(this)
+      this.tryToReconnect = this.tryToReconnect.bind(this)
       this.destroyPeerAndStream = this.destroyPeerAndStream.bind(this)
       this.getQueueCheckMessage = this.getQueueCheckMessage.bind(this)
+      this.handleData = this.handleData.bind(this)
       this.onClose = this.onClose.bind(this)
   }
 
@@ -237,6 +244,18 @@ class Talk extends Component {
 
       if(res.data.message === 'Queuing'){
 
+        localPeer.on('connection', async (incoming) => {
+          dataConnection = incoming
+          dataConnection.on('data', this.handleData)
+          dataConnection.on('close',()=>{
+            if(callConnection){
+              callConnection.close()
+              callConnection = null
+            }
+          })
+          console.log('connected datastream.', dataConnection)
+        })
+
         localPeer.on('call', async (incoming) => {
 
           this.playRingtone()
@@ -262,17 +281,25 @@ class Talk extends Component {
 
           this.playStream(callConnection.remoteStream)
           callConnection.on('stream',this.playStream)
-          callConnection.on('close',()=>{
-            this.destroyPeerAndStream(localPeer,localStream)
-            this.reviewCallback()
-          })
+          callConnection.on('close',this.tryToReconnect)
           this.setState({status: connected})
           console.log('queuer',this.state.starters)
         })
       } else {
         otherId = res.data.user_id
         talkId = res.data.talk_id
-    
+        
+        dataConnection = localPeer.connect(res.data.peerjs_id)
+        console.log('connected datastream.', dataConnection)
+
+        dataConnection.on('data', this.handleData)
+        dataConnection.on('close',()=>{
+          if(callConnection){
+            callConnection.close()
+            callConnection = null
+          }
+        })
+
         callConnection = localPeer.call(res.data.peerjs_id,localStream)
         console.log("caller",{callConnection})
         this.playRingtone()
@@ -280,23 +307,52 @@ class Talk extends Component {
           console.log(stream)
           this.playStream(stream)
         })
-        callConnection.on('close',()=>{
-          this.destroyPeerAndStream(localPeer,localStream)
-          this.reviewCallback()
-        })
+        callConnection.on('close',this.tryToReconnect)
         this.setState({status: connected})
         console.log(this.state.starters)
       }
     })
   }
     
-  disconnectCall(){
-    if(callConnection){
-      this.killStream()
-      callConnection.close()
-      callConnection = null
+  tryToReconnect(){
+    alert('you had a connection problem!')
+    console.log('connection problem!')
+  }
+
+  //timeout count
+  handleData(json){
+    var msg = json.msg
+    console.log('Received '+msg)
+    if(msg == 'FIN'){
+      dataConnection.send({msg:'ACK'})
+      if(this.isCloseInitiator){
+        setTimeout(()=>{
+          console.log('KILL DATACONN')
+          dataConnection.close()
+          dataConnection = null
+        },this.handshakeTimeDelta)
+      } else {
+        //10 ms delay
+        setTimeout(dataConnection.send({msg:'FIN'}),10)
+      }
     }
-    this.reviewCallback()
+    if(msg == 'ACK'){
+      if(this.isCloseInitiator){
+        this.handshakeTimeDelta = new Date().getTime() - this.handshakeTimeDelta
+        console.log(this.handshakeTimeDelta)
+      } else {
+        console.log('KILL DATACONN')
+        dataConnection.close()
+        dataConnection = null
+      }
+    }
+  }
+
+  async disconnectCall(){
+    dataConnection.send({msg: 'FIN'})
+    console.log('sent close message')
+    this.isCloseInitiator = true
+    this.handshakeTimeDelta = new Date().getTime()
   }
   
   async cancelQueue(){
