@@ -59,6 +59,10 @@ class Talk extends Component {
           }
       }
 
+
+      this.handshakeTimeDelta = 0
+      this.isCloseInitiator = false
+
       this.init = this.init.bind(this)
       this.playStream = this.playStream.bind(this)
       this.killStream = this.killStream.bind(this)
@@ -68,7 +72,7 @@ class Talk extends Component {
       this.reviewCallback = this.reviewCallback.bind(this)
       this.destroyPeerAndStream = this.destroyPeerAndStream.bind(this)
       this.getQueueCheckMessage = this.getQueueCheckMessage.bind(this)
-      this.checkDataChannelJson = this.checkDataChannelJson.bind(this)
+      this.handleData = this.handleData.bind(this)
       this.onClose = this.onClose.bind(this)
   }
 
@@ -231,8 +235,13 @@ class Talk extends Component {
 
         localPeer.on('connection', async (incoming) => {
           dataConnection = incoming
-          dataConnection.on('data', this.checkDataChannelJson)
-          dataConnection.on('close',()=>console.log('closed data channel'))
+          dataConnection.on('data', this.handleData)
+          dataConnection.on('close',()=>{
+            if(callConnection){
+              callConnection.close()
+              callConnection = null
+            }
+          })
           console.log('connected datastream.', dataConnection)
         })
 
@@ -272,8 +281,13 @@ class Talk extends Component {
         dataConnection = localPeer.connect(res.data.peerjs_id)
         console.log('connected datastream.', dataConnection)
 
-        dataConnection.on('data', this.checkDataChannelJson)
-        dataConnection.on('close',()=>console.log('closed data channel'))
+        dataConnection.on('data', this.handleData)
+        dataConnection.on('close',()=>{
+          if(callConnection){
+            callConnection.close()
+            callConnection = null
+          }
+        })
 
         callConnection = localPeer.call(res.data.peerjs_id,localStream)
         console.log("caller",{callConnection})
@@ -291,29 +305,41 @@ class Talk extends Component {
     })
   }
     
-  async checkDataChannelJson(data){
-    console.log(data)
-    if(data.msg === 'END_CALL'){
-      console.log('pingin back')
-      await dataConnection.send({msg: 'END_CALL'})
-      console.log('close datachannel')
-      if(callConnection.open){
-       dataConnection.close()
-       callConnection.close()
+  //timeout count
+
+  handleData(json){
+    var msg = json.msg
+    console.log('Received '+msg)
+    if(msg == 'FIN'){
+      dataConnection.send({msg:'ACK'})
+      if(this.isCloseInitiator){
+        setTimeout(()=>{
+          console.log('KILL DATACONN')
+          dataConnection.close()
+          dataConnection = null
+        },this.handshakeTimeDelta)
+      } else {
+        //10 ms delay
+        setTimeout(dataConnection.send({msg:'FIN'}),10)
       }
     }
-    // TO DO: add support for sending text data such as text-to-speech transcriptions. 
+    if(msg == 'ACK'){
+      if(this.isCloseInitiator){
+        this.handshakeTimeDelta = new Date().getTime() - this.handshakeTimeDelta
+        console.log(this.handshakeTimeDelta)
+      } else {
+        console.log('KILL DATACONN')
+        dataConnection.close()
+        dataConnection = null
+      }
+    }
   }
 
   async disconnectCall(){
-    await dataConnection.send({msg: 'END_CALL'})
+    dataConnection.send({msg: 'FIN'})
     console.log('sent close message')
-    if(callConnection.open){
-      this.killStream()
-      callConnection.close()
-      callConnection = null
-    }
-    this.reviewCallback()
+    this.isCloseInitiator = true
+    this.handshakeTimeDelta = new Date().getTime()
   }
   
   async cancelQueue(){
