@@ -70,6 +70,7 @@ class Talk extends Component {
       this.cancelQueue = this.cancelQueue.bind(this)
       this.disconnectCall = this.disconnectCall.bind(this)
       this.reviewCallback = this.reviewCallback.bind(this)
+      this.tryToReconnect = this.tryToReconnect.bind(this)
       this.destroyPeerAndStream = this.destroyPeerAndStream.bind(this)
       this.getQueueCheckMessage = this.getQueueCheckMessage.bind(this)
       this.handleData = this.handleData.bind(this)
@@ -267,10 +268,7 @@ class Talk extends Component {
 
           this.playStream(callConnection.remoteStream)
           callConnection.on('stream',this.playStream)
-          callConnection.on('close',()=>{
-            this.destroyPeerAndStream(localPeer,localStream)
-            this.reviewCallback()
-          })
+          callConnection.on('close',this.tryToReconnect)
           this.setState({status: connected})
           console.log('queuer',this.state.starters)
         })
@@ -295,18 +293,19 @@ class Talk extends Component {
           console.log(stream)
           this.playStream(stream)
         })
-        callConnection.on('close',()=>{
-          this.destroyPeerAndStream(localPeer,localStream)
-          this.reviewCallback()
-        })
+        callConnection.on('close',this.tryToReconnect)
         this.setState({status: connected})
         console.log(this.state.starters)
       }
     })
   }
     
-  //timeout count
+  tryToReconnect(){
+    alert('you had a connection problem!')
+    console.log('connection problem!')
+  }
 
+  //timeout count
   handleData(json){
     var msg = json.msg
     console.log('Received '+msg)
