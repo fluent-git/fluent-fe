@@ -64,6 +64,7 @@ class Talk extends Component {
 
       this.handshakeTimeDelta = 0
       this.isCloseInitiator = false
+      this.isClosed = true
 
       this.init = this.init.bind(this)
       this.playStream = this.playStream.bind(this)
@@ -241,6 +242,7 @@ class Talk extends Component {
         this.setState({starters: starters, tips: tips})
       })
       
+      this.isClosed = false
 
       if(res.data.message === 'Queuing'){
 
@@ -315,35 +317,44 @@ class Talk extends Component {
   }
     
   tryToReconnect(){
-    alert('you had a connection problem!')
-    console.log('connection problem!')
+    if(!this.isClosed){
+      alert('you had a connection problem!')
+      console.log('connection problem!')
+    } else {
+      console.log('actually close')
+      this.reviewCallback()
+    }
   }
 
   //timeout count
   handleData(json){
-    var msg = json.msg
-    console.log('Received '+msg)
-    if(msg == 'FIN'){
-      dataConnection.send({msg:'ACK'})
-      if(this.isCloseInitiator){
-        setTimeout(()=>{
+    if(dataConnection){
+      var msg = json.msg
+      console.log('Received '+msg)
+      if(msg == 'FIN'){
+        dataConnection.send({msg:'ACK'})
+        if(this.isCloseInitiator){
+          setTimeout(()=>{
+            this.isClosed = true
+            console.log('KILL DATACONN')
+            dataConnection.close()
+            dataConnection = null
+          },this.handshakeTimeDelta)
+        } else {
+          //10 ms delay
+          setTimeout(dataConnection.send({msg:'FIN'}),10)
+        }
+      }
+      if(msg == 'ACK'){
+        if(this.isCloseInitiator){
+          this.handshakeTimeDelta = new Date().getTime() - this.handshakeTimeDelta
+          console.log(this.handshakeTimeDelta)
+        } else {
+          this.isClosed = true
           console.log('KILL DATACONN')
           dataConnection.close()
           dataConnection = null
-        },this.handshakeTimeDelta)
-      } else {
-        //10 ms delay
-        setTimeout(dataConnection.send({msg:'FIN'}),10)
-      }
-    }
-    if(msg == 'ACK'){
-      if(this.isCloseInitiator){
-        this.handshakeTimeDelta = new Date().getTime() - this.handshakeTimeDelta
-        console.log(this.handshakeTimeDelta)
-      } else {
-        console.log('KILL DATACONN')
-        dataConnection.close()
-        dataConnection = null
+        }
       }
     }
   }
