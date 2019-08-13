@@ -41,7 +41,7 @@ class Home extends Component {
                 <article className="tile is-child centered">
                   <div className="centered has-text-centered-mobile">
                     <p className="title is-size-1-desktop">Berlatihlah Berbicara Bahasa Inggris Secara Anonim!</p>
-                    <p className="subtitle">Tingkatkan keterampilan berbicara anda di Bahasa Ingris, cari hobi baru, atau cuman ngobrol aja!</p>
+                    <p className="subtitle">Tingkatkan keterampilan berbicara anda di Bahasa Inggris, cari hobi baru, atau cuman ngobrol aja!</p>
                     <div className="buttons">
                       <Link prefetch href="/login">
                         <a className="button is-primary">Mulai Berbicara</a>
@@ -90,8 +90,8 @@ class Home extends Component {
                 <div className="centered has-text-centered-mobile">
                   <p className="subtitle strong">Dengarkan, bagikan, dan ekspresikan ide favoritmu dalam Bahasa Inggris</p>
                   <p className="subtitle">Ngobrol secara gratis dengan orang yang juga ingin melatih 
-                  Bahasa Ingris mereka dan diskusikan topik favoritmu! Saling melatih kemampuan 
-                  bahasa ingris kalian dan mereka tidak akan pernah tau apa pun tentang mu, termasuk nama mu!</p>
+                  Bahasa Inggris mereka dan diskusikan topik favoritmu! Saling melatih kemampuan 
+                  bahasa Inggris kalian dan mereka tidak akan pernah tau apa pun tentang mu, termasuk nama mu!</p>
                 </div>
               </article>
             </div>
@@ -107,7 +107,7 @@ class Home extends Component {
                 <div className="centered has-text-centered-mobile">
                   <p className="subtitle strong">Pilih Topik, Mulai Berbicara!</p>
                   <p className="subtitle">Pilihlah topik apapun dan kamu akan di hubungkan dengan 
-                  orang lain untuk mulai berbicara dengan Bahasa Ingriss. Setelah berbicara, kalian 
+                  orang lain untuk mulai berbicara dengan Bahasa Inggris. Setelah berbicara, kalian 
                   akan diberikan kesempatan untuk menilai kemampuan berbicara match kamu.</p>
                 </div>
               </article>
@@ -140,10 +140,10 @@ class Home extends Component {
             <div className="columns is-mobile is-centered window-top">
               <div className="column is-two-thirds-desktop has-text-centered">
                 <p className="title is-size-2-desktop">
-                Mengapa berlatih berbicara Bahasa Ingris?
+                Mengapa berlatih berbicara Bahasa Inggris?
                 </p>
                 <p className="subtitle light">
-                Bahasa Ingris adalah Bahasa Internasional! Dengan melancarkan kemampuan percakapan kamu, anda bisa membuka banyak kesempatan baru
+                Bahasa Inggris adalah Bahasa Internasional! Dengan melancarkan kemampuan percakapan kamu, anda bisa membuka banyak kesempatan baru
                 </p>
               </div>
             </div>
