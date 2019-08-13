@@ -68,6 +68,7 @@ class Profile extends Component {
                     <br></br>
                     {titleName}
                     <br></br>
+                    <h1 className="title">Talk History</h1>
                     <div className="card-box table-responsive">
                         <table id="datatable" className="table table-striped is-striped table-bordered" width="100%">
                             <thead>
