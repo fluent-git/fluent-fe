@@ -13,12 +13,14 @@ import {
 } from '../utils/constants'
 
 var localPeer = null
+var localStream = null
 var callConnection = null
 var dataConnection = null
-var audioPlayer = null
+var audioPlayers = []
 var otherId = -1
 var talkId = -1
-
+var connectionRole = null
+var reconnectInterval = null
 
 class Talk extends Component {
   constructor(props) {
@@ -65,6 +67,7 @@ class Talk extends Component {
       this.handshakeTimeDelta = 0
       this.isCloseInitiator = false
       this.isClosed = true
+      this.otherPeerId = null
 
       this.init = this.init.bind(this)
       this.playStream = this.playStream.bind(this)
@@ -76,6 +79,9 @@ class Talk extends Component {
       this.tryToReconnect = this.tryToReconnect.bind(this)
       this.destroyPeerAndStream = this.destroyPeerAndStream.bind(this)
       this.getQueueCheckMessage = this.getQueueCheckMessage.bind(this)
+      this.handleIncomingDataConnection = this.handleIncomingDataConnection.bind(this)
+      this.handleIncomingCallConnection = this.handleIncomingCallConnection.bind(this)
+      this.peerConnectionActions = this.peerConnectionActions.bind(this)
       this.handleData = this.handleData.bind(this)
       this.onClose = this.onClose.bind(this)
   }
@@ -88,15 +94,18 @@ class Talk extends Component {
   }
 
   playStream(stream) {
-    audioPlayer = document.createElement('audio')
-    audioPlayer.srcObject = stream
-    audioPlayer.autoplay = true
-    document.body.appendChild(audioPlayer)
+    var newAudioPlayer = document.createElement('audio')
+    newAudioPlayer.srcObject = stream
+    newAudioPlayer.autoplay = true
+    document.body.appendChild(newAudioPlayer)
+    audioPlayers.push(newAudioPlayer)
   }
 
   killStream(){
-    if(audioPlayer) audioPlayer.remove()
-    audioPlayer = null
+    console.log(audioPlayers)
+    audioPlayers.forEach((audioPlayer)=>audioPlayer.remove())
+    console.log(audioPlayers)
+    audioPlayers = []
   }
     
   async getQueueCheckMessage(params){
@@ -196,7 +205,7 @@ class Talk extends Component {
 
       navigator.mediaDevices.getUserMedia = (navigator.mediaDevices.getUserMedia || navigator.mediaDevices.webkitGetUserMedia || navigator.mediaDevices.mozGetUserMedia || navigator.mediaDevices.msGetUserMedia);
       // Get access to microphone
-      var localStream = await navigator.mediaDevices.getUserMedia ({video: false, audio: true})
+      localStream = await navigator.mediaDevices.getUserMedia ({video: false, audio: true})
       console.log(localStream)
       await new Promise(resolve => setTimeout(resolve, 2000));
 
@@ -245,84 +254,88 @@ class Talk extends Component {
       this.isClosed = false
 
       if(res.data.message === 'Queuing'){
-
-        localPeer.on('connection', async (incoming) => {
-          dataConnection = incoming
-          dataConnection.on('data', this.handleData)
-          dataConnection.on('close',()=>{
-            if(callConnection){
-              callConnection.close()
-              callConnection = null
-            }
-          })
-          console.log('connected datastream.', dataConnection)
-        })
-
-        localPeer.on('call', async (incoming) => {
-
-          this.playRingtone()
-
-          callConnection = incoming
-          callConnection.answer(localStream)
-          console.log("queuer",{callConnection})
-    
-          var res = await axios.post(startTalkUrl,
-            {
-              "user_id":user_id
-            },
-            {
-              "headers": {
-                "Content-Type": "application/json"
-              }
-            }
-          )
-          console.log(res.data)
-    
-          otherId = res.data.user_id
-          talkId = res.data.talk_id
-
-          this.playStream(callConnection.remoteStream)
-          callConnection.on('stream',this.playStream)
-          callConnection.on('close',this.tryToReconnect)
-          this.setState({status: connected})
-          console.log('queuer',this.state.starters)
-        })
+        connectionRole = 'Queuer'
+        localPeer.on('connection', this.handleIncomingDataConnection)
+        localPeer.on('call', this.handleIncomingCallConnection)
+        this.setState({status: connected})
+        console.log('queuer',this.state.starters)
       } else {
+        connectionRole = 'Caller'
         otherId = res.data.user_id
         talkId = res.data.talk_id
-        
-        dataConnection = localPeer.connect(res.data.peerjs_id)
-        console.log('connected datastream.', dataConnection)
-
-        dataConnection.on('data', this.handleData)
-        dataConnection.on('close',()=>{
-          if(callConnection){
-            callConnection.close()
-            callConnection = null
-          }
-        })
-
-        callConnection = localPeer.call(res.data.peerjs_id,localStream)
-        console.log("caller",{callConnection})
-        this.playRingtone()
-        callConnection.on('stream', (stream)=>{
-          console.log(stream)
-          this.playStream(stream)
-        })
-        callConnection.on('close',this.tryToReconnect)
+        this.otherPeerId = res.data.peerjs_id
+        this.peerConnectionActions()
         this.setState({status: connected})
         console.log(this.state.starters)
       }
     })
   }
     
+  async handleIncomingDataConnection(incoming){
+    dataConnection = incoming
+    this.otherPeerId = dataConnection.peer
+    dataConnection.on('data', this.handleData)
+  }
+
+  async handleIncomingCallConnection(incoming){
+    var user_id = this.state.userId
+
+    callConnection = incoming
+    callConnection.answer(localStream)
+  
+    if(callConnection == null){ this.playRingtone()    
+      var res = await axios.post(startTalkUrl,
+        {
+          "user_id":user_id
+        },
+        {
+          "headers": {
+            "Content-Type": "application/json"
+          }
+        }
+      )
+      console.log(res.data)
+
+      otherId = res.data.user_id
+      talkId = res.data.talk_id
+    }
+
+    this.playStream(callConnection.remoteStream)
+    callConnection.on('stream',this.playStream)
+    callConnection.on('close',this.tryToReconnect)
+  }
+
+  peerConnectionActions(){
+    dataConnection = localPeer.connect(this.otherPeerId)
+    dataConnection.on('data', this.handleData)
+    var firstCallConnection = (callConnection == null)
+    callConnection = localPeer.call(this.otherPeerId,localStream)
+    if(firstCallConnection)this.playRingtone()
+    callConnection.on('stream', (stream)=>{
+      console.log(stream)
+      this.playStream(stream)
+    })
+    callConnection.on('close',this.tryToReconnect)
+  }
+
   tryToReconnect(){
+    this.killStream()
+    callConnection = {open:false}
     if(!this.isClosed){
+      if(connectionRole == 'Caller'){
+        reconnectInterval = window.setInterval(()=>{
+          console.log('reconnect try')
+          if(callConnection.open){
+            console.log('reconnect done!')
+            window.clearInterval(reconnectInterval)
+          } else {
+            this.killStream()
+            this.peerConnectionActions()
+          }
+        },700)
+      }
       alert('you had a connection problem!')
       console.log('connection problem!')
-    } else {
-      console.log('actually close')
-      this.reviewCallback()
     }
   }
 
@@ -339,6 +352,9 @@ class Talk extends Component {
             console.log('KILL DATACONN')
             dataConnection.close()
             dataConnection = null
+            if(callConnection)callConnection.close()
+            callConnection = null
+            this.reviewCallback()
           },this.handshakeTimeDelta)
         } else {
           //10 ms delay
@@ -354,6 +370,9 @@ class Talk extends Component {
           console.log('KILL DATACONN')
           dataConnection.close()
           dataConnection = null
+          if(callConnection) callConnection.close()
+          callConnection = null
+          this.reviewCallback()
         }
       }
     }
