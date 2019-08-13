@@ -12,29 +12,29 @@ const toggleStyles = (event) => {
 const Layout = props => (
   <div>
     <Head>
-      <link href = "/static/asset/logo/favicon.png" rel="icon" type="image/png"/>
+      <link href="/static/asset/logo/favicon.png" rel="icon" type="image/png" />
       <title>Fluent</title>
-      <meta name="viewport" content="initial-scale=1.0, width=device-width"/>
+      <meta name="viewport" content="initial-scale=1.0, width=device-width" />
     </Head>
     <header>
       <nav className="navbar is-spaced is-primary navbar is-fixed-top" role="navigation" aria-label="main navigation">
-        <div className="container" style={{maxWidth:"none", margin: "none", 'padding-right': '18px'}}>
+        <div className="container" style={{ maxWidth: "none", margin: "none", 'padding-right': '18px' }}>
           <div className="navbar-brand">
             <a className="navbar-item">
               <Link prefetch href="/">
-                <img src="/static/asset/logo/logo-white.svg"/>
+                <img src="/static/asset/logo/logo-white.svg" />
               </Link>
             </a>
-            <a id="burger" onClick={toggleStyles} 
-                role="button" className="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarmenu">
+            <a id="burger" onClick={toggleStyles}
+              role="button" className="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarmenu">
               <span aria-hidden="true"></span>
               <span aria-hidden="true"></span>
               <span aria-hidden="true"></span>
             </a>
           </div>
-            {props.loggedIn ? (
-              <ProfileButton username={props.username}></ProfileButton>
-            ) : (<LoginButton></LoginButton>)}
+          {props.loggedIn ? (
+            <ProfileButton username={props.username}></ProfileButton>
+          ) : (<LoginButton></LoginButton>)}
         </div>
       </nav>
     </header>
@@ -64,9 +64,12 @@ const ProfileButton = props => (
               Profile
             </a>
           </Link>
-          <hr className="navbar-divider"/>
+          <hr className="navbar-divider" />
           <Link prefetch href="/contact">
             <a className="navbar-item">Contact Us</a>
+          </Link>
+          <Link prefetch href="/download">
+            <a className="navbar-item">Download</a>
           </Link>
           <a className="navbar-item" onClick={sessionManager.signOut}>
             Sign Out
@@ -96,7 +99,7 @@ const LoginButton = props => (
         <div className="buttons">
           <Link prefetch href="/login">
             <a className="button">Sign In</a>
-            </Link>
+          </Link>
         </div>
       </div>
 
