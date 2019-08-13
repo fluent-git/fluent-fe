@@ -36,9 +36,9 @@ class Home extends Component {
       <Layout loggedIn={this.state.loggedIn} username={this.state.username}>
         <section className="section first">
           <div className="container is-widescreen">
-            <div class="tile is-ancestor fullsize">
-              <div class="tile">
-                <article class="tile is-child centered">
+            <div className="tile is-ancestor fullsize">
+              <div className="tile">
+                <article className="tile is-child centered">
                   <div className="centered has-text-centered-mobile">
                     <p className="title is-size-1-desktop">Berlatihlah Berbicara Bahasa Inggris Secara Anonim!</p>
                     <p className="subtitle">Tingkatkan keterampilan berbicara anda di Bahasa Ingris, cari hobi baru, atau cuman ngobrol aja!</p>
@@ -50,9 +50,9 @@ class Home extends Component {
                   </div>
                 </article>
               </div>
-              <div class="tile is-vertical is-8">
-                <article class="tile is-child">
-                  <figure class="image is-5by4">
+              <div className="tile is-vertical is-8">
+                <article className="tile is-child">
+                  <figure className="image is-5by4">
                     <img src="/static/asset/image/home.png"/>
                   </figure>
                 </article>
@@ -74,19 +74,19 @@ class Home extends Component {
               </p>
             </div>
           </div>
-          <div class="tile is-ancestor fullsize">
-            <div class="tile is-1"></div>
+          <div className="tile is-ancestor fullsize">
+            <div className="tile is-1"></div>
 
-            <div class="tile is-5 is-parent">
-              <article class="tile">
-                <figure class="image">
+            <div className="tile is-5 is-parent">
+              <article className="tile">
+                <figure className="image">
                   <img src="/static/asset/image/talk-3d.png"/>
                 </figure>
               </article>
             </div>
 
-            <div class="tile is-5 is-parent">
-              <article class="tile centered">
+            <div className="tile is-5 is-parent">
+              <article className="tile centered">
                 <div className="centered has-text-centered-mobile">
                   <p className="subtitle strong">Dengarkan, bagikan, dan ekspresikan ide favoritmu dalam Bahasa Inggris</p>
                   <p className="subtitle">Ngobrol secara gratis dengan orang yang juga ingin melatih 
@@ -96,14 +96,14 @@ class Home extends Component {
               </article>
             </div>
 
-            <div class="tile is-1"></div>
+            <div className="tile is-1"></div>
           </div>
 
-          <div class="tile is-ancestor fullsize">
-            <div class="tile is-1"></div>
+          <div className="tile is-ancestor fullsize">
+            <div className="tile is-1"></div>
 
-            <div class="tile is-5 is-parent">
-              <article class="tile centered">
+            <div className="tile is-5 is-parent">
+              <article className="tile centered">
                 <div className="centered has-text-centered-mobile">
                   <p className="subtitle strong">Pilih Topik, Mulai Berbicara!</p>
                   <p className="subtitle">Pilihlah topik apapun dan kamu akan di hubungkan dengan 
@@ -113,18 +113,98 @@ class Home extends Component {
               </article>
             </div>
 
-            <div class="tile is-5 is-parent">
-              <article class="tile">
-                <figure class="image">
+            <div className="tile is-5 is-parent">
+              <article className="tile">
+                <figure className="image">
                   <img src="/static/asset/image/topic-3d.png"/>
                 </figure>
               </article>
             </div>
 
-            <div class="tile is-1"></div>
+            <div className="tile is-1"></div>
+          </div>
+          <hr></hr>
+        </section>
+        <div className="separator-curve">
+            <div className="columns is-mobile is-centered">
+              <div className="column is-two-thirds-desktop has-text-centered">
+                <p className="title title-bottom is-size-3-desktop">
+                Kami menjaminkan anda 100% privasi, anonimitas lengkap, tidak perlu foto profil, tidak perlu nama asli.
+                </p>
+              </div>
+            </div>
+          <img className="image-curve" src="/static/asset/image/anonym.png"/>
+        </div>
+        <section className="section last">
+          <div className="container is-widescreen">
+            <div className="columns is-mobile is-centered window-top">
+              <div className="column is-two-thirds-desktop has-text-centered">
+                <p className="title is-size-2-desktop">
+                Mengapa berlatih berbicara Bahasa Ingris?
+                </p>
+                <p className="subtitle light">
+                Bahasa Ingris adalah Bahasa Internasional! Dengan melancarkan kemampuan percakapan kamu, anda bisa membuka banyak kesempatan baru
+                </p>
+              </div>
+            </div>
+            <div className="tile is-ancestor fullsize">
+              <div className="tile is-1"></div>
+              <div className="tile is-parent middle">
+                <article className="tile">
+                  <figure className="image">
+                    <img className="image-small" src="/static/asset/image/career.png"/>
+                    <p className="title is-size-5-desktop has-text-centered">
+                    Better Career Prospects
+                    </p>
+                  </figure>
+                </article>
+              </div>
+              <div className="tile is-parent">
+                <article className="tile">
+                  <figure className="image">
+                    <img className="image-small" src="/static/asset/image/speak.png"/>
+                    <p className="title is-size-5-desktop has-text-centered">
+                    Speak With Foreigners
+                    </p>
+                  </figure>
+                </article>
+              </div>
+              <div className="tile is-parent">
+                <article className="tile">
+                  <figure className="image">
+                    <img className="image-small" src="/static/asset/image/increase.png"/>
+                    <p className="title is-size-5-desktop has-text-centered">
+                    Increase Your Value
+                    </p>
+                  </figure>
+                </article>
+              </div>
+              <div className="tile is-parent">
+                <article className="tile">
+                  <figure className="image">
+                    <img className="image-small" src="/static/asset/image/travel.png"/>
+                    <p className="title is-size-5-desktop has-text-centered">
+                    Travel Anywhere Easily
+                    </p>
+                  </figure>
+                </article>
+              </div>
+              <div className="tile is-1"></div>
+            </div>
           </div>
         </section>
         <style jsx>{`
+
+          hr {
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 6rem;
+            margin-bottom: 6rem;
+            width: 50%;
+            color: #5353AC;
+            background-color: #5353AC;
+            border-color: #5353AC;
+          }
 
           p {
             color: #3c3c72;
@@ -132,6 +212,10 @@ class Home extends Component {
 
           p.title {
             margin-bottom: 3rem;
+          }
+
+          p.title-bottom {
+            margin-bottom: 0rem;
           }
 
           p.light {
@@ -148,6 +232,11 @@ class Home extends Component {
             padding-top: 0px;
           }
 
+          .last {
+            padding-bottom: 5px;
+            padding-top: 4rem;
+          }
+
           .window-top {
             margin-bottom: 55px;
           }
@@ -160,10 +249,6 @@ class Home extends Component {
 
           .pink {
             background-color: #F4E3E1;
-          }
-
-          .fullsize {
-            height: 100vh;
           }
 
           @media only screen and (max-width: 800px) {
@@ -184,7 +269,7 @@ class Home extends Component {
           .centered {
             width: 100%;
             height: auto;
-            top: 25%;
+            top: 15%;
             margin: 0 auto;
             position: relative;
           }
@@ -194,6 +279,14 @@ class Home extends Component {
             margin: 50px;
           }
 
+          .image-small {
+            width: 50%;
+            margin: auto;
+          }
+
+          .middle {
+            justify-content: middle;
+          }
         `}</style>
       </Layout>
     );
