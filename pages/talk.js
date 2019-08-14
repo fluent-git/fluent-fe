@@ -103,7 +103,7 @@ class Talk extends Component {
 
   killStream(){
     console.log(audioPlayers)
-    audioPlayers.forEach((audioPlayer)=>audioPlayer.remove())
+    audioPlayers.forEach((audioPlayer)=>document.body.remove(audioPlayer))
     console.log(audioPlayers)
     audioPlayers = []
   }
