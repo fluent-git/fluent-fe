@@ -143,13 +143,13 @@ class Register extends Component {
                                                               </select>
                                                             </div>
                                                         </div>
-                                                        <p style={{color: 'black', marginBottom: 10}}>Already have an account? <b><a href="/login">Sign In</a></b></p>
-
+                                                        <p style={{color: 'black', marginBottom: 10}}>By signing up you agree to the <b><a href="/terms_conditions">terms and conditions</a></b></p>
                                                         <div className="field is-grouped">
                                                             <div className="control">
                                                             <button className={`button is-primary ${this.state.loading}`} type="submit">Submit</button>
                                                             </div>
                                                         </div>
+                                                        {/* <p style={{color: 'black', marginBottom: 10}}>Already have an account? <b><a href="/login">Sign In</a></b></p> */}
                                                     </form>
 
                                                 </article>
