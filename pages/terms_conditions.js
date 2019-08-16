@@ -22,7 +22,7 @@ class TermsConditions extends Component {
   render() {
       return (
         <Layout loggedIn={this.state.loggedIn} username={this.state.username}>
-            <section className="section" style={{display: 'flex', alignItems: 'center', flexDirection: 'column', textAlign: 'center', justifyContent:'center', height: '1050vh', textAlign: 'left'}}>
+            <section className="section" style={{display: 'flex', alignItems: 'center', flexDirection: 'column', textAlign: 'center', justifyContent:'center', height: '1025vh', textAlign: 'left'}}>
                 <div>
                     <p className="title">Terms and Conditions</p>
                     <br></br>
