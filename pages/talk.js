@@ -63,7 +63,6 @@ class Talk extends Component {
           }
       }
 
-
       this.handshakeTimeDelta = 0
       this.isCloseInitiator = false
       this.isClosed = true
@@ -379,10 +378,28 @@ class Talk extends Component {
   }
 
   async disconnectCall(){
-    dataConnection.send({msg: 'FIN'})
-    console.log('sent close message')
-    this.isCloseInitiator = true
-    this.handshakeTimeDelta = new Date().getTime()
+    try{
+      dataConnection.send({msg: 'FIN'})
+      console.log('sent close message')
+      this.isCloseInitiator = true
+      this.handshakeTimeDelta = new Date().getTime()
+    } catch {
+      //langsung matiin aja
+      await axios.post(cancelUrl,
+        {
+          "user_id":Number(this.state.userId)
+        },
+        {
+          "headers": {
+            "Content-Type": "application/json"
+          }
+        }
+      )
+      this.destroyPeerAndStream(localPeer,localStream)
+      dataConnection = null
+      callConnection = null
+      this.setState({status: notQueued})
+    }
   }
   
   async cancelQueue(){
