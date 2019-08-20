@@ -22,6 +22,8 @@ var talkId = -1
 var connectionRole = null
 var reconnectInterval = null
 
+var docBody
+
 class Talk extends Component {
   constructor(props) {
       super(props)
@@ -87,12 +89,19 @@ class Talk extends Component {
 
   init(){
     const script = document.createElement('script')
-    script.src = 'https://cdn.jsdelivr.net/npm/peerjs@0.3.20/dist/peer.min.js'
-
+    try{
+      script.src = 'https://cdn.jsdelivr.net/npm/peerjs@0.3.20/dist/peer.min.js'
+    } catch (err){
+      //benerin supaya gapake alert nanti
+      alert('You have a network error.')
+    }
+    console.log(document.body)
     document.body.appendChild(script)
   }
 
   playStream(stream) {
+    docBody = document.body
+    console.log({docBody})
     var newAudioPlayer = document.createElement('audio')
     newAudioPlayer.srcObject = stream
     newAudioPlayer.autoplay = true
@@ -101,10 +110,12 @@ class Talk extends Component {
   }
 
   killStream(){
-    console.log(audioPlayers)
-    audioPlayers.forEach((audioPlayer)=>document.body.remove(audioPlayer))
-    console.log(audioPlayers)
+    console.log('KILL STREAM #####')
+    console.log('players',audioPlayers)
+    //trycatch ??
+    audioPlayers.forEach((audioPlayer)=>docBody.remove(audioPlayer))
     audioPlayers = []
+    console.log('cleared audioplayers')
   }
     
   async getQueueCheckMessage(params){
@@ -113,6 +124,7 @@ class Talk extends Component {
         {
           return {
             msg:res.data.message,
+            //nanti add region compatibility supaya ga cuma GMT+7
             start:res.data.start,
             end:res.data.end
           };
@@ -134,7 +146,7 @@ class Talk extends Component {
     document.body.appendChild(ringtonePlayer)
     ringtonePlayer.src = '../static/asset/audio/ringtone.mp3'
     ringtonePlayer.autoplay = true
-    setTimeout(()=>{ringtonePlayer.remove()},2200)
+    setTimeout(()=>{document.body.remove(ringtonePlayer())},2200)
   }
 
   async tryToQueue(thisTopic, topicImageSource){
@@ -256,7 +268,6 @@ class Talk extends Component {
         connectionRole = 'Queuer'
         localPeer.on('connection', this.handleIncomingDataConnection)
         localPeer.on('call', this.handleIncomingCallConnection)
-        this.setState({status: connected})
         console.log('queuer',this.state.starters)
       } else {
         connectionRole = 'Caller'
@@ -282,6 +293,7 @@ class Talk extends Component {
     callConnection = incoming
     callConnection.answer(localStream)
   
+    this.setState({status: connected})
     if(callConnection == null){ this.playRingtone()    
       var res = await axios.post(startTalkUrl,
         {
