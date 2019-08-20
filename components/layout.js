@@ -18,7 +18,7 @@ const Layout = props => (
     </Head>
     <header>
       <nav className="navbar is-spaced is-primary navbar is-fixed-top" role="navigation" aria-label="main navigation">
-        <div className="container" style={{ maxWidth: "none", margin: "none", 'padding-right': '18px' }}>
+        <div className="container" style={{ maxWidth: "none", margin: "none", paddingRight: '18px' }}>
           <div className="navbar-brand">
             <a className="navbar-item">
               <Link prefetch href="/">

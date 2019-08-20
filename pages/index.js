@@ -192,6 +192,36 @@ class Home extends Component {
               <div className="tile is-1"></div>
             </div>
           </div>
+
+          <div className="container is-widescreen">
+            <div className="tile is-ancestor fullsize">
+              <div className="tile is-vertical is-1">
+              </div>
+              <div className="tile is-vertical is-4">
+                <article className="tile is-child is-10">
+                  <figure className="image">
+                    <img src="/static/asset/image/phone-mock.png"/>
+                  </figure>
+                </article>
+              </div>
+              <div className="tile is-vertical is-6">
+                <article className="tile is-child centered-narrow">
+                  <div className="centered-narrow has-text-centered-mobile">
+                    <p className="title is-size-1-desktop">Ngobrol Apapun, Dimanapun, Kapanpun!</p>
+                    <p className="subtitle">Tersedia di Android dan Google Chrome! Lagi menunggu bus atau lagi bosen di rumah? Investasilah waktumu untuk dirimu sendiri buat
+                    meningkatkan lancarnya Bahasa Inggrismu. Bahaskanlah topik apa aja dengan fitur Free Talk!</p>
+                    <div className="buttons">
+                      <Link prefetch href="/download">
+                        <a><img className="google-play" src="/static/asset/image/googleplay.png"/></a>
+                      </Link>
+                  </div>
+                  </div>
+                </article>
+              </div>
+              <div className="tile is-vertical is-1">
+              </div>
+            </div>
+          </div>
         </section>
         <style jsx>{`
 
@@ -273,6 +303,14 @@ class Home extends Component {
             margin: 0 auto;
             position: relative;
           }
+          
+          .centered-narrow {
+            width: 100%;
+            height: auto;
+            top: 10%;
+            margin: 0 auto;
+            position: relative;
+          }
 
           .tile.fluent-window {
             padding: 50px;
@@ -286,6 +324,10 @@ class Home extends Component {
 
           .middle {
             justify-content: middle;
+          }
+
+          .google-play {
+            height: 50px;
           }
         `}</style>
       </Layout>
