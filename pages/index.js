@@ -31,6 +31,10 @@ class Home extends Component {
   }
 
   render () {
+    var mainLink = "/login" // default link
+    if (this.state.loggedIn) {
+      mainLink = "/talk"
+    }
     return (
       <Layout loggedIn={this.state.loggedIn} username={this.state.username} showFooter={true}>
         <section className="section first">
@@ -42,7 +46,7 @@ class Home extends Component {
                     <p className="title is-size-1-desktop">Berlatih Berbicara Bahasa Inggris Secara Anonim!</p>
                     <p className="subtitle">Tingkatkan keterampilan berbicara kamu di Bahasa Inggris, cari hobi baru, atau sekadar ngobrol saja!</p>
                     <div className="buttons">
-                      <Link prefetch href="/login">
+                      <Link prefetch href={mainLink}>
                         <a className="button is-primary">Mulai Berbicara</a>
                       </Link>
                   </div>
