@@ -15,3 +15,5 @@ export const minimumCallTimeForReview = 60
 
 // call page
 export const startersToShow = 3
+export const bannerRed = '#CC3333'
+export const bannerGreen = '#33CC33'

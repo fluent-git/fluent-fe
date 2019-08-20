@@ -9,7 +9,8 @@ import Router from 'next/router'
 import axios from 'axios'
 import {
   baseUrl, checkUrl, queueUrl, cancelUrl, startTalkUrl, endTalkUrl, 
-  queued, notQueued, connected, minimumCallTimeForReview, topicDetailUrl
+  queued, notQueued, connected, minimumCallTimeForReview, topicDetailUrl,
+  bannerRed, bannerGreen
 } from '../utils/constants'
 
 var localPeer = null
@@ -43,6 +44,9 @@ class Talk extends Component {
             callSeconds: 0,
             starters: [],
             tips: [],
+            banner: false,
+            bannerContent: "",
+            bannerColor: bannerRed
           }
       } else {
           var username = sessionManager.getUsername()
@@ -60,6 +64,9 @@ class Talk extends Component {
             callSeconds: 0,
             starters: [],
             tips: [],
+            banner: false,
+            bannerContent: "",
+            bannerColor: bannerRed
           }
       }
 
@@ -90,8 +97,11 @@ class Talk extends Component {
     try{
       script.src = 'https://cdn.jsdelivr.net/npm/peerjs@0.3.20/dist/peer.min.js'
     } catch (err){
-      //benerin supaya gapake alert nanti
-      alert('You have a network error.')
+      this.setState({
+        banner:true,
+        bannerContent: 'You have a connection Error. Please refresh the page.',
+        bannerColor: bannerRed
+      })
     }
     console.log(document.body)
     document.body.appendChild(script)
@@ -184,14 +194,27 @@ class Talk extends Component {
       modalImgSrc: "/static/asset/icon/queue_load.gif",
     })
 
-    localPeer = new Peer({
-      config: {'iceServers': [
-        { url: 'stun:stun.l.google.com:19302' },
-        { url: 'turn:165.22.105.219:65432', username: 'peerjs', credential: 'h2olo2' }
-      ]}
-    });
+    try{
+      localPeer = new Peer({
+        config: {'iceServers': [
+          { url: 'stun:stun.l.google.com:19302' },
+          { url: 'turn:165.22.105.219:65432', username: 'peerjs', credential: 'h2olo2' }
+        ]}
+      })
+    } catch(err) {
+      this.setState({
+        banner:true,
+        bannerContent: 'You have a connection Error. Please refresh the page.',
+        bannerColor: bannerRed,
+        modal:true,
+        modalContent: "You have a connection Error. Please refresh the page."
+      })
+    }
 
     localPeer.on('open',async()=>{
+
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
       console.log("localPeer",localPeer)
       console.log(localPeer.id)
 
@@ -202,15 +225,12 @@ class Talk extends Component {
       var user_id = this.state.userId
       console.log("user_id",user_id)
       console.log("topic",topic)
-      
-      await new Promise(resolve => setTimeout(resolve, 1000));
 
       this.setState({status: queued, modal: false, })
 
       navigator.mediaDevices.getUserMedia = (navigator.mediaDevices.getUserMedia || navigator.mediaDevices.webkitGetUserMedia || navigator.mediaDevices.mozGetUserMedia || navigator.mediaDevices.msGetUserMedia);
       // Get access to microphone
       localStream = await navigator.mediaDevices.getUserMedia ({video: false, audio: true})
-      console.log(localStream)
       await new Promise(resolve => setTimeout(resolve, 2000));
 
       try{
@@ -307,7 +327,14 @@ class Talk extends Component {
 
     this.playStream(callConnection.remoteStream)
     callConnection.on('stream',this.playStream)
-    callConnection.on('close',this.tryToReconnect)
+    callConnection.on('close',()=>{
+      //ini cuma nunggu di call, plus callback nya masih ada.
+      this.setState({
+        banner: true,
+        bannerContent: 'Reconnecting...',
+        bannerColor: bannerRed,
+      })
+    })
   }
 
   peerConnectionActions(){
@@ -317,6 +344,7 @@ class Talk extends Component {
     callConnection = localPeer.call(this.otherPeerId,localStream)
     if(firstCallConnection)this.playRingtone()
     callConnection.on('stream', (stream)=>{
+      //callback ni ke trigger lebih cepet daripada callconnection.open ke set.
       console.log(stream)
       this.playStream(stream)
     })
@@ -324,25 +352,31 @@ class Talk extends Component {
   }
 
   tryToReconnect(){
+    this.setState({
+      banner: true,
+      bannerContent: 'Reconnecting...',
+      bannerColor: bannerRed,
+    })
     this.removeStreamPlayers()
     callConnection = {open:false}
     if(dataConnection) dataConnection.close()
     if(!this.isClosed){
       if(connectionRole == 'Caller'){
-        reconnectInterval = window.setInterval(()=>{
-          console.log('reconnect try')
-          if(callConnection.open){
-            console.log('reconnect done!')
+        if(!reconnectInterval) reconnectInterval = window.setInterval(()=>{
+          if(audioPlayers.length || callConnection.open){
+            this.setState({
+              banner:false,
+              bannerContent: 'Connected!',
+              bannerColor: bannerGreen
+            })
             window.clearInterval(reconnectInterval)
-            console.log(callConnection)
-            console.log(dataConnection)
+            reconnectInterval = null
           } else {
             this.removeStreamPlayers()
             this.peerConnectionActions()
           }
         },1000)
       }
-      alert('you had a connection problem!')
       console.log('connection problem!')
     }
   }
@@ -477,7 +511,7 @@ class Talk extends Component {
   }
 
   render() {
-    let currentRender, currentModal
+    let currentRender, currentModal, currentBanner
     if (this.state.status == notQueued) {
       currentRender = <TalkPage tryToQueue={this.tryToQueue} /> 
     } else if(this.state.status == queued) {
@@ -492,10 +526,43 @@ class Talk extends Component {
       <Layout loggedIn={this.state.loggedIn} username={this.state.username}>
         <div id="talk">
           {currentModal}
+          <ConnectionWarning isActive={this.state.banner} content={this.state.bannerContent} color={this.state.bannerColor} />
           {currentRender}
         </div>
       </Layout>
     );
+  }
+}
+
+class ConnectionWarning extends Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      'textAlign':'center',
+      'color':'white',
+      'transition': 'font-size .1s ease, padding .1s ease'
+    }
+  }
+
+  render(){
+    var style = (this.props.isActive?
+      {...this.state,
+        'fontSize': '1em',
+        'padding': '20px 0px 20px 0px',
+        'backgroundColor': this.props.color
+      }
+        :
+      {...this.state,
+        'fontSize': '0px',
+        'padding': "0px 0px 0px 0px",
+        'backgroundColor': this.props.color
+      })
+    console.log(this.props,style)
+    return (
+      <div id="connectionWarning" style={style}>
+        {this.props.content}
+      </div>
+    )
   }
 }
 
