@@ -25,7 +25,7 @@ class Contact extends Component {
 
   render() {
       return (
-        <Layout loggedIn={this.state.loggedIn} username={this.state.username}>
+        <Layout loggedIn={this.state.loggedIn} username={this.state.username} showFooter={true}>
             <link type="text/css" rel="stylesheet" href="static/style.css"/>
               <br></br>
                 <section id="contact">

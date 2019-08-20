@@ -88,7 +88,7 @@ class Register extends Component {
   
     render () {
       return (
-        <Layout loggedIn={this.state.loggedIn} username={this.state.username}>
+        <Layout loggedIn={this.state.loggedIn} username={this.state.username} showFooter={true}>
             <section className="section">
                 <div className="container">
                     <div className="columns">

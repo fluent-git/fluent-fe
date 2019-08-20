@@ -61,7 +61,7 @@ class Profile extends Component {
         const username = sessionManager.getUsername()
         var titleName = <h1 className="title">{username}</h1>;
         return (
-            <Layout loggedIn={this.state.loggedIn} username={this.state.username}>
+            <Layout loggedIn={this.state.loggedIn} username={this.state.username} showFooter={true}>
                 <br style={{lineHeight: '50px'}}></br>
                 <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                     <img src="static/asset/icon/user.svg"/>

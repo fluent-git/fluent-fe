@@ -100,7 +100,7 @@ class Review extends Component {
 
     render() {
         return (
-            <Layout loggedIn={this.state.loggedIn} username={this.state.username}>
+            <Layout loggedIn={this.state.loggedIn} username={this.state.username} showFooter={false}>
               <link type="text/css" rel="stylesheet" href="static/style.css"/>
               <br></br>
               <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>

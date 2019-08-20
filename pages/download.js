@@ -21,7 +21,7 @@ class Download extends Component {
 
   render() {
       return (
-        <Layout loggedIn={this.state.loggedIn} username={this.state.username}>
+        <Layout loggedIn={this.state.loggedIn} username={this.state.username} showFooter={true}>
             <section className="section" style={{display: 'flex', alignItems: 'center', flexDirection: 'column', textAlign: 'center', justifyContent:'center', height: '80vh', textAlign: 'left'}}>
                 <div>
                     <p className="title">Fluent for Android</p>

@@ -523,7 +523,7 @@ class Talk extends Component {
       currentModal = <Modal content={this.state.modalContent} imgSrc={this.state.modalImgSrc} onClose={this.onClose}/>
     }
     return (
-      <Layout loggedIn={this.state.loggedIn} username={this.state.username}>
+      <Layout loggedIn={this.state.loggedIn} username={this.state.username} showFooter={false}>
         <div id="talk">
           {currentModal}
           <ConnectionWarning isActive={this.state.banner} content={this.state.bannerContent} color={this.state.bannerColor} />

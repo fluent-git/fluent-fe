@@ -33,7 +33,7 @@ class Home extends Component {
 
   render () {
     return (
-      <Layout loggedIn={this.state.loggedIn} username={this.state.username}>
+      <Layout loggedIn={this.state.loggedIn} username={this.state.username} showFooter={true}>
         <section className="section first">
           <div className="container is-widescreen">
             <div className="tile is-ancestor fullsize">
