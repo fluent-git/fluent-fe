@@ -70,7 +70,7 @@ class Talk extends Component {
 
       this.init = this.init.bind(this)
       this.playStream = this.playStream.bind(this)
-      this.killStream = this.killStream.bind(this)
+      this.removeStreamPlayers = this.removeStreamPlayers.bind(this)
       this.tryToQueue = this.tryToQueue.bind(this)
       this.cancelQueue = this.cancelQueue.bind(this)
       this.disconnectCall = this.disconnectCall.bind(this)
@@ -98,6 +98,7 @@ class Talk extends Component {
   }
 
   playStream(stream) {
+    this.removeStreamPlayers()
     var newAudioPlayer = document.createElement('audio')
     newAudioPlayer.srcObject = stream
     newAudioPlayer.autoplay = true
@@ -105,13 +106,9 @@ class Talk extends Component {
     audioPlayers.push(newAudioPlayer)
   }
 
-  killStream(){
-    console.log('KILL STREAM #####')
-    console.log('players',audioPlayers)
-    //trycatch ??
+  removeStreamPlayers(){
     audioPlayers.forEach((audioPlayer)=>document.body.removeChild(audioPlayer))
     audioPlayers = []
-    console.log('cleared audioplayers')
   }
     
   async getQueueCheckMessage(params){
@@ -142,7 +139,7 @@ class Talk extends Component {
     document.body.appendChild(ringtonePlayer)
     ringtonePlayer.src = '../static/asset/audio/ringtone.mp3'
     ringtonePlayer.autoplay = true
-    setTimeout(()=>{document.body.removeChild(ringtonePlayer)},2200)
+    setTimeout(()=>{document.body.removeChild(ringtonePlayer)},2500)
   }
 
   async tryToQueue(thisTopic, topicImageSource){
@@ -327,8 +324,9 @@ class Talk extends Component {
   }
 
   tryToReconnect(){
-    this.killStream()
+    this.removeStreamPlayers()
     callConnection = {open:false}
+    if(dataConnection) dataConnection.close()
     if(!this.isClosed){
       if(connectionRole == 'Caller'){
         reconnectInterval = window.setInterval(()=>{
@@ -336,11 +334,13 @@ class Talk extends Component {
           if(callConnection.open){
             console.log('reconnect done!')
             window.clearInterval(reconnectInterval)
+            console.log(callConnection)
+            console.log(dataConnection)
           } else {
-            this.killStream()
+            this.removeStreamPlayers()
             this.peerConnectionActions()
           }
-        },700)
+        },1000)
       }
       alert('you had a connection problem!')
       console.log('connection problem!')
@@ -428,6 +428,7 @@ class Talk extends Component {
   }
     
   reviewCallback(){
+    this.destroyPeerAndStream(localPeer,localStream)
     /*if(this.state.callSeconds <= minimumCallTimeForReview){
       axios.post(endTalkUrl,
         {
