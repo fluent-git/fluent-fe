@@ -96,33 +96,37 @@ class Register extends Component {
                         </div>
                         <div className="column is-three-quarters">
                             <div className="box">
-                                <div class="tile is-ancestor">
-                                    <div class="tile is-vertical">
-                                        <div class="tile">
-                                            <div class="tile is-parent is-vertical">
-                                                <article class="tile is-child notification is-primary">
+                                <div className="tile is-ancestor">
+                                    <div className="tile is-vertical">
+                                        <div className="tile">
+                                            <div className="tile is-parent is-vertical">
+                                                <article className="tile is-child notification is-primary">
                                                   <p className="title">Learn English Conversation for free.</p>
                                                   <p className="subtitle">A fun conversation learning app that lets you make friends as you learn English!</p>
                                                 </article>
                                             </div>
-                                            <div class="tile is-parent">
-                                                <article class="tile is-child is-info">
+                                            <div className="tile is-parent">
+                                                <article className="tile is-child is-info">
 
-                                                    <p class="title">Sign Up</p>
-                                                    <p class="subtitle">Fill in your details</p>
+                                                    <p className="title">Sign Up</p>
+                                                    <p className="subtitle">Fill in your details</p>
+
+                                                    <p className={`has-text-danger error ${this.state.error && 'show'}`}>
+                                                      <small>{this.state.error && `Error: ${this.state.error}`}</small>
+                                                    </p>
 
                                                     <form onSubmit={this.handleSubmit}>
-                                                        <div class="field">
-                                                            <label class="label">Username</label>
-                                                            <div class="control">
-                                                                <input class="input" type="username" placeholder="Username"  onChange={this.handleUsername}/>
+                                                        <div className="field">
+                                                            <label className="label">Username</label>
+                                                            <div className="control">
+                                                                <input className="input" type="username" placeholder="Username"  onChange={this.handleUsername}/>
                                                             </div>
                                                         </div>
 
-                                                        <div class="field">
-                                                            <label class="label">Email</label>
-                                                            <div class="control">
-                                                                <input class="input" type="email" placeholder="Email"  onChange={this.handleEmail}/>
+                                                        <div className="field">
+                                                            <label className="label">Email</label>
+                                                            <div className="control">
+                                                                <input className="input" type="email" placeholder="Email"  onChange={this.handleEmail}/>
                                                             </div>
                                                         </div>
 
