@@ -22,8 +22,6 @@ var talkId = -1
 var connectionRole = null
 var reconnectInterval = null
 
-var docBody
-
 class Talk extends Component {
   constructor(props) {
       super(props)
@@ -100,8 +98,6 @@ class Talk extends Component {
   }
 
   playStream(stream) {
-    docBody = document.body
-    console.log({docBody})
     var newAudioPlayer = document.createElement('audio')
     newAudioPlayer.srcObject = stream
     newAudioPlayer.autoplay = true
@@ -113,7 +109,7 @@ class Talk extends Component {
     console.log('KILL STREAM #####')
     console.log('players',audioPlayers)
     //trycatch ??
-    audioPlayers.forEach((audioPlayer)=>docBody.remove(audioPlayer))
+    audioPlayers.forEach((audioPlayer)=>document.body.removeChild(audioPlayer))
     audioPlayers = []
     console.log('cleared audioplayers')
   }
@@ -146,7 +142,7 @@ class Talk extends Component {
     document.body.appendChild(ringtonePlayer)
     ringtonePlayer.src = '../static/asset/audio/ringtone.mp3'
     ringtonePlayer.autoplay = true
-    setTimeout(()=>{document.body.remove(ringtonePlayer())},2200)
+    setTimeout(()=>{document.body.removeChild(ringtonePlayer)},2200)
   }
 
   async tryToQueue(thisTopic, topicImageSource){
@@ -289,12 +285,10 @@ class Talk extends Component {
 
   async handleIncomingCallConnection(incoming){
     var user_id = this.state.userId
-
-    callConnection = incoming
-    callConnection.answer(localStream)
-  
-    this.setState({status: connected})
-    if(callConnection == null){ this.playRingtone()    
+    
+    if(callConnection == null){
+      this.setState({status: connected})
+      this.playRingtone()    
       var res = await axios.post(startTalkUrl,
         {
           "user_id":user_id
@@ -310,6 +304,9 @@ class Talk extends Component {
       otherId = res.data.user_id
       talkId = res.data.talk_id
     }
+
+    callConnection = incoming
+    callConnection.answer(localStream)
 
     this.playStream(callConnection.remoteStream)
     callConnection.on('stream',this.playStream)
