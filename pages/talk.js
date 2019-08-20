@@ -367,7 +367,7 @@ class Talk extends Component {
             this.setState({
               banner:false,
               bannerContent: 'Connected!',
-              bannerColor: bannerGreen
+              bannerColor: bannerGreen,
             })
             window.clearInterval(reconnectInterval)
             reconnectInterval = null
@@ -375,7 +375,7 @@ class Talk extends Component {
             this.removeStreamPlayers()
             this.peerConnectionActions()
           }
-        },1000)
+        },2000)
       }
       console.log('connection problem!')
     }
