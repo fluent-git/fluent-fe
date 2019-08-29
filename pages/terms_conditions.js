@@ -19,12 +19,26 @@ class TermsConditions extends Component {
     }
   }
 
+  componentDidMount() {
+    document.querySelector("body").classList.add("has-navbar-fixed-top")
+  }
+
   render() {
       return (
         <Layout loggedIn={this.state.loggedIn} username={this.state.username} showFooter={true}>
-            <section className="section" style={{display: 'flex', alignItems: 'center', flexDirection: 'column', textAlign: 'center', justifyContent:'center', height: '1025vh', textAlign: 'left'}}>
-                <div>
-                    <p className="title">Terms and Conditions</p>
+        <section className="section">
+            <div className="container">
+                <div className="columns">
+                    <div className="column auto">
+                    </div>
+                    <div className="column is-three-quarters">
+                        <div className="box">
+                            <div className="tile is-ancestor">
+                                <div className="tile is-vertical">
+                                    <div className="tile">
+                                        <div className="tile is-parent has-text-justified">
+                                            <article className="tile is-child is-info">
+                                            <p className="title has-text-centered">Terms and Conditions</p>
                     <br></br>
                     <p className="subtitle">1. Acknowledgment.
 Please read carefully the following provisions of this TERMS OF USE (“TERMS OF USE”). This is a legal agreement between you and Fluent regarding the use of the Fluent software programs and related documentation being installed by you on your device (the “Software”). By downloading the Software and/or using any of the services enabled by the Software (the “Services”), YOU ACKNOWLEDGE THAT YOU HAVE READ, UNDERSTOOD, AND AGREE TO BE BOUND BY THE FOLLOWING TERMS AND CONDITIONS (INCLUDING ANY ADDITIONAL GUIDELINES AND FUTURE MODIFICATIONS) AND BY Fluent’s PRIVACY POLICY, WHICH IS INCORPORATED HEREIN BY REFERENCE AND CAN BE FOUND AT fluent.id/privacy. IF AT ANY TIME YOU DO NOT AGREE TO THESE TERMS AND CONDITIONS OF USE, YOU MAY NOT USE THE SOFTWARE OR SERVICES AND MUST IMMEDIATELY TERMINATE YOUR USE OF THE SOFTWARE AND ALL SERVICES. If you do not accept and agree to be bound by all of the terms of this Agreement, please do not use the Service.
@@ -180,9 +194,19 @@ If you downloaded the Software from the app marketplaces, you acknowledge and ag
 <p className="subtitle">32.9 Mobile Alerts and Opt Out.
 Fluent may use carrier distributed mobile messaging (SMS) to verify ownership of a registered mobile phone number.
 </p>
+                                            </article>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="column auto">
+                    </div>
                 </div>
+            </div>
             </section>
-        </Layout>
+      </Layout>
       )
   }
 }
