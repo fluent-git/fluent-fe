@@ -82,6 +82,9 @@ class Profile extends Component {
                             <tbody>
                                 {this.state.data.map((talkList) => {
                                     const { id, start_time, topic, duration } = talkList
+                                    if (duration == 0) {
+                                        return
+                                    }
                                     const callDate = start_time.substring(0, 10)
                                     const callTime = start_time.substring(11, 16)
                                     var date = new Date(null);
