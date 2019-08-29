@@ -43,11 +43,11 @@ class Home extends Component {
               <div className="tile">
                 <article className="tile is-child centered">
                   <div className="centered has-text-centered-mobile">
-                    <p className="title is-size-1-desktop">Berlatih Berbicara Bahasa Inggris Secara Anonim!</p>
-                    <p className="subtitle">Tingkatkan keterampilan berbicara kamu di Bahasa Inggris, cari hobi baru, atau sekadar ngobrol saja!</p>
+                    <p className="title is-size-1-desktop">Practice Speaking English Anonymously!</p>
+                    <p className="subtitle">Improve your speaking skills in English, find a new hobby, or just talk to people!</p>
                     <div className="buttons">
                       <Link prefetch href={mainLink}>
-                        <a className="button is-primary">Mulai Berbicara</a>
+                        <a className="button is-primary">Start Talking</a>
                       </Link>
                   </div>
                   </div>
@@ -70,10 +70,10 @@ class Home extends Component {
           <div className="columns is-mobile is-centered window-top">
             <div className="column is-two-thirds-desktop has-text-centered">
               <p className="title is-size-2-desktop">
-              Berbicara Bahasa Inggris itu mudah dan menyenangkan!
+              Speaking English can be fun and easy!
               </p>
               <p className="subtitle light">
-                Beginilah caranya 👇
+                Here's how 👇
               </p>
             </div>
           </div>
@@ -91,10 +91,10 @@ class Home extends Component {
             <div className="tile is-5 is-parent">
               <article className="tile centered">
                 <div className="centered has-text-centered-mobile">
-                  <p className="subtitle strong">Dengarkan, bagikan, dan ekspresikan pendapatmu dalam Bahasa Inggris.</p>
+                  <p className="subtitle strong">Listen, share and express your opinions in English.</p>
                   <p className="subtitle">
-                    Diskusikan topik favoritmu dengan orang lain yang juga ingin berlatih Bahasa Inggris.
-                    Dengan mengembangkan kemampuan berbicara Inggris secara anonim, tidak ada alasan bagi kamu untuk canggung!
+                    Discuss your favorite topics with others who also want to improve their English.
+                    By improving your English speaking abilities anonymously, there is no reason for you to fear anything!
                   </p>
                 </div>
               </article>
@@ -109,9 +109,9 @@ class Home extends Component {
             <div className="tile is-5 is-parent">
               <article className="tile centered">
                 <div className="centered has-text-centered-mobile">
-                  <p className="subtitle strong">Pilih Topik, Mulai Berbicara!</p>
-                  <p className="subtitle">Pilihlah topik apapun dan kamu akan dihubungkan untuk mulai berbicara dengan Bahasa Inggris.
-                  Setelah itu, kamu akan diberikan kesempatan untuk menilai kemampuan berbicara pasangan kamu.</p>
+                  <p className="subtitle strong">Choose a Topic, Start Talking!</p>
+                  <p className="subtitle">Choose any topic and you will be connected with someone to start talking in English.
+                  At the end of the call, you will be given a chance to provide feedback to your partner.</p>
                 </div>
               </article>
             </div>
@@ -132,7 +132,7 @@ class Home extends Component {
             <div className="columns is-mobile is-centered">
               <div className="column is-two-thirds-desktop has-text-centered">
                 <p className="title title-bottom is-size-3-desktop">
-                  Kami menjamin privasi dan anonimitas lengkap - kami tidak meminta data pribadi apapun.
+                  We guarantee you 100% complete privacy and anonymity - we do not ask for any personal data.
                 </p>
               </div>
             </div>
@@ -143,10 +143,10 @@ class Home extends Component {
             <div className="columns is-mobile is-centered window-top">
               <div className="column is-two-thirds-desktop has-text-centered">
                 <p className="title is-size-2-desktop">
-                  Mengapa berlatih berbicara Bahasa Inggris?
+                  Why improve your English speaking skills?
                 </p>
                 <p className="subtitle light">
-                  Bahasa Inggris adalah Bahasa Internasional. Dengan melancarkan kemampuan percakapan, kamu bisa membuka banyak kesempatan baru!
+                  English is an international language. By improving your speaking abilities, you can unlock lots of new opportunities!
                 </p>
               </div>
             </div>
@@ -157,7 +157,7 @@ class Home extends Component {
                   <figure className="image">
                     <img className="image-small" src="/static/asset/image/career.png"/>
                     <p className="title is-size-5-desktop has-text-centered">
-                      Kembangkan kemampuan untuk kariermu
+                      Improve career prospects
                     </p>
                   </figure>
                 </article>
@@ -167,7 +167,7 @@ class Home extends Component {
                   <figure className="image">
                     <img className="image-small" src="/static/asset/image/speak.png"/>
                     <p className="title is-size-5-desktop has-text-centered">
-                      Berbicara dengan orang asing
+                      Talk with foreigners
                     </p>
                   </figure>
                 </article>
@@ -177,7 +177,7 @@ class Home extends Component {
                   <figure className="image">
                     <img className="image-small" src="/static/asset/image/increase.png"/>
                     <p className="title is-size-5-desktop has-text-centered">
-                      Tingkatkan nilai jual dan percaya diri
+                      Improve your confidence
                     </p>
                   </figure>
                 </article>
@@ -187,7 +187,7 @@ class Home extends Component {
                   <figure className="image">
                     <img className="image-small" src="/static/asset/image/travel.png"/>
                     <p className="title is-size-5-desktop has-text-centered">
-                      Berkomunikasi di luar negeri
+                      Talk to people abroad
                     </p>
                   </figure>
                 </article>
@@ -210,9 +210,9 @@ class Home extends Component {
               <div className="tile is-vertical is-6">
                 <article className="tile is-child centered-narrow">
                   <div className="centered-narrow has-text-centered-mobile">
-                    <p className="title is-size-1-desktop">Ngobrol Apapun, Dimanapun, Kapanpun!</p>
-                    <p className="subtitle">Tersedia di Android dan Google Chrome! Lagi menunggu bus atau lagi bosen di rumah? Investasilah waktumu untuk dirimu sendiri buat
-                    meningkatkan lancarnya Bahasa Inggrismu. Bahaskanlah topik apa aja dengan fitur Free Talk!</p>
+                    <p className="title is-size-1-desktop">Talk about Anything, Anywhere, Anytime!</p>
+                    <p className="subtitle">Available on Android and Google Chrome! Waiting for a bus or just bored at home? Invest your time for yourself to improve your English
+                    speaking abilities. Talk about anything with the Free Talk feature!</p>
                     <div className="buttons">
                       <Link prefetch href="/download">
                         <a><img className="google-play" src="/static/asset/image/googleplay.png"/></a>
