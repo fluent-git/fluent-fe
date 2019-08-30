@@ -338,6 +338,25 @@ class Talk extends Component {
   }
 
   peerConnectionActions(){
+    if(otherId == userId){
+      this.setState({
+        status: notQueued,
+        modal: true,
+        modalContent: "There was an error queuing you. Please wait a few moments, then refresh the page.",
+        modalImgSrc: "/static/asset/icon/warn.svg",
+      })
+      await axios.post(cancelUrl,
+        {
+          "user_id":Number(this.state.userId)
+        },
+        {
+          "headers": {
+            "Content-Type": "application/json"
+          }
+        }
+      )
+      return
+    }
     dataConnection = localPeer.connect(this.otherPeerId)
     dataConnection.on('data', this.handleData)
     var firstCallConnection = (callConnection == null)
