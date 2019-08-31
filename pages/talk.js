@@ -345,7 +345,7 @@ class Talk extends Component {
         modalContent: "There was an error queuing you. Please wait a few moments, then refresh the page.",
         modalImgSrc: "/static/asset/icon/warn.svg",
       })
-      await axios.post(cancelUrl,
+      axios.post(cancelUrl,
         {
           "user_id":Number(this.state.userId)
         },
