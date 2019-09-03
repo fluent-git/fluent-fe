@@ -16,7 +16,7 @@ class Profile extends Component {
             var username = sessionManager.getUsername()
             var userId = sessionManager.getUserId()
             var token = sessionManager.getToken()
-            this.state = { loggedIn: false, username: "", userId: 0, token: "", data: [] }
+            this.state = { loggedIn: false, username: "", userId: 0, token: "", data: [], clarity: 0, pacing: 0, pronunciation:0}
         }  
         this.getUserProfile = this.getUserProfile.bind(this)
         this.handleTalkDetail = this.handleTalkDetail.bind(this)
@@ -25,13 +25,19 @@ class Profile extends Component {
     async getUserProfile() {
         this.setState({ error: '' })
         const url = 'https://api.fluent.id/talk/recent_talk/'
+        const ratingUrl = 'https://api.fluent.id/profiles/summary/'
         this.setState({ loading: "is-loading" })
         try {
           const userID = sessionManager.getUserId()
           const response = await Axios.post(url, {
             "user_id": userID,
           })
+          const ratingResponse = await Axios.post(ratingUrl, {
+            "user_id": userID,
+          })
           this.setState({data: response.data})
+          const ratings = ratingResponse.data
+          this.setState({clarity: ratings.clarity, pacing: ratings.pacing, pronunciation: ratings.pronunciation})
         } catch (error) {
           console.error(
             'You have an error in your code or there are Network issues.',
@@ -67,6 +73,10 @@ class Profile extends Component {
                     <img src="static/asset/icon/user.svg"/>
                     <br></br>
                     {titleName}
+                    <h1 className="title">Profile Summary</h1>
+                    <h1 style={{fontSize: '25px'}}>Clarity: {this.state.clarity}</h1>
+                    <h1 style={{fontSize: '25px'}}>Pacing: {this.state.pacing}</h1>
+                    <h1 style={{fontSize: '25px'}}>Pronunciation: {this.state.pronunciation}</h1>
                     <br></br>
                     <h1 className="title">Talk History</h1>
                     <div className="card-box table-responsive">
