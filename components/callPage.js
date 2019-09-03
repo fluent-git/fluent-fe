@@ -59,6 +59,7 @@ class CallPage extends Component {
 						</button>
 					</p>
 				</div>
+				<LiveTranslation></LiveTranslation>
 				<p className="subtitle">Don’t be shy and talk for at least a few minutes!</p>
 				<TimerCountUp cfun={this.props.cfun}/>
 				<a onClick={() => this.props.disconnectCall()}>
@@ -68,6 +69,56 @@ class CallPage extends Component {
 				</a>
 			</div>
 		);
+	}
+}
+
+class LiveTranslation extends Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			text: '',
+			from: 'id', // Translate from this language
+			to: 'en', // Translate to this language
+			translated: ''
+		}
+		this.handleTextChange = this.handleTextChange.bind(this)
+	}
+	handleTextChange (event) {
+		this.setState({text: event.target.value})
+	}
+
+	async translateText() {
+		this.setState({ error: '' })
+		const trFrom = this.state.from
+		const trTo = this.state.to
+		const encodedText = encodeURI(this.state.text)
+		const translateUrl = 'https://translate.googleapis.com/translate_a/single?client=gtx&sl=' + trFrom + '&tl=' + trTo + '&dt=t&q=' + encodedText
+        this.setState({ loading: "is-loading" })
+        try {
+
+          const response = await Axios.get(translateUrl)
+
+          this.setState({data: response.data})
+
+        } catch (error) {
+          console.error(
+            'You have an error in your code or there are Network issues.',
+            error
+          )
+          this.setState({ error: error.message })
+        }
+        this.setState({ loading: "" })
+	}
+
+	render() {
+		return (
+			<div>
+				<p className="title">
+						Live Translation
+				</p>
+				<input class="input" type="text" placeholder="Enter Text" onChange={this.handleTextChange}></input>
+			</div>
+		)
 	}
 }
 
