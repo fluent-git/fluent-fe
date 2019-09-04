@@ -88,7 +88,12 @@ class LiveTranslation extends Component {
 		this.translateText = this.translateText.bind(this)
 	}
 
-	translateText(textTranslate) {
+	translateText() {
+		var textTranslate = this.state.text
+		if (textTranslate.length < 2) {
+			this.setState({translated: "Please type at least 3 characters..."})
+			return
+		} 
 		this.setState({ error: '' })
 		const trFrom = this.state.from
 		const trTo = this.state.to
@@ -116,11 +121,6 @@ class LiveTranslation extends Component {
 
 	handleTextChange (event) {
 		this.setState({text: event.target.value})
-		if (event.target.value.length > 2) {
-			this.translateText(event.target.value)
-		} else {
-			this.setState({translated: "Please type something..."})
-		}
 	}
 
 	render() {
@@ -132,7 +132,18 @@ class LiveTranslation extends Component {
 				<p className="title">
 						Live Translation
 				</p>
-				<input class="input" type="text" placeholder="Enter Text" onChange={this.handleTextChange}></input>
+				<label>
+					<input class="input" type="text" placeholder="Enter Text" onChange={this.handleTextChange}></input>
+					<br></br>
+				</label>
+				<br></br>
+				<div class="field is-grouped">
+					<p class="control">
+						<button class="button is-primary" onClick={this.translateText}>
+							Translate
+						</button>
+					</p>
+				</div>
 				<label className="label" style={{ width: '100px', position: 'relative', top: '6px', 'text-align': 'left' }}>Translation</label>
               	<div className="control" style={{ width: '100%' }}>
 					{translation}
