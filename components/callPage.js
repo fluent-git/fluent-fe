@@ -1,5 +1,6 @@
 import { Component } from 'react'
 import { startersToShow } from '../utils/constants'
+import Axios from 'axios'
 
 class CallPage extends Component {
 	constructor(props){
@@ -59,7 +60,9 @@ class CallPage extends Component {
 						</button>
 					</p>
 				</div>
+				<br></br>
 				<LiveTranslation></LiveTranslation>
+				<br></br>
 				<p className="subtitle">Don’t be shy and talk for at least a few minutes!</p>
 				<TimerCountUp cfun={this.props.cfun}/>
 				<a onClick={() => this.props.disconnectCall()}>
@@ -79,26 +82,27 @@ class LiveTranslation extends Component {
 			text: '',
 			from: 'id', // Translate from this language
 			to: 'en', // Translate to this language
-			translated: ''
+			translated: 'Enter Text'
 		}
 		this.handleTextChange = this.handleTextChange.bind(this)
-	}
-	handleTextChange (event) {
-		this.setState({text: event.target.value})
+		this.translateText = this.translateText.bind(this)
 	}
 
-	async translateText() {
+	translateText(textTranslate) {
 		this.setState({ error: '' })
 		const trFrom = this.state.from
 		const trTo = this.state.to
-		const encodedText = encodeURI(this.state.text)
+		const encodedText = encodeURI(textTranslate)
 		const translateUrl = 'https://translate.googleapis.com/translate_a/single?client=gtx&sl=' + trFrom + '&tl=' + trTo + '&dt=t&q=' + encodedText
         this.setState({ loading: "is-loading" })
         try {
 
-          const response = await Axios.get(translateUrl)
-
-          this.setState({data: response.data})
+          const response = Axios.get(translateUrl)		  
+		  var resolvePromise = Promise.resolve(response)
+		  resolvePromise.then(value => {
+			var translatedText = value.data[0][0][0]
+			this.setState({translated: translatedText})
+		  });
 
         } catch (error) {
           console.error(
@@ -110,13 +114,29 @@ class LiveTranslation extends Component {
         this.setState({ loading: "" })
 	}
 
+	handleTextChange (event) {
+		this.setState({text: event.target.value})
+		if (event.target.value.length > 2) {
+			this.translateText(event.target.value)
+		} else {
+			this.setState({translated: "Please type something..."})
+		}
+	}
+
 	render() {
+		var translation = <p className="subtitle">
+							{this.state.translated}
+						  </p>
 		return (
 			<div>
 				<p className="title">
 						Live Translation
 				</p>
 				<input class="input" type="text" placeholder="Enter Text" onChange={this.handleTextChange}></input>
+				<label className="label" style={{ width: '100px', position: 'relative', top: '6px', 'text-align': 'left' }}>Translation</label>
+              	<div className="control" style={{ width: '100%' }}>
+					{translation}
+             	 </div>
 			</div>
 		)
 	}
