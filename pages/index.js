@@ -311,7 +311,7 @@ class Home extends Component {
           }
 
           .centered-title {
-            padding-top: 40%;
+            padding-top: 50%;
           }
 
           @media only screen and (max-width: 800px) {
