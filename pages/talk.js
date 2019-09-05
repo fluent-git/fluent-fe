@@ -338,7 +338,7 @@ class Talk extends Component {
   }
 
   peerConnectionActions(){
-    if(otherId == userId){
+    if(otherId == this.state.userId){
       this.setState({
         status: notQueued,
         modal: true,
