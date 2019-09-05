@@ -40,9 +40,10 @@ class Home extends Component {
         <section className="section first">
           <div className="container is-widescreen">
             <div className="tile is-ancestor fullsize">
-              <div className="tile">
-                <article className="tile is-child centered">
-                  <div className="centered has-text-centered-mobile">
+              <div className="tile is-1"></div>
+              <div className="tile is-3">
+                <article className="tile is-child centered-title">
+                  <div className="has-text-centered-mobile">
                     <p className="title is-size-1-desktop">Practice Speaking English Anonymously!</p>
                     <p className="subtitle">Improve your speaking skills in English, find a new hobby, or just talk to people!</p>
                     <div className="buttons">
@@ -53,13 +54,15 @@ class Home extends Component {
                   </div>
                 </article>
               </div>
-              <div className="tile is-vertical is-8">
+              <div className="tile is-7">
                 <article className="tile is-child">
                   <figure className="image is-5by4">
                     <img src="/static/asset/image/home.png"/>
                   </figure>
                 </article>
               </div>
+
+              <div className="tile is-1"></div>
             </div>
           </div>
         </section>
@@ -305,6 +308,16 @@ class Home extends Component {
             top: 15%;
             margin: 0 auto;
             position: relative;
+          }
+
+          .centered-title {
+            padding-top: 40%;
+          }
+
+          @media only screen and (max-width: 800px) {
+            .centered-title {
+              padding-top: 0px;
+            }
           }
           
           .centered-narrow {
