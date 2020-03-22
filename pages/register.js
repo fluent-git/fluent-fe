@@ -9,7 +9,7 @@ class Register extends Component {
       super(props)
   
       if (sessionManager.isLoggedIn()) {
-        Router.push('/')
+        Router.push('/talk')
       }
   
       this.state = { username: '', email: '', password: '', level: 1, error: '', loading: '', loggedIn: false }

@@ -10,7 +10,7 @@ class Login extends Component {
     super(props)
 
     if (sessionManager.isLoggedIn()) {
-      Router.push('/')
+      Router.push('/talk')
     }
 
     this.state = { username: '', password: '', error: '', loading: '', loggedIn: false }

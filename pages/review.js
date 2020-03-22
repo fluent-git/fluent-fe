@@ -80,9 +80,9 @@ class Review extends Component {
           if (response.data.id != 0) {
             console.log('Success')
             SessionManager.endReview()
-            Router.push('/')
+            Router.push('/talk')
           } else {
-            console.log('Login failed.')
+            console.log('Review failed.')
             let error = new Error(response.data.message)
             error.response = response
             throw error

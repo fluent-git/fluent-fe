@@ -46,7 +46,7 @@ var SessionManager = (function() {
         cookie.set('username', username)
         cookie.set('userId',userId)
         cookie.set('token', token)
-        Router.push('/')
+        Router.push('/talk')
     }
 
     var signOut = function() {
