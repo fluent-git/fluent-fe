@@ -6,7 +6,7 @@ import Router from 'next/router'
 import { initGA, logPageView } from '../utils/analytics'
 
 class Home extends Component {
-  componentDidMount () {
+  componentDidMount() {
     if (!window.GA_INITIALIZED) {
       initGA()
       window.GA_INITIALIZED = true
@@ -30,7 +30,7 @@ class Home extends Component {
     }
   }
 
-  render () {
+  render() {
     var mainLink = "/login" // default link
     if (this.state.loggedIn) {
       mainLink = "/talk"
@@ -44,20 +44,28 @@ class Home extends Component {
               <div className="tile is-3">
                 <article className="tile is-child centered-title">
                   <div className="has-text-centered-mobile">
-                    <p className="title is-size-1-desktop">Practice Speaking English Anonymously!</p>
-                    <p className="subtitle">Improve your speaking skills in English, find a new hobby, or just talk to people!</p>
+                    <p className="title is-size-1-desktop">WFH? Bored? Lonely at Home?</p>
+                    <p className="subtitle">Talk with people online! Practice speaking english anonymously!</p>
                     <div className="buttons">
                       <Link prefetch href={mainLink}>
-                        <a className="button is-primary">Start Talking</a>
+                        <a className="button is-primary" style={{
+                          padding: '1.2rem .4rem 1.2rem .8rem'
+                        }}>
+                          Start Talking Now
+                          <img src="/static/asset/icon/start_talking.png" style={{
+                            height: "2rem",
+                            marginLeft: '.2rem'
+                          }} />
+                        </a>
                       </Link>
-                  </div>
+                    </div>
                   </div>
                 </article>
               </div>
               <div className="tile is-7">
                 <article className="tile is-child">
                   <figure className="image is-5by4">
-                    <img src="/static/asset/image/home.png"/>
+                    <img src="/static/asset/image/home.png" />
                   </figure>
                 </article>
               </div>
@@ -67,13 +75,13 @@ class Home extends Component {
           </div>
         </section>
         <div className="separator-curve">
-          <img className="image-curve" src="/static/asset/image/curve.png"/>
+          <img className="image-curve" src="/static/asset/image/curve.png" />
         </div>
         <section className="section pink">
           <div className="columns is-mobile is-centered window-top">
             <div className="column is-two-thirds-desktop has-text-centered">
               <p className="title is-size-2-desktop">
-              Speaking English can be fun and easy!
+                Speaking English can be fun and easy!
               </p>
               <p className="subtitle light">
                 Here's how 👇
@@ -86,7 +94,7 @@ class Home extends Component {
             <div className="tile is-5 is-parent">
               <article className="tile">
                 <figure className="image">
-                  <img src="/static/asset/image/talk-3d.png"/>
+                  <img src="/static/asset/image/talk-3d.png" />
                 </figure>
               </article>
             </div>
@@ -122,7 +130,7 @@ class Home extends Component {
             <div className="tile is-5 is-parent">
               <article className="tile">
                 <figure className="image">
-                  <img src="/static/asset/image/topic-3d.png"/>
+                  <img src="/static/asset/image/topic-3d.png" />
                 </figure>
               </article>
             </div>
@@ -132,14 +140,14 @@ class Home extends Component {
           <hr></hr>
         </section>
         <div className="separator-curve">
-            <div className="columns is-mobile is-centered">
-              <div className="column is-two-thirds-desktop has-text-centered">
-                <p className="title title-bottom is-size-3-desktop">
-                  We guarantee you 100% complete privacy and anonymity - we do not ask for any personal data.
+          <div className="columns is-mobile is-centered">
+            <div className="column is-two-thirds-desktop has-text-centered">
+              <p className="title title-bottom is-size-3-desktop">
+                We guarantee you 100% complete privacy and anonymity - we do not ask for any personal data.
                 </p>
-              </div>
             </div>
-          <img className="image-curve" src="/static/asset/image/anonym.png"/>
+          </div>
+          <img className="image-curve" src="/static/asset/image/anonym.png" />
         </div>
         <section className="section last">
           <div className="container is-widescreen">
@@ -158,7 +166,7 @@ class Home extends Component {
               <div className="tile is-parent middle">
                 <article className="tile">
                   <figure className="image">
-                    <img className="image-small" src="/static/asset/image/career.png"/>
+                    <img className="image-small" src="/static/asset/image/career.png" />
                     <p className="title is-size-5-desktop has-text-centered">
                       Improve career prospects
                     </p>
@@ -168,7 +176,7 @@ class Home extends Component {
               <div className="tile is-parent">
                 <article className="tile">
                   <figure className="image">
-                    <img className="image-small" src="/static/asset/image/speak.png"/>
+                    <img className="image-small" src="/static/asset/image/speak.png" />
                     <p className="title is-size-5-desktop has-text-centered">
                       Talk with foreigners
                     </p>
@@ -178,7 +186,7 @@ class Home extends Component {
               <div className="tile is-parent">
                 <article className="tile">
                   <figure className="image">
-                    <img className="image-small" src="/static/asset/image/increase.png"/>
+                    <img className="image-small" src="/static/asset/image/increase.png" />
                     <p className="title is-size-5-desktop has-text-centered">
                       Improve your confidence
                     </p>
@@ -188,7 +196,7 @@ class Home extends Component {
               <div className="tile is-parent">
                 <article className="tile">
                   <figure className="image">
-                    <img className="image-small" src="/static/asset/image/travel.png"/>
+                    <img className="image-small" src="/static/asset/image/travel.png" />
                     <p className="title is-size-5-desktop has-text-centered">
                       Talk to people abroad
                     </p>
@@ -206,7 +214,7 @@ class Home extends Component {
               <div className="tile is-vertical is-4">
                 <article className="tile is-child is-10">
                   <figure className="image">
-                    <img src="/static/asset/image/phone-mock.png"/>
+                    <img src="/static/asset/image/phone-mock.png" />
                   </figure>
                 </article>
               </div>
@@ -218,9 +226,9 @@ class Home extends Component {
                     speaking abilities. Talk about anything with the Free Talk feature!</p>
                     <div className="buttons">
                       <Link prefetch href="/download">
-                        <a><img className="google-play" src="/static/asset/image/googleplay.png"/></a>
+                        <a><img className="google-play" src="/static/asset/image/googleplay.png" /></a>
                       </Link>
-                  </div>
+                    </div>
                   </div>
                 </article>
               </div>
