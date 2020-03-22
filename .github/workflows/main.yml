@@ -12,5 +12,5 @@ jobs:
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
         script: |
-          make-fe
-          restart-fe
+          make make-fe
+          make restart-fe
