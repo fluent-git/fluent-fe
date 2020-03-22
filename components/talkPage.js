@@ -10,11 +10,11 @@ class TalkPage extends Component {
 				<link type="text/css" rel="stylesheet" href="static/style.css"/>
 				<div className="column has-background-grey-light is-narrow is-hidden-mobile">
 					<div className="columns header-wrapper" style={{flexDirection: 'column'}}>         
-						<TileHeader tryToQueue={this.props.tryToQueue} isEnabled='True' imgsrc='/static/asset/topic/free-purple.svg' title="Free Talk"/>
+						<TileHeader tryToQueue={this.props.tryToQueue} isEnabled='True' imgsrc='/static/asset/topic/free-purple.svg' title="Talk Now"/>
 						<div className="column">
-							<p className="title" style={{color: '#3C3C72'}}>Talk</p>
+							<p className="title" style={{color: '#3C3C72'}}> Free Talk</p>
 							<p className="subtitle">
-								Talk with community members and practice your speaking skill!  
+								Click the button above to start talking with community members and practice your speaking skill!  
 							</p>
 						</div>
 					</div> 
@@ -22,11 +22,11 @@ class TalkPage extends Component {
 				<div className="column content-wrapper has-background-grey-lighter">
 					<div className="columns is-mobile is-multiline"> 
 							<div className="is-hidden-tablet" style={{width: '100%'}}>
-								<TileTalk tryToQueue={this.props.tryToQueue} isEnabled='True' imgsrc='/static/asset/topic/free.svg' title="Free Talk"/>
+								<TileTalk tryToQueue={this.props.tryToQueue} isEnabled='True' imgsrc='/static/asset/topic/free.svg' title="Talk Now"/>
 							</div>
-							<Tile tryToQueue={this.props.tryToQueue} isEnabled='True' imgsrc='/static/asset/topic/game.svg' title="Hobbies"/>
-							<Tile tryToQueue={this.props.tryToQueue} isEnabled='True' imgsrc='/static/asset/topic/tech.svg' title="Tech"/>
-							<Tile tryToQueue={this.props.tryToQueue} isEnabled='True' imgsrc='/static/asset/topic/food.svg' title="Food"/>
+							<Tile tryToQueue={this.props.tryToQueue} imgsrc='/static/asset/topic/game.svg' title="Hobbies"/>
+							<Tile tryToQueue={this.props.tryToQueue} imgsrc='/static/asset/topic/tech.svg' title="Tech"/>
+							<Tile tryToQueue={this.props.tryToQueue} imgsrc='/static/asset/topic/food.svg' title="Food"/>
 							<Tile tryToQueue={this.props.tryToQueue} imgsrc='/static/asset/topic/trend.svg' title="Opinion"/>
 							<Tile tryToQueue={this.props.tryToQueue} imgsrc='/static/asset/topic/place.svg' title="Travel"/>
 							<Tile tryToQueue={this.props.tryToQueue} imgsrc='/static/asset/topic/culture.svg' title="Culture"/>
