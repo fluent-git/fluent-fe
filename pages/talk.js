@@ -165,7 +165,7 @@ class Talk extends Component {
     //   return
     // }
 
-    var queueCheckResponse = await this.getQueueCheckMessage({"topic": topic})
+    var queueCheckResponse = await this.getQueueCheckMessage({"topic": "free talk"})
     
     console.log("queue check response",queueCheckResponse)
     
