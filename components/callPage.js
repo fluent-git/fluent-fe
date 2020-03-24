@@ -44,7 +44,7 @@ class CallPage extends Component {
 					<img src={this.props.imgsrc} />
 				</figure>
 				<p className="title">
-					Conversation Starters about {topic}
+					Conversation Starters
 				</p>
 				<div className="box" style={{textAlign: 'left', boxShadow: '0 2px 3px rgba(233, 35, 35, 0.1), 0 0 0 1px rgba(182, 0, 0, 0.1)'}}>
 					<div className="content">
