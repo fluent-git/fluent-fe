@@ -86,12 +86,13 @@ class LiveTranslation extends Component {
 		}
 		this.handleTextChange = this.handleTextChange.bind(this)
 		this.translateText = this.translateText.bind(this)
+		this.keyPress = this.keyPress.bind(this)
 	}
 
 	translateText() {
 		var textTranslate = this.state.text
 		if (textTranslate.length < 2) {
-			this.setState({translated: "Please type at least 3 characters..."})
+			this.setState({translated: "Please type at least 2 characters..."})
 			return
 		} 
 		this.setState({ error: '' })
@@ -123,6 +124,12 @@ class LiveTranslation extends Component {
 		this.setState({text: event.target.value})
 	}
 
+	keyPress (event) {
+		if (event.keyCode == 13) {
+			this.translateText()
+		}
+	}
+
 	render() {
 		var translation = <p className="subtitle">
 							{this.state.translated}
@@ -133,7 +140,7 @@ class LiveTranslation extends Component {
 						Live Translation
 				</p>
 				<label>
-					<input class="input" type="text" placeholder="Enter Text" onChange={this.handleTextChange}></input>
+					<input class="input" type="text" placeholder="Enter Text" onChange={this.handleTextChange} onKeyDown={this.keyPress}></input>
 					<br></br>
 				</label>
 				<br></br>
