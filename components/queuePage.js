@@ -33,6 +33,7 @@ class QueuePage extends Component {
 					<div className="four" style={{background: 'rgba(106, 104, 250, 0.5)'}}></div>
 				</div>
 				<p className="title">This may take a few minutes...</p>
+				<p>What do you think of Fluent? <a href="bit.ly/fluent-feedback" target="_blank">bit.ly/fluent-feedback</a>.</p>
 				<TipsDisplay tips={this.props.tips}/>
 				<br/>
 				<TimerCountDown topic={this.props.topic} />
@@ -80,7 +81,7 @@ class TipsDisplay extends Component {
 		if (this.props.tips.length){
 			return <p>{this.props.tips[this.state.currentIndex]}</p>
 		} else {
-			return <p>What do you think of Fluent?<a href="https://docs.google.com/forms/d/1dcf3KYo46Pzlkoyyi4INPxqBRwEupNqTxrCbl9VSsg4" target="_blank"> Please kindly fill this form.</a></p>
+			return <p>What do you think of Fluent?<a href="bit.ly/fluent-feedback" target="_blank"> Please kindly fill this form.</a></p>
 		}
 	}
 }
